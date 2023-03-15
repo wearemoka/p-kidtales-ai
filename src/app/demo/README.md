@@ -23,3 +23,5 @@ Do not share your secret passwords. Do not add your secret keys in the repositor
 The API calls are inside the `services` folder.
 
 As a general rule, promises are returned in each API call, which you will be able to call from the different components or pages and use them in the way you require.
+
+Toda la referencia respecto a las llamadas a la API puedes encontrarlas en el siguiente [link](https://platform.openai.com/docs/api-reference/introduction)
