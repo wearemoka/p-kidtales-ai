@@ -2,7 +2,7 @@ import './globals.css'
 
 export const metadata = {
   title: 'KidTales.ai',
-  description: 'KidTales AI Generator',
+  description: 'KidTales AI Generator'
 }
 
 export default function RootLayout ({
