@@ -8,3 +8,14 @@
     text-align: justify;
     font-size: large;
 }
+
+.selectors {
+    width: 200px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.button {
+    height: 40px;
+    width: 80px;
+}

@@ -1,5 +1,6 @@
 import History from "./components/History"
 import Illustration from "./components/Illustration"
+import PreSelectedHistory from "./components/PreSetedHistory"
 import styles from './demo.module.css'
 
 /**
@@ -14,6 +15,10 @@ function DemoPage() {
         <hr/>
 
         <Illustration />
+
+        <hr/>
+
+        <PreSelectedHistory />
 
     </main>
 }

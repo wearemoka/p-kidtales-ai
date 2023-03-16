@@ -7,12 +7,10 @@ import styles from './components.module.css'
 // Generic component to request a story in written format.
 function History() {
     const [answer, setAnswer] = React.useState('');
-    const [btnEnabled, setBtnEnabled] = React.useState(true);
 
     function handleClickTellMe() {
         const inputElem = document?.querySelector('#inputAbout') as HTMLInputElement;
         const about = inputElem.value;
-        setBtnEnabled(false);
         // Uses the service to obtain a Promise with the API response.
         getAiHistory(about).then(
             (res)=> {
@@ -23,8 +21,6 @@ function History() {
                 console.log('e',err);
             }
         );
-        setBtnEnabled(true);
-
     }
 
     return (
@@ -35,7 +31,7 @@ function History() {
 
             <div className={styles.row}>
                 <input id="inputAbout" name="inputAbout" type="text" placeholder="a dog with a sword"/>
-                <button onClick={handleClickTellMe} disabled={!btnEnabled}>Tell Me!</button>
+                <button onClick={handleClickTellMe} >Tell Me!</button>
             </div>
 
             <div className={styles.row}>

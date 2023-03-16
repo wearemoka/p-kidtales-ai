@@ -63,3 +63,39 @@ export async function getAiIllustration(about:string) {
         console.error('catch', err);
     }
 }
+
+
+
+/**
+ * Requests a story to the AI using some parameter and
+ * adds constraints to the story.
+ * @param ageRange the age range, e.g. 5-7
+ * @param character a character, e.g. dog
+ * @param adventure type of adventure, e.g. fable
+ * @param place where the story take place, e.g. farm
+ * @param paragraphs number of paragraphs expected
+ * @returns promise
+ */
+export async function getAiStory(ageRange: string, character:string, adventure:string, place:string, paragraphs:number = 3) {
+    try {
+        const prompt = JSON.stringify({
+            "model": "gpt-3.5-turbo",
+            "messages": [
+                {
+                    "role": "user",
+                    "content": `Generate a story about a ${ageRange}-year-old ${character} who embarks on a ${adventure} adventure in ${place}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting.`
+                }
+            ]
+        });
+
+        const res = await fetch(`${uriAPI}/chat/completions`, {
+            method: "POST",
+            body: prompt,
+            headers: headerOpenAiRequest
+        });
+        const data = res.json();
+        return data;
+    } catch (err) {
+        console.error('catch', err);
+    }
+}
