@@ -1,10 +1,10 @@
-"use client";
+'use client'
 import { useFetchStory } from '@/app/hooks/useFetchStory'
-import {useRouter} from 'next/navigation';
-import Style from './list.module.css';
+import { useRouter } from 'next/navigation'
+import Style from './list.module.css'
 const List = () => {
-  const { data } = useFetchStory('stories');
-  const router = useRouter();
+  const { data } = useFetchStory('stories')
+  const router = useRouter()
   const viewStoryHandler = (id: string) => {
     router.push(`/story/${id}`)
   }
@@ -13,7 +13,7 @@ const List = () => {
   }
   return (
     <div className={Style.tableWrapper}>
-      <table className={Style.table} style={{ marginTop: "20px" }}>
+      <table className={Style.table} style={{ marginTop: '20px' }}>
         <thead>
           <tr>
             <th className={Style.tableColumnCell}>No</th>
@@ -23,25 +23,29 @@ const List = () => {
           </tr>
         </thead>
         <tbody>
-          {data.length > 0 ? data.map((item, index) => {
-            return (
-              <tr key={`${index}`}>
-                <td className={Style.tableRowCell}>{index + 1}</td>
-                <td className={Style.tableRowCell}>{item.title}</td>
-                <td className={Style.tableRowCell}>{item.description}</td>
-                <td className={Style.tableRowCell}>
-                  <button className={Style.actionEditButton} onClick = {() => editStoryHandler(item.id)}>Edit</button>
-                  <button className={Style.actionViewButton} onClick={() => viewStoryHandler(item.id)}>View</button>
-                </td>
+          {data.length > 0
+            ? data.map((item, index) => {
+              return (
+                <tr key={`${index}`}>
+                  <td className={Style.tableRowCell}>{index + 1}</td>
+                  <td className={Style.tableRowCell}>{item.title}</td>
+                  <td className={Style.tableRowCell}>{item.description}</td>
+                  <td className={Style.tableRowCell}>
+                    <button className={Style.actionEditButton} onClick={() => editStoryHandler(item.id)}>Edit</button>
+                    <button className={Style.actionViewButton} onClick={() => viewStoryHandler(item.id)}>View</button>
+                  </td>
+                </tr>
+              )
+            })
+            : (
+              <tr>
+                <td colSpan={12}>Loading...</td>
               </tr>
-            )
-          }) : <tr>
-            <td colSpan={12}>Loading...</td>
-          </tr>}
+              )}
         </tbody>
       </table>
     </div>
   )
 }
 
-export default List;
+export default List
