@@ -1,9 +1,8 @@
 // Import the functions you need from the SDKs you need
 // import { getAnalytics } from "firebase/analytics";
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs } from "firebase/firestore";
-import { getStorage } from "firebase/storage";
+import { initializeApp } from 'firebase/app'
+import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore'
+import { getStorage } from 'firebase/storage'
 
 export const config = {
   apiKey: process.env.FIRESTORE_API_KEY,
@@ -13,10 +12,10 @@ export const config = {
   messagingSenderId: process.env.FIRESTORE_MESSAGING_SENDER_ID,
   appId: process.env.FIRESTORE_APP_ID,
   measurementId: process.env.FIRESTORE_MEASUREMENT_ID
-};
+}
 
-export const app = initializeApp(config);
-export const db = getFirestore(app);
+export const app = initializeApp(config)
+export const db = getFirestore(app)
 // const analytics = app.name && typeof window !== 'undefined' ? getAnalytics(app) : null;;
-export const storage = getStorage(app);
-export {collection, addDoc, getDocs}
+export const storage = getStorage(app)
+export { collection, addDoc, getDocs }
