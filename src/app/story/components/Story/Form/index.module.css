@@ -1,0 +1,28 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    background: aliceblue;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+    width: 300px;
+}
+.container {
+    display: flex;
+    margin-top: 60px;
+    height: 100vh;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: flex-start;
+    align-items:center ;
+}
+.input {
+    padding: 12px 10px;
+    display: block;
+}
+.button {
+    margin-top: 10px;
+    background: orange;
+    border: 0px;
+    padding: 7px 10px;
+}
