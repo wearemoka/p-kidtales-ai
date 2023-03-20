@@ -9,10 +9,10 @@ import './globals.css'
  * @param param0
  *
  */
-export const metadata = {
-  title: 'KidTales.ai',
-  description: 'KidTales AI Generator'
-}
+// export const metadata = {
+//   title: 'KidTales.ai',
+//   description: 'KidTales AI Generator'
+// }
 
 export default function RootLayout ({
   children
