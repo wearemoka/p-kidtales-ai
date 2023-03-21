@@ -10,10 +10,12 @@ const View = () => {
   return (
     <div className={box}>
       {status === 'success'
-        ? <>
-          <h2>Title :: {data?.title}</h2>
-          <p className={Style.description}>Description :: {data?.description}</p>
+        ? (
+          <>
+            <h2>Title :: {data?.title}</h2>
+            <p className={Style.description}>Description :: {data?.description}</p>
           </>
+          )
         : 'Loading...'}
     </div>
   )

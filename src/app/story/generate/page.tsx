@@ -4,7 +4,7 @@ import Button from '@/app/components/Story/Button/Button'
 import { useState } from 'react'
 import { ages, characters, adventures, places } from '../../service/constants/StoryParams'
 import { getAiStory } from '../../service/ChatGPTService'
-import { addDocumentInFireStore } from '@/app/service/FirebaseService'
+import { addDocumentInFireStore } from '../../service/FirebaseService'
 
 type StoryParams = string[]
 /**
@@ -22,7 +22,7 @@ function GenerateStory () {
     const randomIndex = Math.floor(Math.random() * data.length)
     return data[randomIndex]
   }
-  console.log('key', process.env.NEXT_PUBLIC_FIREBASE_STORAGE_END_POINT)
+
   const handlerClickOnGenerateRandomStory = () => {
     setStatus('process')
     const randomAge = generateRandomIndex(ages)
@@ -57,9 +57,10 @@ function GenerateStory () {
       <div className={styles.answerContainer}>
         {status === 'pending' && <h4 className={styles.loader}>Your story display here</h4>}
         {status === 'process' && <h4 className={styles.loader}>Loading...</h4>}
-        {status === 'success' && <div className={styles.loader}>
-          <p className={styles.description}>{answer.content}</p>
-        </div>}
+        {status === 'success' &&
+          <div className={styles.loader}>
+            <p className={styles.description}>{answer.content}</p>
+          </div>}
         {status === 'error' && <p className={styles.loader}>No data found</p>}
       </div>
     </main>
