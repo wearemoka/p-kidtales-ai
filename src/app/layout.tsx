@@ -1,6 +1,6 @@
 'use client'
 import { FirebaseAppProvider } from 'reactfire'
-import Header from './components/MainHeader/Header'
+import Header from './components/Header/Header'
 import { config } from './firebase/Config/Config'
 import StoreProvider from './firebase/StoreProvider/StoreProvider'
 import './globals.css'

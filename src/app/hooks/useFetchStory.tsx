@@ -1,6 +1,6 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
-import { getDocArrayDataType, getDocumentFromFireStore } from '../service/firebaseService'
+import { getDocArrayDataType, getDocumentFromFireStore } from '../service/FirebaseService'
 
 export function useFetchStory (storyPath: string) {
   const [data, setData] = useState<getDocArrayDataType[]>([])

@@ -1,9 +1,9 @@
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
 import { useFetchStoryItem } from '@/app/hooks/useFetchStoryItem'
-import { updateDocumentInFireStore } from '@/app/service/firebaseService'
+import { updateDocumentInFireStore } from '@/app/service/FirebaseService'
 import { useState } from 'react'
-import Form, { StoryFormState } from '../../components/Story/Form/Form'
+import Form, { StoryFormState } from '../../../components/Story/Form/Form'
 
 const EditStory = () => {
   const [updateStoryStatus, setUpdateStoryStatus] = useState<string>('')
@@ -23,16 +23,12 @@ const EditStory = () => {
   return (
     <div>
       {status === 'success'
-        ? (
-          <>
-            <Form
-              selectedItemTitle={data?.title} selectedItemDescription={data?.description}
-              onSubmit={updateStoryHandler}
-              isEdit
-              message={updateStoryStatus}
-            />
-          </>
-          )
+        ? <Form
+            selectedItemTitle={data?.title} selectedItemDescription={data?.description}
+            onSubmit={updateStoryHandler}
+            isEdit
+            message={updateStoryStatus}
+          />
         : 'Loading...'}
     </div>
   )

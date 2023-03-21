@@ -20,8 +20,7 @@ export const useCreateStory = () => {
       collection(firestore, organizationsPath)
 
     try {
-      // eslint-disable-next-line no-unused-vars
-      const response = use(addDoc(
+      use(addDoc(
         collectionReference,
         StoryData
       ))

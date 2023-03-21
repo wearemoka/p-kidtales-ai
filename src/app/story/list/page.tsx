@@ -6,7 +6,7 @@ const List = () => {
   const { data } = useFetchStory('stories')
   const router = useRouter()
   const viewStoryHandler = (id: string) => {
-    router.push(`/story/${id}`)
+    router.push(`/story/view/${id}`)
   }
   const editStoryHandler = (id: string) => {
     router.push(`/story/edit/${id}`)
