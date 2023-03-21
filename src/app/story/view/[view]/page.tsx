@@ -13,7 +13,7 @@ const View = () => {
         ? <>
           <h2>Title :: {data?.title}</h2>
           <p className={Style.description}>Description :: {data?.description}</p>
-        </>
+          </>
         : 'Loading...'}
     </div>
   )

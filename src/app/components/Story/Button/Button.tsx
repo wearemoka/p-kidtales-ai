@@ -14,12 +14,13 @@ const Button:React.FC<ButtonProps> = ({
   status
 }) => {
   return (
-      <div className={styles.row}>
-        <button disabled = {status === "process" ? true : false} onClick={() => onClick()} className={styles.button}>{
+    <div className={styles.row}>
+      <button disabled={status === 'process'} onClick={() => onClick()} className={styles.button}>{
           buttonText
-        }</button>
-      </div>
+        }
+      </button>
+    </div>
   )
 }
 
-export default Button;
+export default Button
