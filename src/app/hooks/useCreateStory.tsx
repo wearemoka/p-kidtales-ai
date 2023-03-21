@@ -1,41 +1,40 @@
-'use client'
-import { use, useCallback, useState } from 'react'
+"use client"
+import { use, useCallback, useState } from "react";
 
 import {
   collection,
-  addDoc
-} from 'firebase/firestore'
-import { useFirestore } from 'reactfire'
+  addDoc,
+} from 'firebase/firestore';
+import { useFirestore } from 'reactfire';
 interface StoryDataProps {
   title: string;
   description: string;
 }
 export const useCreateStory = () => {
-  const firestore = useFirestore()
-  const [state, setState] = useState<string>()
+  const firestore = useFirestore();
+  const [state, setState] = useState<string>();
   const mutation = useCallback(async (StoryData: StoryDataProps) => {
-    setState('loading')
-    const organizationsPath = '/stories'
+    setState('loading');
+    const organizationsPath = `/stories`;
     const collectionReference =
-      collection(firestore, organizationsPath)
+      collection(firestore, organizationsPath);
 
     try {
-      // eslint-disable-next-line no-unused-vars
       const response = use(addDoc(
         collectionReference,
         StoryData
-      ))
-      setState('success')
+      ));
+      setState('success');
     } catch (e) {
-      setState('error')
+      setState('error');
     }
-  }, [firestore])
+  }, [firestore]);
 
   return [
     mutation,
-    state
+    state,
   ] as [
       typeof mutation,
       typeof state,
-    ]
+    ];
 }

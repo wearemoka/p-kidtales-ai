@@ -1,8 +1,8 @@
-import List from './list/page'
+import List from "./list/page";
 
 const Story = () => {
-  return (
-    <List />
-  )
+    return (
+        <List />
+    )
 }
-export default Story
+export default Story;
