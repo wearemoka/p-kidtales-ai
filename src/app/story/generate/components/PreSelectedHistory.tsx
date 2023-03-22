@@ -2,13 +2,10 @@
 
 import React from 'react'
 import { getAiStory } from '../services/services'
+import { ages, characters, adventures, places } from '@/app/service/constants/StoryParams'
 import styles from './components.module.css'
 
-// Preset options
-const ages = ['2-5', '5-7', '7-10']
-const characters = ['dog', 'cat', 'goose']
-const adventures = ['adventure', 'fable', 'love']
-const places = ['mountain', 'big city', 'farm']
+const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLowerCase())) ? 'an' : 'a'
 
 // Generic component to request a story in written format.
 // you can choice options from a selectors
@@ -25,7 +22,6 @@ function PreSelectedHistory () {
   function handleClickTellMe () {
     getAiStory(age, character, adventure, place).then(
       (res) => {
-        console.log(res)
         setAnswer(res.choices[0].message.content)
       },
       (err) => {
@@ -43,7 +39,6 @@ function PreSelectedHistory () {
           className={styles.selectors}
           value={age}
           onChange={(e) => {
-            console.log(e.target.value)
             setAge(e.target.value)
           }}
         >
@@ -56,27 +51,25 @@ function PreSelectedHistory () {
           className={styles.selectors}
           value={character}
           onChange={(e) => {
-            console.log(e.target.value)
             setCharacter(e.target.value)
           }}
         >
-          {characters.map(e => <option key={`opt-character-${e}`} value={e}>{e}</option>)}
+          {characters.map(e => <option key={`opt-character-${e}`} value={e}>{e.toLowerCase()}</option>)}
         </select>
 
-        who embarks on a
+        who embarks on {article(adventure.charAt(0))}
 
         <select
           className={styles.selectors}
           value={adventure}
           onChange={(e) => {
-            console.log(e.target.value)
             setAdventure(e.target.value)
           }}
         >
-          {adventures.map(e => <option key={`opt-adventure-${e}`} value={e}>{e}</option>)}
+          {adventures.map(e => <option key={`opt-adventure-${e}`} value={e}>{e.toLowerCase()}</option>)}
         </select>
 
-        in
+        in {article(place.charAt(0))}
 
         <select
           className={styles.selectors}
@@ -86,7 +79,7 @@ function PreSelectedHistory () {
             setPlace(e.target.value)
           }}
         >
-          {places.map(e => <option key={`opt-place-${e}`} value={e}>{e}</option>)}
+          {places.map(e => <option key={`opt-place-${e}`} value={e}>{e.toLowerCase()}</option>)}
         </select>
 
       </div>

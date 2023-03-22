@@ -18,7 +18,8 @@ function StoryFormPage () {
 
     <main className={styles.main}>
       <h2 className={styles.title}>Generate a Story</h2>
-      <History />
+
+      <PreSelectedHistory />
 
       <hr />
 
@@ -26,7 +27,7 @@ function StoryFormPage () {
 
       <hr />
 
-      <PreSelectedHistory />
+      <History />
 
       <hr />
 
