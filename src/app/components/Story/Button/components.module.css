@@ -1,0 +1,31 @@
+.main {
+    padding: 10px;
+    margin: 30px;
+}
+
+.row {
+    margin-bottom: 20px;
+    text-align: justify;
+    font-size: large;
+}
+
+.selectors {
+    width: 200px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.button {
+    margin-top: 7px;
+    height: 40px;
+    min-width: 155px;
+    background: orange;
+    color: white;
+    border: 0px;
+    cursor: pointer;
+    padding: 12px 14px;
+}
+.button:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}

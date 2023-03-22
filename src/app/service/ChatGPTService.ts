@@ -95,5 +95,6 @@ export async function getAiStory (ageRange: string, character:string, adventure:
     return data
   } catch (err) {
     console.error('catch', err)
+    return err
   }
 }
