@@ -1,7 +1,7 @@
 
 // Some declarations
 const uriAPI = 'https://api.openai.com/v1'
-const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY
+const apiKey = process.env.NEXT_PUBLIC_OPENIA_API_KEY
 
 const headerOpenAiRequest = {
   'Content-Type': 'application/json',
@@ -81,7 +81,7 @@ export async function getAiStory (ageRange: string, character:string, adventure:
       messages: [
         {
           role: 'user',
-          content: `Generate a story about a ${ageRange}-year-old ${character} who embarks on a ${adventure} adventure in ${place}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting.`
+          content: `Generate a story about a ${ageRange}-year-old ${character} who embarks on a ${adventure} adventure in ${place}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. return the story title as separate parameter.`
         }
       ]
     })

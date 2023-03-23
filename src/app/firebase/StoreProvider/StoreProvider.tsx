@@ -1,6 +1,5 @@
-'use client'
 import { FirebaseAppProvider, FirestoreProvider, useFirebaseApp } from 'reactfire'
-import React, { useMemo } from 'react'
+import { useMemo } from 'react'
 import {
   connectFirestoreEmulator,
   initializeFirestore
