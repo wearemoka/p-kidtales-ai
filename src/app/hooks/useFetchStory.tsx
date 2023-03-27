@@ -15,6 +15,7 @@ export function useFetchStory (storyPath: string) {
   }, [fetchStoriesList])
 
   return {
-    data
+    data,
+    setData
   }
 }

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import Style from './list.module.css'
 
 const List = () => {
-  const { data } = useFetchStory('stories')
+  const { data, setData } = useFetchStory('stories')
   const router = useRouter()
 
   const viewStoryHandler = (id: string) => {
@@ -20,10 +20,12 @@ const List = () => {
    * Flag a Story for inappropriate content or language
    */
   const banStory = async (story:any) => {
-    story.appropriate = false
-    await updateDocumentInFireStore('stories', story, story.id)
+    const updatedStory = { ...story, appropriate: false }
+    await updateDocumentInFireStore('stories', updatedStory, story.id)
     const storyIndex = data.findIndex(item => item.id === story.id)
-    data[storyIndex] = story
+    const newData = [...data]
+    newData[storyIndex] = updatedStory
+    setData(newData)
   }
 
   return (
@@ -50,7 +52,7 @@ const List = () => {
                   <td className={Style.tableRowCell}>
                     <button className={Style.actionEditButton} onClick={() => editStoryHandler(item.id)}>Edit</button>
                     <button className={Style.actionViewButton} onClick={() => viewStoryHandler(item.id)}>View</button>
-                    <button onClick={() => banStory(item)}>Inappropriate</button>
+                    <button onClick={() => banStory(item)} disabled={!(item.appropriate == null || item.appropriate)}>Inappropriate</button>
                   </td>
                 </tr>
               )
