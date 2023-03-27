@@ -24,7 +24,9 @@ const EditStory = () => {
     <div>
       {status === 'success'
         ? <Form
-            selectedItemTitle={data?.title} selectedItemDescription={data?.description}
+            selectedItemTitle={data?.title}
+            selectedItemDescription={data?.description}
+            selectedItemAppropriate={data?.appropriate}
             onSubmit={updateStoryHandler}
             isEdit
             message={updateStoryStatus}

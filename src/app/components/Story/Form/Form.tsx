@@ -3,12 +3,14 @@ import Style from './index.module.css'
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react'
 
 export interface StoryFormState {
-    title: string
-    description: string,
+    title: string;
+    description: string;
+    appropriate: boolean;
 }
 interface StoryFormProps {
     selectedItemTitle : string
     selectedItemDescription : string,
+    selectedItemAppropriate: boolean,
     onSubmit : (value : StoryFormState) => void
     isEdit?: boolean
     message?: string
@@ -16,22 +18,25 @@ interface StoryFormProps {
 const Form:React.FC<StoryFormProps> = ({
   selectedItemTitle,
   selectedItemDescription,
+  selectedItemAppropriate,
   onSubmit,
   isEdit = false,
   message = ''
 }) => {
   const [userStoryInput, setUserStoryInput] = useState<StoryFormState>({
     title: '',
-    description: ''
+    description: '',
+    appropriate: true
   })
-  const { title, description } = userStoryInput
+  const { title, description, appropriate } = userStoryInput
 
   useEffect(() => {
     setUserStoryInput({
       title: selectedItemTitle,
-      description: selectedItemDescription
+      description: selectedItemDescription,
+      appropriate: selectedItemAppropriate
     })
-  }, [selectedItemTitle, selectedItemDescription])
+  }, [selectedItemTitle, selectedItemDescription, selectedItemAppropriate])
 
   const handlerChange = (e: BaseSyntheticEvent) => {
     setUserStoryInput((prevState) => {
@@ -60,6 +65,10 @@ const Form:React.FC<StoryFormProps> = ({
         <div className='input-field'>
           <label htmlFor='description'>Description</label>
           <textarea name='description' id='description' cols={18} rows={2} value={description} onChange={handlerChange} />
+        </div>
+        <div>
+          <label htmlFor='appropriate'>Inappropriate?</label>
+          <input type='checkbox' id='appropriate' name='appropriate' checked={appropriate} onChange={(e) => setUserStoryInput({ ...userStoryInput, appropriate: e.target.checked })} />
         </div>
         <button type='submit' className={Style.button}>Submit</button>
         <p>{message}</p>
