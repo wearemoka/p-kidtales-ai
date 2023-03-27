@@ -1,7 +1,7 @@
 
 // Some declarations
 const uriAPI = 'https://api.openai.com/v1'
-const apiKey = process.env.NEXT_PUBLIC_OPENIA_API_KEY
+const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY
 
 const headerOpenAiRequest = {
   'Content-Type': 'application/json',

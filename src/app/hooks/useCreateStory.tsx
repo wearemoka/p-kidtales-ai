@@ -20,7 +20,7 @@ export const useCreateStory = () => {
       collection(firestore, organizationsPath)
 
     try {
-      const response = use(addDoc(
+      use(addDoc(
         collectionReference,
         StoryData
       ))

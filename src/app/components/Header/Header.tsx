@@ -18,10 +18,14 @@ const Header = () => {
           </li>
           <li className={styles.navItem}>
             <Link href='/story/generate'>
-              Generate Story
+              Generate a Story
             </Link>
           </li>
-
+          <li className={styles.navItem}>
+            <Link href='/story/random'>
+              Random Story
+            </Link>
+          </li>
         </ul>
       </div>
     </div>

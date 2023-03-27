@@ -37,9 +37,7 @@ const List = () => {
                 </tr>
               )
             })
-            : <tr>
-              <td colSpan={12}>Loading...</td>
-            </tr>}
+            : <tr><td colSpan={12}>Loading...</td></tr>}
         </tbody>
       </table>
     </div>
