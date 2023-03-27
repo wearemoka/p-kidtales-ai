@@ -1,5 +1,6 @@
 'use client'
 import { useFetchStory } from '@/app/hooks/useFetchStory'
+import { updateDocumentInFireStore } from '@/app/service/FirebaseService'
 import { useRouter } from 'next/navigation'
 import Style from './list.module.css'
 
@@ -13,6 +14,16 @@ const List = () => {
 
   const editStoryHandler = (id: string) => {
     router.push(`/story/edit/${id}`)
+  }
+
+  /**
+   * Flag a Story for inappropriate content or language
+   */
+  const banStory = async (story:any) => {
+    story.appropriate = false
+    await updateDocumentInFireStore('stories', story, story.id)
+    const storyIndex = data.findIndex(item => item.id === story.id)
+    data[storyIndex] = story
   }
 
   return (
@@ -39,6 +50,7 @@ const List = () => {
                   <td className={Style.tableRowCell}>
                     <button className={Style.actionEditButton} onClick={() => editStoryHandler(item.id)}>Edit</button>
                     <button className={Style.actionViewButton} onClick={() => viewStoryHandler(item.id)}>View</button>
+                    <button onClick={() => banStory(item)}>Inappropriate</button>
                   </td>
                 </tr>
               )
