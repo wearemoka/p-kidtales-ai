@@ -1,7 +1,13 @@
 'use client'
 import { useFirestore, useFirestoreDocData } from 'reactfire'
 import { doc, DocumentReference } from 'firebase/firestore'
-type Response = { id: string; title:string; description:string };
+
+type Response = {
+  id: string;
+  title: string;
+  description: string;
+  appropriate: boolean
+};
 
 export function useFetchStoryItem (stroyItemId: string) {
   const firestore = useFirestore()
