@@ -9,6 +9,6 @@ export const createSlugWithTimeStamp = (title:string) => {
 }
 
 export const getStoryTitle = (message: string) => {
-  const splitAnswer = message.split('\n').filter((text) => text !== '')
-  return splitAnswer[0].split('Title:')[1].trim()
+  const splitAnswer = message?.split('\n')?.filter((text) => text !== '')
+  return splitAnswer[0]?.split('Title:')[1]?.trim()
 }

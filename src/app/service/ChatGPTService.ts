@@ -98,3 +98,28 @@ export async function getAiStory (ageRange: string, character:string, adventure:
     return err
   }
 }
+
+export async function createAiStory (age: string, characterName:string, characterType:string, paragraphs:number = 3) {
+  try {
+    const prompt = JSON.stringify({
+      model: 'gpt-3.5-turbo',
+      messages: [
+        {
+          role: 'user',
+          content: `I want you to act as a storyteller. You will come up with entertaining, engaging, imaginative and captivating story about a ${age}-year-old ${characterName} who is acting as ${characterType}. It should have the potential to capture people's attention and imagination. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title as separate parameter.`
+        }
+      ]
+    })
+
+    const res = await fetch(`${uriAPI}/chat/completions`, {
+      method: 'POST',
+      body: prompt,
+      headers: headerOpenAiRequest
+    })
+    const data = res.json()
+    return data
+  } catch (err) {
+    console.error('catch', err)
+    return err
+  }
+}

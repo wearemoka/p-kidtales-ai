@@ -1,3 +1,4 @@
+import CreateStory from './components/CreateStory'
 import History from './components/History'
 import Illustration from './components/Illustration'
 import PreSelectedHistory from './components/PreSelectedHistory'
@@ -22,7 +23,9 @@ function StoryFormPage () {
       <PreSelectedHistory />
 
       <hr />
+      <CreateStory />
 
+      <hr />
       <Illustration />
 
       <hr />

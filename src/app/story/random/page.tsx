@@ -28,7 +28,8 @@ function GenerateStory () {
   })
   const [status, setStatus] = useState('pending')
   const { content } = storyAttrs
-  const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
+  const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINTNEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
+
   const handlerClickOnGenerateRandomStory = async () => {
     setStatus('process')
     const randomAge = generateRandomIndex(ages)
@@ -53,7 +54,7 @@ function GenerateStory () {
             prompt: [randomAge, randomCharacters, randomAdventures, randomPlace]
           }
         })
-        addDocumentInFireStore(fireBaseStoryCollection, {
+        await addDocumentInFireStore(fireBaseStoryCollection, {
           title: storyTitle,
           slug,
           prompt: [randomAge, randomCharacters, randomAdventures, randomPlace],
