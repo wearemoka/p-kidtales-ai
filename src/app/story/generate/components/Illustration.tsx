@@ -34,7 +34,7 @@ function Illustration () {
       </div>
 
       <div className={styles.row}>
-        <img src={imgSrc} alt='img AI gen' />
+        {imgSrc && <img src={imgSrc} alt='img AI gen' />}
       </div>
     </div>
   )
