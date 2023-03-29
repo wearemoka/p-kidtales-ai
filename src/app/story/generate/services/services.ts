@@ -46,8 +46,10 @@ export async function getAiHistory (about:string) {
 export async function getAiIllustration (about:string) {
   try {
     const prompt = JSON.stringify({
-      prompt: `Give me an illustration for a 5 year olds of this story about  ${about}`,
+      model: 'image-alpha-001',
+      prompt: `Give me an illustration for a 5 year olds of this story about ${about}`,
       n: 1,
+      response_format: 'b64_json',
       size: '512x512'
     })
 

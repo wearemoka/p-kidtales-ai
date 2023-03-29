@@ -14,8 +14,7 @@ function Illustration () {
     // Uses the service to obtain a Promise with the API response.
     getAiIllustration(about).then(
       (res) => {
-        console.log(res.data[0].url)
-        setImgSrc(res.data[0].url)
+        setImgSrc(`data:image/jpeg;base64,${res.data[0].b64_json}`)
       },
       (err) => {
         console.log('e', err)
@@ -30,12 +29,12 @@ function Illustration () {
       </div>
 
       <div className={styles.row}>
-        <input id='inputAbout' name='inputAbout' type='text' placeholder='a dog with a sword' />
+        <input id='inputAbout' name='inputAbout' type='text' placeholder='a dog with a sword' className={styles.input} />
         <button onClick={handleClickIllustrate}>Illustrate</button>
       </div>
 
       <div className={styles.row}>
-        <a href={imgSrc} target='_blank'>{imgSrc}</a>
+        {imgSrc && <img src={imgSrc} alt='img AI gen' />}
       </div>
     </div>
   )
