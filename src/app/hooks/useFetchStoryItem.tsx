@@ -7,6 +7,7 @@ type Response = {
   title: string;
   story: string;
   collectionPath: string;
+  description: string;
   appropriate: boolean
 };
 
