@@ -5,7 +5,7 @@ import { ages, characters } from '@/app/service/constants/StoryParams'
 import styles from './components.module.css'
 import SelectInput from '@/app/components/SelectInput/SelectInput'
 import { CustomInput } from '@/app/components/Input/Input'
-import { createAiStory } from '@/app/service/ChatGPTService'
+import { getAiStory } from '@/app/service/ChatGPTService'
 import { addDocumentInFireStore } from '@/app/service/FirebaseService'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 
@@ -43,7 +43,8 @@ const CreateStory = () => {
   const handleClickTellMe = async () => {
     setAnswer('')
     setStatus('process')
-    createAiStory(age, name, type).then(
+    const content = `I want you to act as a storyteller. You will come up with entertaining, engaging, imaginative and captivating story about a ${age}-year-old ${name} who is acting as ${type}. It should have the potential to capture people's attention and imagination. The story should have ${3} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title as separate parameter.`
+    getAiStory(content).then(
       (res) => {
         setStatus('success')
         setAnswer(res.choices[0].message.content)

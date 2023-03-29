@@ -5,14 +5,15 @@ import { doc, DocumentReference } from 'firebase/firestore'
 type Response = {
   id: string;
   title: string;
-  description: string;
+  story: string;
+  collectionPath: string;
   appropriate: boolean
 };
 
-export function useFetchStoryItem (stroyItemId: string) {
+export function useFetchStoryItem (stroyItemId: string, collectionPath: string) {
   const firestore = useFirestore()
   const id = stroyItemId || ' '
-  const storyPath = '/stories'
+  const storyPath = collectionPath
 
   const ref = doc(
     firestore,

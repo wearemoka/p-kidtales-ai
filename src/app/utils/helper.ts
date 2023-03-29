@@ -12,3 +12,8 @@ export const getStoryTitle = (message: string) => {
   const splitAnswer = message?.split('\n')?.filter((text) => text !== '')
   return splitAnswer[0]?.split('Title:')[1]?.trim()
 }
+
+export const createMarkup = (story: string) => {
+  const splitAnswer = story.split('\n').filter((text) => text !== '')
+  return splitAnswer
+}

@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation'
 import Style from './list.module.css'
 
 const List = () => {
-  const { data, setData } = useFetchStory('stories')
+  const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
+  const { data, setData } = useFetchStory(fireBaseStoryCollection)
   const router = useRouter()
 
   const viewStoryHandler = (id: string) => {

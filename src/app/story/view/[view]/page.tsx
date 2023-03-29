@@ -2,16 +2,28 @@
 import { usePathname } from 'next/navigation'
 import Style from './View.module.css'
 import { useFetchStoryItem } from '@/app/hooks/useFetchStoryItem'
+import { createMarkup } from '@/app/utils/helper'
 const View = () => {
+  const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
   const path = usePathname()
   const splitPath = path.split('/')
-  const { status, data } = useFetchStoryItem(splitPath[3] as string)
-  const { box } = Style
+  const { status, data } = useFetchStoryItem(splitPath[3] as string, fireBaseStoryCollection)
+  const { box, description } = Style
 
+  const splitStory = (story:string) => {
+    const storyDescription = createMarkup(story)
+    return storyDescription?.map((item, index) => {
+      if (index === 0) {
+        return <h2 key={`${index}`}>{item}</h2>
+      } else {
+        return <p className={description} key={`${index}`}>{item}</p>
+      }
+    })
+  }
   return (
     <div className={box}>
       {status === 'success'
-        ? <><h2>Title :: {data?.title}</h2><p className={Style.description}>Description :: {data?.description}</p></>
+        ? splitStory(data?.story)
         : 'Loading...'}
     </div>
   )

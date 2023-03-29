@@ -38,8 +38,8 @@ const Form:React.FC<StoryFormProps> = ({
 
   useEffect(() => {
     setUserStoryInput({
-      title: selectedItemTitle,
-      description: selectedItemDescription,
+      title: selectedItemTitle || '',
+      description: selectedItemDescription || '',
       appropriate: selectedItemAppropriate
     })
   }, [selectedItemTitle, selectedItemDescription, selectedItemAppropriate])
