@@ -10,7 +10,7 @@ const EditStory = () => {
   const router = useRouter()
   const path = usePathname()
   const splitPath = path.split('/')
-  const { status, data } = useFetchStoryItem(splitPath[3] as string)
+  const { status, data } = useFetchStoryItem(splitPath[3] as string, process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string)
 
   const updateStoryHandler = async (value: StoryFormState) => {
     setUpdateStoryStatus('Updating...')
@@ -25,7 +25,7 @@ const EditStory = () => {
       {status === 'success'
         ? <Form
             selectedItemTitle={data?.title}
-            selectedItemDescription={data?.description}
+            selectedItemDescription={data?.story}
             selectedItemAppropriate={data?.appropriate}
             onSubmit={updateStoryHandler}
             isEdit
