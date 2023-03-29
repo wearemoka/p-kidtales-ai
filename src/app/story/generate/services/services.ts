@@ -32,7 +32,6 @@ export async function getAiHistory (about:string) {
       headers: headerOpenAiRequest
     })
     const data = res.json()
-    console.log(data)
     return data
   } catch (err) {
     console.error('catch', err)
