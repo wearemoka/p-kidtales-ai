@@ -7,7 +7,6 @@ function AudioPlayer () {
   useEffect(() => {
     if (audioRef.current) {
       audioRef.current.volume = 0.2
-      audioRef.current.play()
     }
   }, [])
 
@@ -16,7 +15,7 @@ function AudioPlayer () {
       <audio
         id='audioPlayer'
         controls
-        src='/music/SalmonLikeTheFish.mp3'
+        src='https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/SalmonLikeTheFish/Music_for_the_Sleepy_Traveler/SalmonLikeTheFish_-_03_-_Glacier.mp3'
         ref={audioRef}
       />
 
