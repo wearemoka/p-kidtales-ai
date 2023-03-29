@@ -6,6 +6,7 @@ function AudioPlayer () {
 
   useEffect(() => {
     if (audioRef.current) {
+      audioRef.current.volume = 0.2
       audioRef.current.play()
     }
   }, [])
