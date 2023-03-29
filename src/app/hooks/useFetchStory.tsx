@@ -4,9 +4,11 @@ import { getDocArrayDataType, getDocumentFromFireStore } from '../service/Fireba
 
 export function useFetchStory (storyPath: string) {
   const [data, setData] = useState<getDocArrayDataType[]>([])
-
+  const [status, setStatus] = useState<string>('pending')
   const fetchStoriesList = useCallback(async () => {
+    setStatus('process')
     const response = await getDocumentFromFireStore(storyPath)
+    setStatus('success')
     setData(response)
   }, [storyPath])
 
@@ -16,6 +18,7 @@ export function useFetchStory (storyPath: string) {
 
   return {
     data,
-    setData
+    setData,
+    status
   }
 }

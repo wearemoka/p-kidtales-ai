@@ -7,19 +7,25 @@ export interface StoryFormState {
     description: string;
     appropriate: boolean;
 }
+
 interface StoryFormProps {
     selectedItemTitle : string
     selectedItemDescription : string,
     selectedItemAppropriate: boolean,
     onSubmit : (value : StoryFormState) => void
     isEdit?: boolean
+    isDescriptionRequired?: boolean
     message?: string
+    headerTitle ?: string
+    buttonText?: string
 }
+
 const Form:React.FC<StoryFormProps> = ({
   selectedItemTitle,
   selectedItemDescription,
   selectedItemAppropriate,
   onSubmit,
+  headerTitle = 'Story',
   isEdit = false,
   message = ''
 }) => {
@@ -32,8 +38,8 @@ const Form:React.FC<StoryFormProps> = ({
 
   useEffect(() => {
     setUserStoryInput({
-      title: selectedItemTitle,
-      description: selectedItemDescription,
+      title: selectedItemTitle || '',
+      description: selectedItemDescription || '',
       appropriate: selectedItemAppropriate
     })
   }, [selectedItemTitle, selectedItemDescription, selectedItemAppropriate])
@@ -56,7 +62,7 @@ const Form:React.FC<StoryFormProps> = ({
     <div className={Style.container}>
       <form className={Style.form} onSubmit={(e) => handlerSubmit(e)}>
         <h1>
-          {isEdit ? 'Edit Story' : 'Add Story'}
+          {isEdit ? `Edit ${headerTitle}` : `Add ${headerTitle}`}
         </h1>
         <div className={Style.input} style={{ marginBottom: '5px' }}>
           <label htmlFor='title'>Title</label>

@@ -2,7 +2,6 @@
 // import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from 'firebase/app'
 import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore'
-
 import { getStorage } from 'firebase/storage'
 
 export const config = {
