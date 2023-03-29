@@ -17,7 +17,9 @@ export const addDocumentInFireStore = async (
   documentData: any
 ) => {
   const dbRef = await addDoc(collection(db, documentPath), documentData)
+  /* verification for add document into firebase storage  */
   console.log('Document written with ID: ', dbRef.id)
+  return dbRef.id
 }
 
 /**

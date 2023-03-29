@@ -4,44 +4,62 @@ import Button from '@/app/components/Story/Button/Button'
 import { useState } from 'react'
 import { ages, characters, adventures, places } from '../../service/constants/StoryParams'
 import { getAiStory } from '../../service/ChatGPTService'
-import { addDocumentInFireStore } from '../../service/FirebaseService'
+import { addDocumentInFireStore } from '@/app/service/FirebaseService'
+import { createSlugWithTimeStamp, generateRandomIndex, getStoryTitle } from '@/app/utils/helper'
 
-type StoryParams = string[]
+export interface StoryAttrs {
+  role: string
+  content: string
+  title: string
+  prompt: string[]
+  generateFireBaseStoryKey : string
+}
 /**
  * This is a general page to show the different integrations with AI,
  * components are used.
  */
 function GenerateStory () {
-  const [answer, setAnswer] = useState({
+  const [storyAttrs, setStoryAttrs] = useState<StoryAttrs>({
     role: '',
-    content: ''
+    content: '',
+    title: '',
+    prompt: [],
+    generateFireBaseStoryKey: ''
   })
   const [status, setStatus] = useState('pending')
+  const { content } = storyAttrs
+  const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
-  const generateRandomIndex = (data: StoryParams) => {
-    const randomIndex = Math.floor(Math.random() * data.length)
-    return data[randomIndex]
-  }
-
-  const handlerClickOnGenerateRandomStory = () => {
+  const handlerClickOnGenerateRandomStory = async () => {
     setStatus('process')
     const randomAge = generateRandomIndex(ages)
     const randomCharacters = generateRandomIndex(characters)
     const randomAdventures = generateRandomIndex(adventures)
     const randomPlace = generateRandomIndex(places)
-    getAiStory(randomAge, randomCharacters, randomAdventures, randomPlace).then(
+    const content = `Generate a story about a ${ages}-year-old ${characters} who embarks on a ${adventures} adventure in ${places}. The story should have ${3} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. return the story title as separate parameter.`
+    getAiStory(content).then(
       async (res) => {
-        const endPoint = process.env.NEXT_PUBLIC_FIREBASE_STORAGE_END_POINT as string
+        if (res?.error) {
+          setStatus('failed')
+          return
+        }
+        const storyTitle = getStoryTitle(res?.choices[0]?.message?.content)
+        const slug = createSlugWithTimeStamp(storyTitle)
         setStatus('success')
-        setAnswer((preViewState) => {
+        setStoryAttrs((preViewState) => {
           return {
             ...preViewState,
-            role: res.choices[0].message.role,
-            content: res.choices[0].message.content
+            role: res?.choices?.[0]?.message?.role,
+            content: res?.choices[0]?.message?.content,
+            title: getStoryTitle(res?.choices[0]?.message?.content),
+            prompt: [randomAge, randomCharacters, randomAdventures, randomPlace]
           }
         })
-        addDocumentInFireStore(endPoint, {
-          story: res.choices[0].message.content
+        await addDocumentInFireStore(fireBaseStoryCollection, {
+          title: storyTitle,
+          slug,
+          prompt: [randomAge, randomCharacters, randomAdventures, randomPlace],
+          story: res?.choices[0]?.message?.content
         })
       },
       (err) => {
@@ -50,6 +68,11 @@ function GenerateStory () {
       }
     )
   }
+  function createMarkup () {
+    const splitAnswer = storyAttrs.content.split('\n').filter((text) => text !== '')
+    return splitAnswer.map((text, index) => <p key={`${index}`} className={styles.description}>{text}</p>)
+  }
+
   return (
     <main className={styles.main}>
       <h2 className={styles.title}>Generate random story</h2>
@@ -57,14 +80,15 @@ function GenerateStory () {
       <div className={styles.answerContainer}>
         {status === 'pending' && <h4 className={styles.loader}>Your story display here</h4>}
         {status === 'process' && <h4 className={styles.loader}>Loading...</h4>}
-        {status === 'success' &&
+        {status === 'success' && content !== '' && (
           <div className={styles.loader}>
-            <p className={styles.description}>{answer.content}</p>
-          </div>}
+            {createMarkup()}
+          </div>
+        )}
+        {status === 'failed' && <p className={styles.loader}>Something went wrong</p>}
         {status === 'error' && <p className={styles.loader}>No data found</p>}
       </div>
     </main>
   )
 }
-
 export default GenerateStory
