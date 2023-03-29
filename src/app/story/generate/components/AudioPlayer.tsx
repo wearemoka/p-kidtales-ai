@@ -18,16 +18,6 @@ function AudioPlayer () {
         src='https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/SalmonLikeTheFish/Music_for_the_Sleepy_Traveler/SalmonLikeTheFish_-_03_-_Glacier.mp3'
         ref={audioRef}
       />
-
-      <button onClick={() => {
-        if (audioRef && audioRef.current) {
-          audioRef.current.volume = 0
-          audioRef.current.pause()
-        }
-      }}
-      >
-        Stop & Mute
-      </button>
     </div>
   )
 }
