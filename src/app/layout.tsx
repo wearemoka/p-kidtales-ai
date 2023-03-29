@@ -3,6 +3,7 @@ import { FirebaseAppProvider } from 'reactfire'
 import Header from './components/Header/Header'
 import { config } from './firebase/Config/Config'
 import StoreProvider from './firebase/StoreProvider/StoreProvider'
+import AudioPlayer from './story/generate/components/AudioPlayer'
 import './globals.css'
 /**
  * For future use
@@ -24,6 +25,10 @@ export default function RootLayout ({
     <html lang='en'>
       <body>
         <Header />
+        <div className='positionTopRight'>
+          <AudioPlayer />
+        </div>
+
         <FirebaseAppProvider firebaseConfig={config}>
           <StoreProvider>
             <div className='main'>

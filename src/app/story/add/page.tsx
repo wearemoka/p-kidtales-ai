@@ -13,7 +13,7 @@ const AddStory = () => {
   }
 
   return (
-    <Form onSubmit={handlerSubmit} selectedItemDescription='' selectedItemTitle='' />
+    <Form onSubmit={handlerSubmit} selectedItemDescription='' selectedItemTitle='' selectedItemAppropriate />
   )
 }
 
