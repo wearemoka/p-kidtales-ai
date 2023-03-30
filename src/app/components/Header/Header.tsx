@@ -26,6 +26,11 @@ const Header = () => {
               Random Story
             </Link>
           </li>
+          <li className={styles.navItem}>
+            <Link href='/disclaimer'>
+              Disclaimer
+            </Link>
+          </li>
         </ul>
       </div>
     </div>
