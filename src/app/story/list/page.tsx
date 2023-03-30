@@ -21,7 +21,7 @@ const List = () => {
    */
   const banStory = async (story:any) => {
     const updatedStory = { ...story, appropriate: false }
-    await updateDocumentInFireStore('stories', updatedStory, story.id)
+    await updateDocumentInFireStore(fireBaseStoryCollection, updatedStory, story.id)
     const storyIndex = data.findIndex(item => item.id === story.id)
     const newData = [...data]
     newData[storyIndex] = updatedStory
