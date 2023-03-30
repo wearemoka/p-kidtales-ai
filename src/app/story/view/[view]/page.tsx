@@ -13,8 +13,9 @@ const View = () => {
   const splitStory = (story:string) => {
     const storyDescription = createMarkup(story)
     return storyDescription?.map((item, index) => {
+      const removeTitle = item.split('Title:')[1] ? item.split('Title:')[1] : item
       if (index === 0) {
-        return <h2 key={`${index}`}>{item}</h2>
+        return <h2 key={`${index}`}>{removeTitle}</h2>
       } else {
         return <p className={description} key={`${index}`}>{item}</p>
       }
