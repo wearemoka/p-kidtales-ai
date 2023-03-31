@@ -8,11 +8,13 @@ import { CustomInput } from '@/app/components/Input/Input'
 import { getAiStory } from '@/app/service/ChatGPTService'
 import { addDocumentInFireStore } from '@/app/service/FirebaseService'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
+import { TextArea } from '@/app/components/TextArea/TextArea'
 
 interface CharacterAttr {
   age: string
   type: string
   name: string
+  lesson: string
 }
 const CreateStory = () => {
   const [answer, setAnswer] = React.useState('')
@@ -21,10 +23,11 @@ const CreateStory = () => {
   const [characterAttr, setCharacterAttr] = useState<CharacterAttr>({
     age: ages[0],
     type: characters[0],
-    name: ''
+    name: '',
+    lesson: ''
   })
 
-  const { age, type, name } = characterAttr
+  const { age, type, name, lesson } = characterAttr
 
   const handlerChange = (value: string, name: string) => {
     setCharacterAttr((prevState) => {
@@ -37,13 +40,13 @@ const CreateStory = () => {
 
   const createMarkup = () => {
     const splitAnswer = answer?.split('\n').filter((text: string) => text !== '')
-    return splitAnswer.map((text: string, index: number) => <p key={`${index}`}>{text}</p>)
+    return splitAnswer.map((text: string, index: number) => <p className={styles.storyDescription} key={`${index}`}>{text}</p>)
   }
 
   const handleClickTellMe = async () => {
     setAnswer('')
     setStatus('process')
-    const content = `I want you to act as a storyteller. You will come up with entertaining, engaging, imaginative and captivating story about a ${age}-year-old ${name} who is acting as ${type}. It should have the potential to capture people's attention and imagination. The story should have ${3} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title as separate parameter.`
+    const content = `Generate a story about a ${type} whose name should be ${name}. It should have the potential to capture ${age} years old child's attention and imagination and child should learn the lesson of ${lesson} from the story. Be creative and feel free to add any other details or plot twists that you think would make the story interesting. Return the story title, content and lesson learnt from the story in 50 words as different parameters`
     getAiStory(content).then(
       (res) => {
         setStatus('success')
@@ -53,7 +56,7 @@ const CreateStory = () => {
         addDocumentInFireStore(fireBaseStoryCollection, {
           title: storyTitle,
           slug,
-          prompt: [age, name, type],
+          prompt: [age, name, type, lesson],
           story: res?.choices[0]?.message?.content
         })
       },
@@ -91,9 +94,17 @@ const CreateStory = () => {
           name='name'
           onChange={handlerChange}
         />
+        <br />
+        <TextArea
+          label='lesson'
+          value={lesson}
+          name='lesson'
+          placeHolder='Enter a lesson'
+          onChange={handlerChange}
+        />
       </div>
       <div className={styles.row}>
-        <button disabled={status === 'process'} onClick={handleClickTellMe} className={styles.button}>Tell Me!</button>
+        <button disabled={status === 'process' || !name} onClick={handleClickTellMe} className={styles.button}>Tell Me!</button>
       </div>
       <div className={styles.row}>
         {status === 'process' && <p>Loading...</p>}
