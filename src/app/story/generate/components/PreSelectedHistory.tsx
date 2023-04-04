@@ -1,7 +1,7 @@
 'use client'
 
-import React from 'react'
-import { getAiStory } from '../services/services'
+import React, { useState } from 'react'
+import { getAiStory, getAiStoryWithStream } from '../services/services'
 import { ages, characters, adventures, places } from '@/app/service/constants/StoryParams'
 import styles from './components.module.css'
 
@@ -11,6 +11,7 @@ const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLow
 // you can choice options from a selectors
 function PreSelectedHistory () {
   const [answer, setAnswer] = React.useState('')
+  const [isCheckedStreamedAPI, setIsCheckedStreamedAPI] = useState(false)
   // selected options
   const [age, setAge] = React.useState(ages[0])
   const [character, setCharacter] = React.useState(characters[0])
@@ -19,15 +20,19 @@ function PreSelectedHistory () {
 
   // Send the parameters to the service that communicates with
   // the AI and wait for its response to be displayed.
-  function handleClickTellMe () {
-    getAiStory(age, character, adventure, place).then(
-      (res) => {
-        setAnswer(res.choices[0].message.content)
-      },
-      (err) => {
-        console.log('e', err)
-      }
-    )
+  async function handleClickTellMe () {
+    if (isCheckedStreamedAPI) {
+      await getAiStoryWithStream(age, character, adventure, place, setAnswer)
+    } else {
+      getAiStory(age, character, adventure, place).then(
+        (res) => { setAnswer(res.choices[0].message.content) },
+        (err) => { console.log('error', err) }
+      )
+    }
+  }
+
+  const handleOnChangeCheckboxStreamedAPI = () => {
+    setIsCheckedStreamedAPI(!isCheckedStreamedAPI)
   }
 
   return (
@@ -85,6 +90,9 @@ function PreSelectedHistory () {
       </div>
 
       <div className={styles.row}>
+        <div>
+          <input type='checkbox' id='useStreamedAPI' name='useStreamedAPI' onChange={handleOnChangeCheckboxStreamedAPI} /> use Streamed API
+        </div>
         <button onClick={handleClickTellMe} className={styles.button}>Tell Me!</button>
       </div>
 
