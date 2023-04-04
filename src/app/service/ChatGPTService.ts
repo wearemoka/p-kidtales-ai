@@ -43,11 +43,13 @@ export async function getAiHistory (about:string) {
  * @param about string, what the illustration is about
  * @returns promise
  */
-export async function getAiIllustration (about:string) {
+export async function getAiIllustration (about: string) {
   try {
     const prompt = JSON.stringify({
-      prompt: `Give me an illustration for a 5 year olds of this story about  ${about}`,
+      model: 'image-alpha-001',
+      prompt: `Give me an illustration for a 5 year olds of this story about ${about}`,
       n: 1,
+      response_format: 'b64_json',
       size: '512x512'
     })
 
@@ -74,14 +76,14 @@ export async function getAiIllustration (about:string) {
  * @param paragraphs number of paragraphs expected
  * @returns promise
  */
-export async function getAiStory (content:string) {
+export async function getAiStory (ageRange: string, character: string, adventure: string, place: string, paragraphs: number = 3) {
   try {
     const prompt = JSON.stringify({
       model: 'gpt-3.5-turbo',
       messages: [
         {
           role: 'user',
-          content
+          content: `Generate a story about a ${ageRange}-year-old ${character} who embarks on a ${adventure} adventure in ${place}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting.`
         }
       ]
     })
@@ -95,6 +97,5 @@ export async function getAiStory (content:string) {
     return data
   } catch (err) {
     console.error('catch', err)
-    return err
   }
 }

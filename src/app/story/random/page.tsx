@@ -36,8 +36,10 @@ function GenerateStory () {
     const randomCharacters = generateRandomIndex(characters)
     const randomAdventures = generateRandomIndex(adventures)
     const randomPlace = generateRandomIndex(places)
-    const content = `Generate a story about a ${ages}-year-old ${characters} who embarks on a ${adventures} adventure in ${places}. The story should have ${3} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. return the story title as separate parameter.`
-    getAiStory(content).then(
+
+    // const content = `Generate a story about a ${ages}-year-old ${characters} who embarks on a ${adventures} adventure in ${places}. The story should have ${3} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. return the story title as separate parameter.`
+
+    getAiStory(ages, characters, adventures, places).then(
       async (res) => {
         if (res?.error) {
           setStatus('failed')
