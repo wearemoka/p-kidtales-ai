@@ -2,9 +2,9 @@
 import styles from './page.module.css'
 import Button from '@/app/components/Story/Button/Button'
 import { useState } from 'react'
-import { ages, characters, adventures, places } from '../../service/constants/StoryParams'
-import { getAiStory } from '../../service/ChatGPTService'
-import { addDocumentInFireStore } from '@/app/service/FirebaseService'
+import { ages, characters, adventures, places } from '../../services/constants/StoryParams'
+import { getAiStory } from '../../services/ChatGPTService'
+import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import { createSlugWithTimeStamp, generateRandomIndex, getStoryTitle } from '@/app/utils/helper'
 
 export interface StoryAttrs {

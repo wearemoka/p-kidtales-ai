@@ -1,12 +1,12 @@
 'use client'
 
 import React, { useState } from 'react'
-import { ages, characters } from '@/app/service/constants/StoryParams'
+import { ages, characters } from '@/app/services/constants/StoryParams'
 import styles from './components.module.css'
 import SelectInput from '@/app/components/SelectInput/SelectInput'
 import { CustomInput } from '@/app/components/Input/Input'
-import { getAiStory } from '@/app/service/ChatGPTService'
-import { addDocumentInFireStore } from '@/app/service/FirebaseService'
+import { getAiStory } from '@/app/services/ChatGPTService'
+import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 import { TextArea } from '@/app/components/TextArea/TextArea'
 

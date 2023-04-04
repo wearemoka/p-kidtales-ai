@@ -1,6 +1,6 @@
 'use client'
 import { useFetchStory } from '@/app/hooks/useFetchStory'
-import { updateDocumentInFireStore } from '@/app/service/FirebaseService'
+import { updateDocumentInFireStore } from '@/app/services/FirebaseService'
 import Link from 'next/link'
 import Style from './list.module.css'
 

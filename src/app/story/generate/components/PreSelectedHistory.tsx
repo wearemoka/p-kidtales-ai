@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { getAiStory } from '../services/services'
-import { ages, characters, adventures, places } from '@/app/service/constants/StoryParams'
+import { ages, characters, adventures, places } from '@/app/services/constants/StoryParams'
 import styles from './components.module.css'
 
 const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLowerCase())) ? 'an' : 'a'

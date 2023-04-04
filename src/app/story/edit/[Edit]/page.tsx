@@ -1,7 +1,7 @@
 'use client'
 import { usePathname, useRouter } from 'next/navigation'
 import { useFetchStoryItem } from '@/app/hooks/useFetchStoryItem'
-import { updateDocumentInFireStore } from '@/app/service/FirebaseService'
+import { updateDocumentInFireStore } from '@/app/services/FirebaseService'
 import { useState } from 'react'
 import Form, { StoryFormState } from '../../../components/Story/Form/Form'
 
