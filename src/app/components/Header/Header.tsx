@@ -23,11 +23,6 @@ const Header = () => {
             </Link>
           </li>
           <li className={styles.navItem}>
-            <Link href='/story/random'>
-              Random Story
-            </Link>
-          </li>
-          <li className={styles.navItem}>
             <Link href='/disclaimer'>
               Disclaimer
             </Link>
