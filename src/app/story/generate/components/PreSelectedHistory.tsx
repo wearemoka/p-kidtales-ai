@@ -4,12 +4,16 @@ import React, { useState } from 'react'
 import { getAiStory, getAiStoryWithStream } from '../services/services'
 import { ages, characters, adventures, places } from '@/app/services/constants/StoryParams'
 import styles from './components.module.css'
+import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
+import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 
 const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLowerCase())) ? 'an' : 'a'
 
 // Generic component to request a story in written format.
 // you can choice options from a selectors
 function PreSelectedHistory () {
+  const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
+
   const [answer, setAnswer] = React.useState('')
   const [isCheckedStreamedAPI, setIsCheckedStreamedAPI] = useState(false)
   // selected options
@@ -17,15 +21,29 @@ function PreSelectedHistory () {
   const [character, setCharacter] = React.useState(characters[0])
   const [adventure, setAdventure] = React.useState(adventures[0])
   const [place, setPlace] = React.useState(places[0])
+  const [characterName, setCharacterName] = React.useState('')
+  const [lesson, setLesson] = React.useState('')
 
   // Send the parameters to the service that communicates with
   // the AI and wait for its response to be displayed.
   async function handleClickTellMe () {
     if (isCheckedStreamedAPI) {
-      await getAiStoryWithStream(age, character, adventure, place, setAnswer)
+      await getAiStoryWithStream(age, character, adventure, characterName, place, lesson, setAnswer)
     } else {
-      getAiStory(age, character, adventure, place).then(
-        (res) => { setAnswer(res.choices[0].message.content) },
+      getAiStory(age, character, adventure, characterName, place, lesson).then(
+        (res) => {
+          setAnswer(res.choices[0].message.content)
+          const storyTitle = getStoryTitle(res?.choices[0]?.message?.content)
+          const slug = createSlugWithTimeStamp(storyTitle)
+          if (storyTitle && slug) {
+            addDocumentInFireStore(fireBaseStoryCollection, {
+              title: storyTitle,
+              slug,
+              prompt: [age, character, adventure, characterName, place],
+              story: res?.choices[0]?.message?.content
+            })
+          }
+        },
         (err) => { console.log('error', err) }
       )
     }
@@ -38,7 +56,7 @@ function PreSelectedHistory () {
   return (
     <div className={styles.main}>
       <div className={styles.row}>
-        Tell me a story about a
+        Tell me a story for children
 
         <select
           className={styles.selectors}
@@ -50,7 +68,7 @@ function PreSelectedHistory () {
           {ages.map(e => <option key={`opt-age-${e}`} value={e}>{e}</option>)}
         </select>
 
-        years-old
+        years-old about
 
         <select
           className={styles.selectors}
@@ -61,6 +79,18 @@ function PreSelectedHistory () {
         >
           {characters.map(e => <option key={`opt-character-${e}`} value={e}>{e.toLowerCase()}</option>)}
         </select>
+
+        named
+
+        <input
+          type='text'
+          value={characterName}
+          placeholder='Enter a name'
+          name='name'
+          onChange={(e) => {
+            setCharacterName(e.target.value)
+          }}
+        />
 
         who embarks on {article(adventure.charAt(0))}
 
@@ -86,6 +116,16 @@ function PreSelectedHistory () {
         >
           {places.map(e => <option key={`opt-place-${e}`} value={e}>{e.toLowerCase()}</option>)}
         </select>
+
+        <input
+          type='text'
+          value={lesson}
+          placeholder='Lesson'
+          name='lesson'
+          onChange={(e) => {
+            setLesson(e.target.value)
+          }}
+        />
 
       </div>
 

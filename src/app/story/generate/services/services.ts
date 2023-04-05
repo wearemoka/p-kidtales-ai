@@ -76,14 +76,14 @@ export async function getAiIllustration (about:string) {
  * @param paragraphs number of paragraphs expected
  * @returns promise
  */
-export async function getAiStory (ageRange: string, character:string, adventure:string, place:string, paragraphs:number = 3) {
+export async function getAiStory (ageRange: string, character:string, adventure:string, place:string, lesson:string = '', characterName:string = '', paragraphs:number = 5) {
   try {
     const prompt = JSON.stringify({
       model: 'gpt-3.5-turbo',
       messages: [
         {
           role: 'user',
-          content: `Generate a story about a ${ageRange}-year-old ${character} who embarks on a ${adventure} adventure in ${place}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting.`
+          content: `Generate a story about a ${character} whose name should be ${characterName} who embarks on a ${adventure} adventure in ${place}. The story should be appropriate for children ${ageRange} years old. Add a lesson of ${lesson}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title, content and lesson learnt from the story in 50 words as different parameters`
         }
       ]
     })
@@ -110,7 +110,7 @@ export async function getAiStory (ageRange: string, character:string, adventure:
  * @param paragraphs number of paragraphs expected
  * @param callback a function to set the streamed response
  */
-export async function getAiStoryWithStream (ageRange: string, character: string, adventure: string, place: string, callback: (result: string) => void, paragraphs: number = 3) {
+export async function getAiStoryWithStream (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson:string = '', callback: (result: string) => void, paragraphs: number = 3) {
   try {
     const prompt = JSON.stringify({
       model: 'gpt-3.5-turbo',
@@ -118,7 +118,7 @@ export async function getAiStoryWithStream (ageRange: string, character: string,
       messages: [
         {
           role: 'user',
-          content: `Generate a story about a ${ageRange}-year-old ${character} who embarks on a ${adventure} adventure in ${place}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting.`
+          content: `Generate a story about a ${character} whose name should be ${characterName} who embarks on a ${adventure} adventure in ${place}. The story should be appropriate for children ${ageRange} years old. Add a lesson of ${lesson}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title, content and lesson learnt from the story in 50 words as different parameters`
         }
       ]
     })
