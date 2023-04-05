@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { getAiHistory } from '../services/services'
+import { getAiHistory } from '@/app/services/ChatGPTService'
 import styles from './components.module.css'
 
 // Generic component to request a story in written format.

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { getAiStory } from '../services/services'
+import { getAiStory } from '@/app/services/ChatGPTService'
 import { ages, characters, adventures, places } from '@/app/services/constants/StoryParams'
 import styles from './components.module.css'
 

@@ -1,11 +1,9 @@
 'use client'
 import { FirebaseAppProvider, FirestoreProvider, useFirebaseApp } from 'reactfire'
 import React, { useMemo } from 'react'
-import {
-  connectFirestoreEmulator,
-  initializeFirestore
-} from 'firebase/firestore'
+import { connectFirestoreEmulator, initializeFirestore } from 'firebase/firestore'
 import { config } from '../Config/Config'
+
 interface FirebaseAppProviderProps {
   children: React.ReactNode;
 }

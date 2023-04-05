@@ -1,5 +1,5 @@
 'use client'
-import React, { Fragment } from 'react'
+import React from 'react'
 interface SelectInputProps {
     classes?:string
     value: string,
@@ -8,6 +8,7 @@ interface SelectInputProps {
     options: string[],
     onChangeHandler: (value: string, name: string) => void
 }
+
 const SelectInput:React.FC<SelectInputProps> = ({
   classes,
   value,

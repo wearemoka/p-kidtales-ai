@@ -83,7 +83,7 @@ export async function getAiStory (ageRange: string, character: string, adventure
       messages: [
         {
           role: 'user',
-          content: `Generate a story about a ${ageRange}-year-old ${character} who embarks on a ${adventure} adventure in ${place}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting.`
+          content: `Generate a story about a ${ageRange}-year-old ${character} who embarks on a ${adventure} adventure in ${place}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title as separate parameter.`
         }
       ]
     })

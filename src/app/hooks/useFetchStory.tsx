@@ -1,10 +1,11 @@
 'use client'
 import { useCallback, useEffect, useState } from 'react'
-import { getDocArrayDataType, getDocumentFromFireStore } from '../service/FirebaseService'
+import { getDocArrayDataType, getDocumentFromFireStore } from '@/app/services/FirebaseService'
 
 export function useFetchStory (storyPath: string) {
   const [data, setData] = useState<getDocArrayDataType[]>([])
   const [status, setStatus] = useState<string>('pending')
+
   const fetchStoriesList = useCallback(async () => {
     setStatus('process')
     const response = await getDocumentFromFireStore(storyPath)
