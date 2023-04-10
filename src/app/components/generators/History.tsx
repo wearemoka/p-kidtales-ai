@@ -1,26 +1,27 @@
 'use client'
 
 import React from 'react'
-import { getAiHistory } from '@/app/services/ChatGPTService'
 import styles from './components.module.css'
 
 // Generic component to request a story in written format.
 function History () {
   const [answer, setAnswer] = React.useState('')
 
-  function handleClickTellMe () {
-    const inputElem = document?.querySelector('#inputAbout') as HTMLInputElement
+  async function handleClickTellMe () {
+    const inputElem = document?.querySelector('#inputAboutStory') as HTMLInputElement
     const about = inputElem.value
-    // Uses the service to obtain a Promise with the API response.
-    getAiHistory(about).then(
-      (res) => {
-        console.log(res.choices[0].message.content)
-        setAnswer(res.choices[0].message.content)
+
+    const response = await fetch('/api/AIStory', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
       },
-      (err) => {
-        console.log('e', err)
-      }
-    )
+      body: JSON.stringify({ about })
+    })
+
+    const jsonResponse = await response.json()
+    console.log(jsonResponse)
+    setAnswer(jsonResponse.res)
   }
 
   return (
@@ -30,7 +31,7 @@ function History () {
       </div>
 
       <div className={styles.row}>
-        <input id='inputAbout' name='inputAbout' type='text' placeholder='a dog with a sword' />
+        <input id='inputAboutStory' name='inputAboutStory' type='text' placeholder='a dog with a sword' />
         <button onClick={handleClickTellMe}>Tell Me!</button>
       </div>
 

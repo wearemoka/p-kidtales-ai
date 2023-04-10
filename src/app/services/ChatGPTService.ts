@@ -19,36 +19,6 @@ const getPrompt = (character:string, characterName:string, adventure:string, pla
 }
 
 /**
- * Requests a story to the AI using the about parameter and
- * adds constraints to the story.
- * @param about string, what the story is about
- * @returns promise
- */
-export async function getAiHistory (about:string) {
-  try {
-    const prompt = JSON.stringify({
-      model: MODEL_COMPLETIONS,
-      messages: [
-        {
-          role: 'user',
-          content: `Tell me a story about ${about} for a 5 year old child`
-        }
-      ]
-    })
-
-    const res = await fetch(`${URI_API}/chat/completions`, {
-      method: 'POST',
-      body: prompt,
-      headers: headerOpenAiRequest
-    })
-    const data = res.json()
-    return data
-  } catch (err) {
-    console.error('catch', err)
-  }
-}
-
-/**
  * Requests a img from the AI using the about parameter
  * @param about string, what the illustration is about
  * @returns promise
