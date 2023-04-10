@@ -7,27 +7,13 @@ import { getAiStory } from '../../services/ChatGPTService'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import { createSlugWithTimeStamp, generateRandomIndex, getStoryTitle } from '@/app/utils/helper'
 
-export interface StoryAttrs {
-  role: string
-  content: string
-  title: string
-  prompt: string[]
-  generateFireBaseStoryKey : string
-}
 /**
  * This is a general page to show the different integrations with AI,
  * components are used.
  */
 function RandomStory () {
-  const [storyAttrs, setStoryAttrs] = useState<StoryAttrs>({
-    role: '',
-    content: '',
-    title: '',
-    prompt: [],
-    generateFireBaseStoryKey: ''
-  })
   const [status, setStatus] = useState('pending')
-  const { content } = storyAttrs
+  const [storyResponse, setStoryResponse] = useState('')
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
   const handlerClickOnGenerateRandomStory = async () => {
@@ -37,40 +23,19 @@ function RandomStory () {
     const randomAdventures = generateRandomIndex(adventures)
     const randomPlace = generateRandomIndex(places)
 
-    getAiStory(randomAge, randomCharacters, randomAdventures, randomPlace).then(
-      async (res) => {
-        if (res?.error) {
-          setStatus('failed')
-          return
-        }
-        const storyTitle = getStoryTitle(res?.choices[0]?.message?.content)
-        const slug = createSlugWithTimeStamp(storyTitle)
-        setStatus('success')
-        setStoryAttrs((preViewState) => {
-          return {
-            ...preViewState,
-            role: res?.choices?.[0]?.message?.role,
-            content: res?.choices[0]?.message?.content,
-            title: getStoryTitle(res?.choices[0]?.message?.content),
-            prompt: [randomAge, randomCharacters, randomAdventures, randomPlace]
-          }
-        })
-        await addDocumentInFireStore(fireBaseStoryCollection, {
-          title: storyTitle,
-          slug,
-          prompt: [randomAge, randomCharacters, randomAdventures, randomPlace],
-          story: res?.choices[0]?.message?.content
-        })
-      },
-      (err) => {
-        setStatus('error')
-        console.log('e', err)
-      }
-    )
-  }
-  function createMarkup () {
-    const splitAnswer = storyAttrs.content.split('\n').filter((text) => text !== '')
-    return splitAnswer.map((text, index) => <p key={`${index}`} className={styles.description}>{text}</p>)
+    const response = await getAiStory(randomAge, randomCharacters, randomAdventures, 'Steve', randomPlace)
+    const storyTitle = getStoryTitle(response.res)
+    const slug = createSlugWithTimeStamp(storyTitle)
+    if (storyTitle && slug) {
+      addDocumentInFireStore(fireBaseStoryCollection, {
+        title: storyTitle,
+        slug,
+        prompt: [randomAge, randomCharacters, randomAdventures, 'Steve', randomPlace],
+        story: response.res
+      })
+    }
+    setStatus('success')
+    setStoryResponse(response.res)
   }
 
   return (
@@ -80,9 +45,9 @@ function RandomStory () {
       <div className={styles.answerContainer}>
         {status === 'pending' && <h4 className={styles.loader}>Your story display here</h4>}
         {status === 'process' && <h4 className={styles.loader}>Loading...</h4>}
-        {status === 'success' && content !== '' && (
+        {status === 'success' && (
           <div className={styles.loader}>
-            {createMarkup()}
+            {storyResponse}
           </div>
         )}
         {status === 'failed' && <p className={styles.loader}>Something went wrong</p>}
