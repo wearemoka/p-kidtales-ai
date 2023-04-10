@@ -2,12 +2,20 @@
 // Some declarations
 const URI_API = 'https://api.openai.com/v1'
 const API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY
-const MODEL_COMPLETIONS = 'gpt-3.5-turbo'
-const MODEL_IMAGE_GENERATION = 'image-alpha-001'
+const MODEL_COMPLETIONS = process.env.NEXT_PUBLIC_MODEL_COMPLETIONS || 'gpt-3.5-turbo'
+const MODEL_IMAGE_GENERATION = process.env.NEXT_PUBLIC_MODEL_IMAGE_GENERATION || 'image-alpha-001'
 
 const headerOpenAiRequest = {
   'Content-Type': 'application/json',
   Authorization: `Bearer ${API_KEY}`
+}
+
+/**
+ * General prompt for the API Requests
+ * Return a string
+ */
+const getPrompt = (character:string, characterName:string, adventure:string, place:string, ageRange:string, lesson:string, paragraphs:number) => {
+  return `Generate a story about a ${character} whose name should be ${characterName} who embarks on a ${adventure} adventure in ${place}. The story should be appropriate for children ${ageRange} years old. Add a lesson of ${lesson}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title, content and lesson learnt from the story in 50 words as different parameters`
 }
 
 /**
@@ -85,7 +93,7 @@ export async function getAiStory (ageRange: string, character: string, adventure
       messages: [
         {
           role: 'user',
-          content: `Generate a story about a ${character} whose name should be ${characterName} who embarks on a ${adventure} adventure in ${place}. The story should be appropriate for children ${ageRange} years old. Add a lesson of ${lesson}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title, content and lesson learnt from the story in 50 words as different parameters`
+          content: getPrompt(character, characterName, adventure, place, ageRange, lesson, paragraphs)
         }
       ]
     })
@@ -120,7 +128,7 @@ export async function getAiStoryWithStream (ageRange: string, character: string,
       messages: [
         {
           role: 'user',
-          content: `Generate a story about a ${character} whose name should be ${characterName} who embarks on a ${adventure} adventure in ${place}. The story should be appropriate for children ${ageRange} years old. Add a lesson of ${lesson}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title, content and lesson learnt from the story in 50 words as different parameters`
+          content: getPrompt(character, characterName, adventure, place, ageRange, lesson, paragraphs)
         }
       ]
     })
