@@ -1,11 +1,13 @@
 
 // Some declarations
-const uriAPI = 'https://api.openai.com/v1'
-const apiKey = process.env.NEXT_PUBLIC_OPENAI_API_KEY
+const URI_API = 'https://api.openai.com/v1'
+const API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY
+const MODEL_COMPLETIONS = 'gpt-3.5-turbo'
+const MODEL_IMAGE_GENERATION = 'image-alpha-001'
 
 const headerOpenAiRequest = {
   'Content-Type': 'application/json',
-  Authorization: `Bearer ${apiKey}`
+  Authorization: `Bearer ${API_KEY}`
 }
 
 /**
@@ -17,7 +19,7 @@ const headerOpenAiRequest = {
 export async function getAiHistory (about:string) {
   try {
     const prompt = JSON.stringify({
-      model: 'gpt-3.5-turbo',
+      model: MODEL_COMPLETIONS,
       messages: [
         {
           role: 'user',
@@ -26,7 +28,7 @@ export async function getAiHistory (about:string) {
       ]
     })
 
-    const res = await fetch(`${uriAPI}/chat/completions`, {
+    const res = await fetch(`${URI_API}/chat/completions`, {
       method: 'POST',
       body: prompt,
       headers: headerOpenAiRequest
@@ -46,14 +48,14 @@ export async function getAiHistory (about:string) {
 export async function getAiIllustration (about: string) {
   try {
     const prompt = JSON.stringify({
-      model: 'image-alpha-001',
+      model: MODEL_IMAGE_GENERATION,
       prompt: `Give me an illustration for a 5 year olds of this story about ${about}`,
       n: 1,
       response_format: 'b64_json',
       size: '512x512'
     })
 
-    const res = await fetch(`${uriAPI}/images/generations`, {
+    const res = await fetch(`${URI_API}/images/generations`, {
       method: 'POST',
       body: prompt,
       headers: headerOpenAiRequest
@@ -79,7 +81,7 @@ export async function getAiIllustration (about: string) {
 export async function getAiStory (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson:string = '', paragraphs: number = 3) {
   try {
     const prompt = JSON.stringify({
-      model: 'gpt-3.5-turbo',
+      model: MODEL_COMPLETIONS,
       messages: [
         {
           role: 'user',
@@ -88,7 +90,7 @@ export async function getAiStory (ageRange: string, character: string, adventure
       ]
     })
 
-    const res = await fetch(`${uriAPI}/chat/completions`, {
+    const res = await fetch(`${URI_API}/chat/completions`, {
       method: 'POST',
       body: prompt,
       headers: headerOpenAiRequest
@@ -113,7 +115,7 @@ export async function getAiStory (ageRange: string, character: string, adventure
 export async function getAiStoryWithStream (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson: string = '', callback: (result: string) => void, paragraphs: number = 3) {
   try {
     const prompt = JSON.stringify({
-      model: 'gpt-3.5-turbo',
+      model: MODEL_COMPLETIONS,
       stream: true,
       messages: [
         {
@@ -123,7 +125,7 @@ export async function getAiStoryWithStream (ageRange: string, character: string,
       ]
     })
 
-    const res = await fetch(`${uriAPI}/chat/completions`, {
+    const res = await fetch(`${URI_API}/chat/completions`, {
       method: 'POST',
       body: prompt,
       headers: headerOpenAiRequest,
