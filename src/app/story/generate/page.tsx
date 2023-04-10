@@ -1,4 +1,3 @@
-import History from '@/app/components/generators/History'
 import Illustration from '@/app/components/generators/Illustration'
 import PreSelectedHistory from '@/app/components/generators/PreSelectedHistory'
 import ShareContent from '@/app/components/generators/ShareContent'
