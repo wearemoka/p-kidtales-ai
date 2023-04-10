@@ -1,3 +1,5 @@
+'use client'
+
 import { useFetchStory } from '@/app/hooks/useFetchStory'
 import { updateDocumentInFireStore } from '@/app/services/FirebaseService'
 import Link from 'next/link'

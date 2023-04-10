@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { getAiStory, getAiStoryWithStream } from '../services/services'
+import { getAiStory, getAiStoryWithStream } from '@/app/services/ChatGPTService'
 import { ages, characters, adventures, places } from '@/app/services/constants/StoryParams'
 import styles from './components.module.css'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'

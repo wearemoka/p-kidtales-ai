@@ -1,8 +1,8 @@
+import History from '@/app/components/generators/History'
+import Illustration from '@/app/components/generators/Illustration'
+import PreSelectedHistory from '@/app/components/generators/PreSelectedHistory'
+import ShareContent from '@/app/components/generators/ShareContent'
 import RandomStory from '../random/RandomStory'
-import History from './components/History'
-import Illustration from './components/Illustration'
-import PreSelectedHistory from './components/PreSelectedHistory'
-import ShareContent from './components/ShareContent'
 import styles from './generate.module.css'
 
 // Moked data to share as example

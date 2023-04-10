@@ -76,14 +76,14 @@ export async function getAiIllustration (about: string) {
  * @param paragraphs number of paragraphs expected
  * @returns promise
  */
-export async function getAiStory (ageRange: string, character: string, adventure: string, place: string, paragraphs: number = 3) {
+export async function getAiStory (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson:string = '', paragraphs: number = 3) {
   try {
     const prompt = JSON.stringify({
       model: 'gpt-3.5-turbo',
       messages: [
         {
           role: 'user',
-          content: `Generate a story about a ${ageRange}-year-old ${character} who embarks on a ${adventure} adventure in ${place}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title as separate parameter.`
+          content: `Generate a story about a ${character} whose name should be ${characterName} who embarks on a ${adventure} adventure in ${place}. The story should be appropriate for children ${ageRange} years old. Add a lesson of ${lesson}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title, content and lesson learnt from the story in 50 words as different parameters`
         }
       ]
     })
@@ -95,6 +95,65 @@ export async function getAiStory (ageRange: string, character: string, adventure
     })
     const data = res.json()
     return data
+  } catch (err) {
+    console.error('catch', err)
+  }
+}
+
+/**
+ * Requests a story to the AI using some parameter and
+ * adds constraints to the story.
+ * @param ageRange the age range, e.g. 5-7
+ * @param character a character, e.g. dog
+ * @param adventure type of adventure, e.g. fable
+ * @param place where the story take place, e.g. farm
+ * @param paragraphs number of paragraphs expected
+ * @param callback a function to set the streamed response
+ */
+export async function getAiStoryWithStream (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson: string = '', callback: (result: string) => void, paragraphs: number = 3) {
+  try {
+    const prompt = JSON.stringify({
+      model: 'gpt-3.5-turbo',
+      stream: true,
+      messages: [
+        {
+          role: 'user',
+          content: `Generate a story about a ${character} whose name should be ${characterName} who embarks on a ${adventure} adventure in ${place}. The story should be appropriate for children ${ageRange} years old. Add a lesson of ${lesson}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title, content and lesson learnt from the story in 50 words as different parameters`
+        }
+      ]
+    })
+
+    const res = await fetch(`${uriAPI}/chat/completions`, {
+      method: 'POST',
+      body: prompt,
+      headers: headerOpenAiRequest,
+      signal: new AbortController().signal
+    })
+
+    const stream = res?.body?.getReader()
+
+    if (!stream) return
+
+    let result = ''
+    let jsonResult = null
+    let done = false
+
+    do {
+      const { value } = await stream.read()
+
+      const v = new TextDecoder().decode(value)
+      const lastIndex = v.lastIndexOf('data: {')
+      if (lastIndex >= 0) {
+        const s = v.substring(lastIndex + 6)
+        jsonResult = JSON.parse(s.replace('\n\ndata: [DONE]\n\n', ''))
+
+        done = jsonResult.choices[0].finish_reason === 'stop'
+        if (!done) {
+          result += jsonResult.choices[0].delta.content
+          callback(result)
+        }
+      }
+    } while (!done)
   } catch (err) {
     console.error('catch', err)
   }

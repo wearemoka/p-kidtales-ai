@@ -3,7 +3,7 @@ import { FirebaseAppProvider } from 'reactfire'
 import Header from './components/Header/Header'
 import { config } from './firebase/Config/Config'
 import StoreProvider from './firebase/StoreProvider/StoreProvider'
-import AudioPlayer from './story/generate/components/AudioPlayer'
+import AudioPlayer from './components/generators/AudioPlayer'
 import './globals.css'
 /**
  * For future use
