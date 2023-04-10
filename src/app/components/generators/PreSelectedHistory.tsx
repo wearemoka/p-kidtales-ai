@@ -30,22 +30,28 @@ function PreSelectedHistory () {
     if (isCheckedStreamedAPI) {
       await getAiStoryWithStream(age, character, adventure, characterName, place, lesson, setAnswer)
     } else {
-      getAiStory(age, character, adventure, characterName, place, lesson).then(
-        (res) => {
-          setAnswer(res.choices[0].message.content)
-          const storyTitle = getStoryTitle(res?.choices[0]?.message?.content)
-          const slug = createSlugWithTimeStamp(storyTitle)
-          if (storyTitle && slug) {
-            addDocumentInFireStore(fireBaseStoryCollection, {
-              title: storyTitle,
-              slug,
-              prompt: [age, character, adventure, characterName, place],
-              story: res?.choices[0]?.message?.content
-            })
-          }
+      const response = await fetch('/api/story', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
         },
-        (err) => { console.log('error', err) }
-      )
+        body: JSON.stringify({ age, character, adventure, characterName, place, lesson, paragraphs: 3 })
+      })
+
+      const jsonResponse = await response.json()
+      console.log(jsonResponse)
+      setAnswer(jsonResponse.res)
+
+      const storyTitle = getStoryTitle(jsonResponse.res)
+      const slug = createSlugWithTimeStamp(storyTitle)
+      if (storyTitle && slug) {
+        addDocumentInFireStore(fireBaseStoryCollection, {
+          title: storyTitle,
+          slug,
+          prompt: [age, character, adventure, characterName, place],
+          story: jsonResponse.res
+        })
+      }
     }
   }
 
