@@ -29,9 +29,6 @@ function StoryFormPage () {
       <Illustration />
       <hr />
 
-      <History />
-      <hr />
-
       <ShareContent
         urlToShare={urlToShare}
         quote={quote}
