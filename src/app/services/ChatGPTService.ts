@@ -47,8 +47,7 @@ export async function getAiIllustration (about: string) {
 }
 
 /**
- * Requests a story to the AI using some parameter and
- * adds constraints to the story.
+ * Requests a story to the AI using internal API
  * @param ageRange the age range, e.g. 5-7
  * @param character a character, e.g. dog
  * @param adventure type of adventure, e.g. fable
@@ -57,27 +56,16 @@ export async function getAiIllustration (about: string) {
  * @returns promise
  */
 export async function getAiStory (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson:string = '', paragraphs: number = 3) {
-  try {
-    const prompt = JSON.stringify({
-      model: MODEL_COMPLETIONS,
-      messages: [
-        {
-          role: 'user',
-          content: getPrompt(character, characterName, adventure, place, ageRange, lesson, paragraphs)
-        }
-      ]
-    })
+  const response = await fetch('/api/story', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ ageRange, character, adventure, characterName, place, lesson, paragraphs: 3 })
+  })
 
-    const res = await fetch(`${URI_API}/chat/completions`, {
-      method: 'POST',
-      body: prompt,
-      headers: headerOpenAiRequest
-    })
-    const data = res.json()
-    return data
-  } catch (err) {
-    console.error('catch', err)
-  }
+  const jsonResponse = await response.json()
+  return jsonResponse
 }
 
 /**
