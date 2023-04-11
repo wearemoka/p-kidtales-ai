@@ -1,22 +1,15 @@
-
-// Some declarations
-
 import { OpenAIStream, OpenAIStreamPayload } from '@/app/utils/openAIStream'
+import { getStoryPrompt } from '@/app/utils/promptsGenerators'
+import { NextApiResponse } from 'next'
 
 export const config = {
   runtime: 'edge'
 }
 
-export async function POST (req: Request): Promise<Response> {
-//   const { prompt } = (await req.json()) as {
-//         prompt?: string;
-//     }
+export async function POST (req: Request, res: NextApiResponse): Promise<Response> {
+  const { ageRange, character, adventure, characterName, place, lesson, paragraphs, streamed } = await req.json()
 
-  //   if (!prompt) {
-  //     return new Response('No prompt in the request', { status: 400 })
-  //   }
-
-  const prompt = 'contame una historia de un perro llamado Fox'
+  const prompt = getStoryPrompt(character, characterName, adventure, place, ageRange, lesson, paragraphs, streamed)
 
   const payload: OpenAIStreamPayload = {
     model: 'gpt-3.5-turbo',

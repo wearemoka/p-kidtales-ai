@@ -24,6 +24,10 @@ function RandomStory () {
     const randomPlace = generateRandomIndex(places)
 
     const response = await getAiStory(randomAge, randomCharacters, randomAdventures, 'Steve', randomPlace)
+    if (response.status === 'error') {
+      setStatus('error')
+      return
+    }
     const storyTitle = getStoryTitle(response.res)
     const slug = createSlugWithTimeStamp(storyTitle)
     if (storyTitle && slug) {
