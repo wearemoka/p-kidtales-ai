@@ -126,3 +126,36 @@ export async function getAiStoryWithStream (ageRange: string, character: string,
     console.error('catch', err)
   }
 }
+
+export async function getAiStoryWithStream2 (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson: string = '', callback: (result: string) => void, paragraphs: number = 3) {
+  const response = await fetch('/api/story/stream', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      ageRange,
+      character,
+      adventure,
+      characterName,
+      place,
+      lesson,
+      paragraphs
+    })
+  })
+
+  let streamedResponse = ''
+
+  const data = response.body
+  const reader = data.getReader()
+  const decoder = new TextDecoder()
+  let done = false
+
+  while (!done) {
+    const { value, done: doneReading } = await reader.read()
+    done = doneReading
+    const chunkValue = decoder.decode(value)
+    streamedResponse += chunkValue
+    callback(streamedResponse)
+  }
+}
