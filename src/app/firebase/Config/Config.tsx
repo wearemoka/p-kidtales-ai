@@ -1,5 +1,3 @@
-// Import the functions you need from the SDKs you need
-// import { getAnalytics } from "firebase/analytics";
 import { initializeApp } from 'firebase/app'
 import { getFirestore, collection, addDoc, getDocs } from 'firebase/firestore'
 import { getStorage } from 'firebase/storage'
@@ -16,6 +14,5 @@ export const config = {
 
 export const app = initializeApp(config)
 export const db = getFirestore(app)
-// const analytics = app.name && typeof window !== 'undefined' ? getAnalytics(app) : null;;
 export const storage = getStorage(app)
 export { collection, addDoc, getDocs }

@@ -15,6 +15,7 @@ function AudioPlayer () {
       <audio
         id='audioPlayer'
         controls
+        loop
         src='https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/SalmonLikeTheFish/Music_for_the_Sleepy_Traveler/SalmonLikeTheFish_-_03_-_Glacier.mp3'
         ref={audioRef}
       />

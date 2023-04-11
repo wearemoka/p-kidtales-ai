@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { getAiIllustration } from '../services/services'
+import { getAiIllustration } from '@/app/services/ChatGPTService'
 import styles from './components.module.css'
 
 function Illustration () {

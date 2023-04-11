@@ -9,7 +9,7 @@ type Response = {
   collectionPath: string;
   description: string;
   appropriate: boolean
-};
+}
 
 export function useFetchStoryItem (stroyItemId: string, collectionPath: string) {
   const firestore = useFirestore()

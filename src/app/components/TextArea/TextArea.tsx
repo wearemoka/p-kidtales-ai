@@ -1,4 +1,3 @@
-
 import * as React from 'react'
 
 interface TextAreaProps {
@@ -11,7 +10,7 @@ interface TextAreaProps {
   value : string
   onChange : (value:string, name:string) => void
   id?:string
-  }
+}
 
 export const TextArea: React.FC<TextAreaProps> = (props) => {
   const {

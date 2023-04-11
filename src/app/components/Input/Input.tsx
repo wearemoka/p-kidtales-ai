@@ -1,4 +1,3 @@
-
 import * as React from 'react'
 
 interface InputProps {
@@ -11,7 +10,7 @@ interface InputProps {
   type : string
   onChange : (value:string, name:string) => void
   id?:string
-  }
+}
 
 export const CustomInput: React.FC<InputProps> = (props) => {
   const {

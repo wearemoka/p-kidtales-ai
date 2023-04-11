@@ -1,20 +1,13 @@
 'use client'
+
 import { useFetchStory } from '@/app/hooks/useFetchStory'
-import { updateDocumentInFireStore } from '@/app/service/FirebaseService'
+import { updateDocumentInFireStore } from '@/app/services/FirebaseService'
 import Link from 'next/link'
 import Style from './list.module.css'
 
 const List = () => {
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
   const { data, setData } = useFetchStory(fireBaseStoryCollection)
-  /**
-   * Edit a Story
-   * Route to edit page
-   */
-
-  // const editStoryHandler = (id: string) => {
-  //   router.push(`/story/edit/${id}`)
-  // }
 
   /**
    * Flag a Story for inappropriate content or language

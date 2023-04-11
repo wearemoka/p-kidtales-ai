@@ -1,6 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import styles from './Header.module.css'
+
 const Header = () => {
   return (
     <div className={styles.header}>
@@ -19,11 +20,6 @@ const Header = () => {
           <li className={styles.navItem}>
             <Link href='/story/generate'>
               Generate a Story
-            </Link>
-          </li>
-          <li className={styles.navItem}>
-            <Link href='/story/random'>
-              Random Story
             </Link>
           </li>
           <li className={styles.navItem}>

@@ -1,5 +1,3 @@
-'use client'
-
 const Disclaimer = () => {
   return (
     <div style={{ maxWidth: '800px', margin: '0px auto' }}>

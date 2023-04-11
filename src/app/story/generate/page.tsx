@@ -1,14 +1,7 @@
-import CreateStory from './components/CreateStory'
-import History from './components/History'
-import Illustration from './components/Illustration'
-import PreSelectedHistory from './components/PreSelectedHistory'
-import ShareContent from './components/ShareContent'
+import Illustration from '@/app/components/generators/Illustration'
+import PreSelectedHistory from '@/app/components/generators/PreSelectedHistory'
+import RandomStory from '../random/RandomStory'
 import styles from './generate.module.css'
-
-// Moked data to share as example
-const urlToShare: string = 'http://localhost:3000/demo'
-const quote: string = 'This is an AI-generated story'
-const hashtags: string[] = ['#iaStory', '#bedStory', '#IA']
 
 /**
  * This is a general page to show the different integrations with AI,
@@ -21,24 +14,13 @@ function StoryFormPage () {
       <h2 className={styles.title}>Generate a Story</h2>
 
       <PreSelectedHistory />
-
       <hr />
-      <CreateStory />
 
+      <RandomStory />
       <hr />
+
       <Illustration />
 
-      <hr />
-
-      <History />
-
-      <hr />
-
-      <ShareContent
-        urlToShare={urlToShare}
-        quote={quote}
-        hashtags={hashtags}
-      />
     </main>
   )
 }
