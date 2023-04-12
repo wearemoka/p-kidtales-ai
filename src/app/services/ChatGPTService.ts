@@ -1,4 +1,4 @@
-import { getStoryIllustrationPrompt, getStoryPrompt, headerOpenAiRequest } from '@/app/utils/promptsGenerators'
+import { getStoryIllustrationPrompt, headerOpenAiRequest } from '@/app/utils/promptsGenerators'
 
 // Some declarations
 const URI_API = process.env.NEXT_PUBLIC_OPENAI_API_URL
@@ -56,48 +56,10 @@ export async function getAiStory (ageRange: string, character: string, adventure
  * @param place where the story take place, e.g. farm
  * @param paragraphs number of paragraphs expected
  * @param callback a function to set the streamed response
+ * @param paragraphs number of paragraphs
+ * @param streamed use a stream on response
  */
-export async function getAiStoryWithStream (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson: string = '', callback: (result: string) => void, paragraphs: number = 3) {
-  try {
-    const prompt = getStoryPrompt(character, characterName, adventure, place, ageRange, lesson, paragraphs)
-
-    const res = await fetch(`${URI_API}/chat/completions`, {
-      method: 'POST',
-      body: prompt,
-      headers: headerOpenAiRequest,
-      signal: new AbortController().signal
-    })
-
-    const stream = res?.body?.getReader()
-
-    if (!stream) return
-
-    let result = ''
-    let jsonResult = null
-    let done = false
-
-    do {
-      const { value } = await stream.read()
-
-      const v = new TextDecoder().decode(value)
-      const lastIndex = v.lastIndexOf('data: {')
-      if (lastIndex >= 0) {
-        const s = v.substring(lastIndex + 6)
-        jsonResult = JSON.parse(s.replace('\n\ndata: [DONE]\n\n', ''))
-
-        done = jsonResult.choices[0].finish_reason === 'stop'
-        if (!done) {
-          result += jsonResult.choices[0].delta.content
-          callback(result)
-        }
-      }
-    } while (!done)
-  } catch (err) {
-    console.error('catch', err)
-  }
-}
-
-export async function getAiStoryWithStreamBE (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson: string = '', callback: (result: string) => void, paragraphs: number = 3, streamed:boolean = false) {
+export async function getAiStoryWithStreamBE (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson: string = '', callback: (result: string) => void, paragraphs: number = 3, streamed:boolean = true) {
   const response = await fetch('/api/story/stream', {
     method: 'POST',
     headers: {

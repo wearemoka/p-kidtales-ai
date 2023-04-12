@@ -1,10 +1,8 @@
-import {
-  createParser,
-  ParsedEvent,
-  ReconnectInterval
-} from 'eventsource-parser'
+import { headerOpenAiRequest } from '@/app/utils/promptsGenerators'
+import { createParser, ParsedEvent, ReconnectInterval } from 'eventsource-parser'
 
 export type ChatGPTAgent = 'user' | 'system';
+const URI_API = process.env.NEXT_PUBLIC_OPENAI_API_URL
 
 export interface ChatGPTMessage {
     role: ChatGPTAgent;
@@ -14,24 +12,21 @@ export interface ChatGPTMessage {
 export interface OpenAIStreamPayload {
     model: string;
     messages: ChatGPTMessage[];
-    temperature: number;
-    top_p: number;
-    frequency_penalty: number;
-    presence_penalty: number;
-    max_tokens: number;
-    stream: boolean;
-    n: number;
+    temperature?: number;
+    top_p?: number;
+    frequency_penalty?: number;
+    presence_penalty?: number;
+    max_tokens?: number;
+    stream?: boolean;
+    n?: number;
 }
 
 export async function OpenAIStream (payload: OpenAIStreamPayload) {
   const encoder = new TextEncoder()
   const decoder = new TextDecoder()
 
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY ?? ''}`
-    },
+  const res = await fetch(`${URI_API}/chat/completions`, {
+    headers: headerOpenAiRequest,
     method: 'POST',
     body: JSON.stringify(payload)
   })
