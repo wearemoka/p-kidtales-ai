@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { getAiStory, getAiStoryWithStream } from '@/app/services/ChatGPTService'
+import { getAiStory, getAiStoryWithStreamBE } from '@/app/services/ChatGPTService'
 import { ages, characters, adventures, places } from '@/app/services/constants/StoryParams'
 import styles from './components.module.css'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
@@ -28,9 +28,14 @@ function PreSelectedHistory () {
   // the AI and wait for its response to be displayed.
   async function handleClickTellMe () {
     if (isCheckedStreamedAPI) {
-      await getAiStoryWithStream(age, character, adventure, characterName, place, lesson, setAnswer)
+      const paragraphs = 3
+      await getAiStoryWithStreamBE(age, character, adventure, characterName, place, lesson, setAnswer, paragraphs, isCheckedStreamedAPI)
     } else {
       const response = await getAiStory(age, character, adventure, characterName, place, lesson)
+      if (response.status === 'error') {
+        setAnswer('An server error')
+        return
+      }
       setAnswer(response.res)
 
       const storyTitle = getStoryTitle(response.res)
