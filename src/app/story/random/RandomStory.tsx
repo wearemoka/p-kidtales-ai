@@ -45,7 +45,7 @@ function RandomStory () {
   return (
     <main className={styles.main}>
       <h2 className={styles.title}>Generate random story</h2>
-      <Button status={status} onClick={handlerClickOnGenerateRandomStory} buttonText='Generate random story' />
+      <Button enabled={status !== 'process'} onClick={handlerClickOnGenerateRandomStory} buttonText='Generate random story' />
       <div className={styles.answerContainer}>
         {status === 'pending' && <h4 className={styles.loader}>Your story display here</h4>}
         {status === 'process' && <h4 className={styles.loader}>Loading...</h4>}

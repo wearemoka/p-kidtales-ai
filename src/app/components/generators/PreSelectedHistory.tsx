@@ -1,11 +1,12 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getAiStory, getAiStoryWithStreamBE } from '@/app/services/ChatGPTService'
 import { ages, characters, adventures, places } from '@/app/services/constants/StoryParams'
 import styles from './components.module.css'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
+import Button from '@/app/components/Story/Button/Button'
 
 const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLowerCase())) ? 'an' : 'a'
 
@@ -14,8 +15,10 @@ const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLow
 function PreSelectedHistory () {
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
-  const [answer, setAnswer] = React.useState('')
+  const [answer, setAnswer] = React.useState('Your Story will be displayed here')
   const [isCheckedStreamedAPI, setIsCheckedStreamedAPI] = useState(false)
+  const [loading, setLoading] = useState(false)
+
   // selected options
   const [age, setAge] = React.useState(ages[0])
   const [character, setCharacter] = React.useState(characters[0])
@@ -27,6 +30,7 @@ function PreSelectedHistory () {
   // Send the parameters to the service that communicates with
   // the AI and wait for its response to be displayed.
   async function handleClickTellMe () {
+    setLoading(true)
     if (isCheckedStreamedAPI) {
       const paragraphs = 3
       await getAiStoryWithStreamBE(age, character, adventure, characterName, place, lesson, setAnswer, paragraphs, isCheckedStreamedAPI)
@@ -49,7 +53,29 @@ function PreSelectedHistory () {
         })
       }
     }
+    setLoading(false)
   }
+
+  // Change message on loading times
+  useEffect(() => {
+    let timer1
+    let timer2
+
+    if (loading) {
+      setAnswer('Loading...')
+
+      timer1 = setTimeout(() => {
+        setAnswer('Esto está tardando más de lo esperado...')
+      }, 5000)
+
+      timer2 = setTimeout(() => {
+        setAnswer('Lamento la espera, ya casi está listo...')
+      }, 10000)
+    } else {
+      clearTimeout(timer1)
+      clearTimeout(timer2)
+    }
+  }, [loading])
 
   const handleOnChangeCheckboxStreamedAPI = () => {
     setIsCheckedStreamedAPI(!isCheckedStreamedAPI)
@@ -135,7 +161,7 @@ function PreSelectedHistory () {
         <div>
           <input type='checkbox' id='useStreamedAPI' name='useStreamedAPI' onChange={handleOnChangeCheckboxStreamedAPI} /> use Streamed API
         </div>
-        <button onClick={handleClickTellMe} className={styles.button}>Tell Me!</button>
+        <Button enabled={!loading} onClick={handleClickTellMe} buttonText='Generate random story' />
       </div>
 
       <div className={styles.row}>
