@@ -28,15 +28,13 @@ export function getStoryPayload (character: string, characterName: string, adven
   if (streamed) {
     payload = {
       ...payload,
-      ...{
-        temperature: 0.7,
-        top_p: 1,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-        max_tokens: 1000,
-        n: 1,
-        stream: streamed
-      }
+      temperature: 0.7,
+      top_p: 1,
+      frequency_penalty: 0,
+      presence_penalty: 0,
+      max_tokens: 1000,
+      n: 1,
+      stream: streamed
     }
   }
 
