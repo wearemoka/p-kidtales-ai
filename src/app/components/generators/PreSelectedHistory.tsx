@@ -7,6 +7,7 @@ import styles from './components.module.css'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import Button from '@/app/components/Story/Button/Button'
+import { LoadingMessages } from '@/app/utils/constants'
 
 const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLowerCase())) ? 'an' : 'a'
 
@@ -15,17 +16,18 @@ const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLow
 function PreSelectedHistory () {
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
-  const [answer, setAnswer] = React.useState('Your Story will be displayed here')
-  const [isCheckedStreamedAPI, setIsCheckedStreamedAPI] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [answer, setAnswer] = useState<string>('Your Story will be displayed here')
+  const [isCheckedStreamedAPI, setIsCheckedStreamedAPI] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
+  const [messageIndex, setMessageIndex] = useState<number>(0)
 
   // selected options
-  const [age, setAge] = React.useState(ages[0])
-  const [character, setCharacter] = React.useState(characters[0])
-  const [adventure, setAdventure] = React.useState(adventures[0])
-  const [place, setPlace] = React.useState(places[0])
-  const [characterName, setCharacterName] = React.useState('')
-  const [lesson, setLesson] = React.useState('')
+  const [age, setAge] = useState(ages[0])
+  const [character, setCharacter] = useState(characters[0])
+  const [adventure, setAdventure] = useState(adventures[0])
+  const [place, setPlace] = useState(places[0])
+  const [characterName, setCharacterName] = useState('')
+  const [lesson, setLesson] = useState('')
 
   // Send the parameters to the service that communicates with
   // the AI and wait for its response to be displayed.
@@ -38,6 +40,7 @@ function PreSelectedHistory () {
       const response = await getAiStory(age, character, adventure, characterName, place, lesson)
       if (response.status === 'error') {
         setAnswer('An server error')
+        setLoading(false)
         return
       }
       setAnswer(response.res)
@@ -58,24 +61,22 @@ function PreSelectedHistory () {
 
   // Change message on loading times
   useEffect(() => {
-    let timer1
-    let timer2
+    let timer
 
     if (loading) {
-      setAnswer('Loading...')
+      setAnswer(LoadingMessages[messageIndex])
 
-      timer1 = setTimeout(() => {
-        setAnswer('Esto está tardando más de lo esperado...')
+      timer = setTimeout(() => {
+        if (messageIndex < LoadingMessages.length - 1) {
+          setMessageIndex(messageIndex + 1)
+          setAnswer(LoadingMessages[messageIndex + 1])
+        }
       }, 5000)
-
-      timer2 = setTimeout(() => {
-        setAnswer('Lamento la espera, ya casi está listo...')
-      }, 10000)
     } else {
-      clearTimeout(timer1)
-      clearTimeout(timer2)
+      setMessageIndex(0)
+      clearTimeout(timer)
     }
-  }, [loading])
+  }, [loading, messageIndex])
 
   const handleOnChangeCheckboxStreamedAPI = () => {
     setIsCheckedStreamedAPI(!isCheckedStreamedAPI)
@@ -161,7 +162,7 @@ function PreSelectedHistory () {
         <div>
           <input type='checkbox' id='useStreamedAPI' name='useStreamedAPI' onChange={handleOnChangeCheckboxStreamedAPI} /> use Streamed API
         </div>
-        <Button enabled={!loading} onClick={handleClickTellMe} buttonText='Generate random story' />
+        <Button enabled={!loading} onClick={handleClickTellMe} buttonText='Get a story' />
       </div>
 
       <div className={styles.row}>
