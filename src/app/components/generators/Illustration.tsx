@@ -1,17 +1,15 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { getAiIllustration } from '@/app/services/ChatGPTService'
 import styles from './components.module.css'
 import Image from 'next/image'
 import Button from '../Story/Button/Button'
-import { LoadingMessages } from '@/app/utils/constants'
+import { useMessageTime } from '@/app/hooks/useMessageTime'
 
 function Illustration () {
   const [imgSrc, setImgSrc] = useState('')
   const [loading, setLoading] = useState<boolean>(false)
-  const [messageIndex, setMessageIndex] = useState<number>(0)
-  const [message, setMessage] = useState<string>()
 
   function handleClickIllustrate () {
     setLoading(true)
@@ -31,24 +29,8 @@ function Illustration () {
     )
   }
 
-  // Change message on loading times
-  useEffect(() => {
-    let timer
-
-    if (loading) {
-      setMessage(LoadingMessages[messageIndex])
-
-      timer = setTimeout(() => {
-        if (messageIndex < LoadingMessages.length - 1) {
-          setMessageIndex(messageIndex + 1)
-          setMessage(LoadingMessages[messageIndex + 1])
-        }
-      }, 5000)
-    } else {
-      setMessageIndex(0)
-      clearTimeout(timer)
-    }
-  }, [loading, messageIndex])
+  // Set loading messages
+  const loadingMessage = useMessageTime(loading)
 
   return (
     <div className={styles.main}>
@@ -62,7 +44,7 @@ function Illustration () {
       </div>
 
       <div className={styles.row}>
-        {loading && <p>{message}</p>}
+        {loading && <p>{loadingMessage}</p>}
 
         {imgSrc &&
           <Image

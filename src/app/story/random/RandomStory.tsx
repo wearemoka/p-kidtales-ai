@@ -1,12 +1,12 @@
 'use client'
 import styles from './page.module.css'
 import Button from '@/app/components/Story/Button/Button'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ages, characters, adventures, places } from '../../services/constants/StoryParams'
 import { getAiStory } from '../../services/ChatGPTService'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import { createSlugWithTimeStamp, generateRandomIndex, getStoryTitle } from '@/app/utils/helper'
-import { LoadingMessages } from '@/app/utils/constants'
+import { useMessageTime } from '@/app/hooks/useMessageTime'
 
 /**
  * This is a general page to show the different integrations with AI,
@@ -14,7 +14,6 @@ import { LoadingMessages } from '@/app/utils/constants'
  */
 function RandomStory () {
   const [loading, setLoading] = useState<boolean>(false)
-  const [messageIndex, setMessageIndex] = useState<number>(0)
   const [storyResponse, setStoryResponse] = useState('')
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
@@ -45,23 +44,7 @@ function RandomStory () {
   }
 
   // Change message on loading times
-  useEffect(() => {
-    let timer
-
-    if (loading) {
-      setStoryResponse(LoadingMessages[messageIndex])
-
-      timer = setTimeout(() => {
-        if (messageIndex < LoadingMessages.length - 1) {
-          setMessageIndex(messageIndex + 1)
-          setStoryResponse(LoadingMessages[messageIndex + 1])
-        }
-      }, 5000)
-    } else {
-      setMessageIndex(0)
-      clearTimeout(timer)
-    }
-  }, [loading, messageIndex])
+  const loadingMessage = useMessageTime(loading)
 
   return (
     <main className={styles.main}>
@@ -70,7 +53,8 @@ function RandomStory () {
       <Button enabled={!loading} onClick={handlerClickOnGenerateRandomStory} buttonText='Generate random story' />
 
       <div className={styles.loader}>
-        {storyResponse}
+        {loading && <div>{loadingMessage}</div>}
+        {!loading && <div>{storyResponse}</div>}
       </div>
 
     </main>

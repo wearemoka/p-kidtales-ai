@@ -1,13 +1,13 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { getAiStory, getAiStoryWithStreamBE } from '@/app/services/ChatGPTService'
 import { ages, characters, adventures, places } from '@/app/services/constants/StoryParams'
 import styles from './components.module.css'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import Button from '@/app/components/Story/Button/Button'
-import { LoadingMessages } from '@/app/utils/constants'
+import { useMessageTime } from '@/app/hooks/useMessageTime'
 
 const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLowerCase())) ? 'an' : 'a'
 
@@ -19,7 +19,6 @@ function PreSelectedHistory () {
   const [answer, setAnswer] = useState<string>('Your Story will be displayed here')
   const [isCheckedStreamedAPI, setIsCheckedStreamedAPI] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
-  const [messageIndex, setMessageIndex] = useState<number>(0)
 
   // selected options
   const [age, setAge] = useState(ages[0])
@@ -59,24 +58,8 @@ function PreSelectedHistory () {
     setLoading(false)
   }
 
-  // Change message on loading times
-  useEffect(() => {
-    let timer
-
-    if (loading) {
-      setAnswer(LoadingMessages[messageIndex])
-
-      timer = setTimeout(() => {
-        if (messageIndex < LoadingMessages.length - 1) {
-          setMessageIndex(messageIndex + 1)
-          setAnswer(LoadingMessages[messageIndex + 1])
-        }
-      }, 5000)
-    } else {
-      setMessageIndex(0)
-      clearTimeout(timer)
-    }
-  }, [loading, messageIndex])
+  // Set loading messages
+  const loadingMessage = useMessageTime(loading)
 
   const handleOnChangeCheckboxStreamedAPI = () => {
     setIsCheckedStreamedAPI(!isCheckedStreamedAPI)
@@ -166,7 +149,8 @@ function PreSelectedHistory () {
       </div>
 
       <div className={styles.row}>
-        {answer}
+        {loading && <div>{loadingMessage}</div>}
+        {!loading && <div>{answer}</div>}
       </div>
     </div>
   )
