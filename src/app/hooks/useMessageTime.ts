@@ -22,8 +22,7 @@ export function useMessageTime (loading:boolean):string | null {
       setMessageIndex(0)
       clearTimeout(timer)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loading, messageIndex])
 
-  return messageIndex !== -1 ? LoadingMessages[messageIndex] : null
+  return (messageIndex !== -1) ? LoadingMessages[messageIndex] : null
 }
