@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react'
 import { LoadingMessages } from '@/app/utils/constants'
 
 /**
- * This Custom Hook allows every 5 seconds and return it
- * useful to change the loading messages.
+ * This Custom Hook update the text every 5 seconds and returns it
+ * useful to change the loading message.
  * @param loading boolean reset the function
  */
 export function useMessageTime (loading:boolean):string | null {
