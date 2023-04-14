@@ -2,6 +2,7 @@ import Illustration from '@/app/components/generators/Illustration'
 import PreSelectedHistory from '@/app/components/generators/PreSelectedHistory'
 import DeviceReader from '@/app/components/Speakers/DeviceReader'
 import EdenaiReader from '@/app/components/Speakers/EdenaiReader'
+import LovoReader from '@/app/components/Speakers/LovoReader'
 import RandomStory from '../random/RandomStory'
 import styles from './generate.module.css'
 
@@ -41,6 +42,16 @@ function StoryFormPage () {
           <br />First Push Load Edenai AI
         </div>
         <EdenaiReader text={text} />
+      </div>
+
+      <hr />
+
+      <div className={styles.row}>
+        <div>
+          This example uses a API with AI.
+          <br />First Push Load Edenai AI
+        </div>
+        <LovoReader text={text} />
       </div>
 
     </main>
