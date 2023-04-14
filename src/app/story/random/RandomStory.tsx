@@ -7,12 +7,14 @@ import { getAiStory } from '../../services/ChatGPTService'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import { createSlugWithTimeStamp, generateRandomIndex, getStoryTitle } from '@/app/utils/helper'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
+import { useGlobalContext } from '@/app/context/store'
 
 /**
  * This is a general page to show the different integrations with AI,
  * components are used.
  */
 function RandomStory () {
+  const { setGlobalStory } = useGlobalContext()
   const [loading, setLoading] = useState<boolean>(false)
   const [storyResponse, setStoryResponse] = useState('')
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
@@ -41,6 +43,7 @@ function RandomStory () {
     }
     setLoading(false)
     setStoryResponse(response.res)
+    setGlobalStory(response.res)
   }
 
   // Change message on loading times

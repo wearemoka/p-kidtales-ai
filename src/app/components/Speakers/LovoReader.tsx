@@ -1,11 +1,10 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react'
+import { useGlobalContext } from '@/app/context/store'
 
-interface Props {
-  text: string;
-}
-
-const LovoReader = ({ text }: Props) => {
+const LovoReader = () => {
+  const { BGMusic, setBGMusic, globalStory } = useGlobalContext()
+  const [BGMusicPrevState, setBGMusicPrevState] = useState(BGMusic)
   const audioRef = useRef<HTMLAudioElement>(null)
   const [skinVoices, setSkinVoices] = useState([])
   const [providers, setProviders] = useState('Jemima Taylor')
@@ -26,7 +25,7 @@ const LovoReader = ({ text }: Props) => {
 
   const handleClick = async () => {
     const bodyRequest = {
-      text,
+      text: globalStory.slice(0, 500),
       speaker_id: providers
     }
 
@@ -66,6 +65,16 @@ const LovoReader = ({ text }: Props) => {
         id='reader'
         ref={audioRef}
         controls
+        onPlay={() => {
+          setBGMusicPrevState(BGMusic)
+          setBGMusic(false)
+        }}
+        onPause={() => {
+          setBGMusic(BGMusicPrevState)
+        }}
+        onEnded={() => {
+          setBGMusic(BGMusicPrevState)
+        }}
       />
     </>
   )

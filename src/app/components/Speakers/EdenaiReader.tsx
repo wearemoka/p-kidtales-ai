@@ -1,18 +1,17 @@
 'use client'
 import React, { useState } from 'react'
+import { useGlobalContext } from '@/app/context/store'
 
-interface Props {
-  text: String,
-}
-
-const EdenaiReader = ({ text }: Props) => {
-  const [audioSrc, setAudioSrc] = useState()
+const EdenaiReader = () => {
+  const { BGMusic, setBGMusic, globalStory } = useGlobalContext()
+  const [BGMusicPrevState, setBGMusicPrevState] = useState(BGMusic)
+  const [audioSrc, setAudioSrc] = useState<string | undefined>()
   const [providers, setProviders] = useState('microsoft')
   const [gender, setGender] = useState('FEMALE')
 
   const handleClick = async () => {
     const bodyRequest = {
-      text,
+      text: globalStory,
       providers,
       language: 'en',
       option: gender
@@ -60,8 +59,17 @@ const EdenaiReader = ({ text }: Props) => {
       <audio
         controls
         src={audioSrc}
+        onPlay={() => {
+          setBGMusicPrevState(BGMusic)
+          setBGMusic(false)
+        }}
+        onPause={() => {
+          setBGMusic(BGMusicPrevState)
+        }}
+        onEnded={() => {
+          setBGMusic(BGMusicPrevState)
+        }}
       />
-
     </>
   )
 }

@@ -11,8 +11,6 @@ import styles from './generate.module.css'
  * components are used.
  */
 function StoryFormPage () {
-  const text = 'this is the story of two dogs in a cave'
-
   return (
 
     <main className={styles.main}>
@@ -31,7 +29,7 @@ function StoryFormPage () {
 
       <div className={styles.row}>
         <p>This example uses the Reader operating system </p>
-        <DeviceReader text={text} />
+        <DeviceReader />
       </div>
 
       <hr />
@@ -41,17 +39,17 @@ function StoryFormPage () {
           This example uses a API with AI.
           <br />First Push Load Edenai AI
         </div>
-        <EdenaiReader text={text} />
+        <EdenaiReader />
       </div>
 
       <hr />
 
       <div className={styles.row}>
         <div>
-          This example uses a API with AI.
-          <br />First Push Load Edenai AI
+          This example uses a API with AI. It has a limit of 500 characters. So you have to pass the text in sections.'
+          <br />First Push Load Lovo AI
         </div>
-        <LovoReader text={text} />
+        <LovoReader />
       </div>
 
     </main>
