@@ -5,17 +5,17 @@ import styles from './components.module.css'
 interface ButtonProps {
   onClick: () => void
   buttonText : string
-  status: string
+  enabled: boolean
 }
 
 const Button:React.FC<ButtonProps> = ({
   onClick,
   buttonText,
-  status
+  enabled
 }) => {
   return (
     <div className={styles.row}>
-      <button disabled={status === 'process'} onClick={() => onClick()} className={styles.button}>{
+      <button disabled={!enabled} onClick={() => onClick()} className={styles.button}>{
           buttonText
         }
       </button>

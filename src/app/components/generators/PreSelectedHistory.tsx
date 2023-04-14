@@ -6,6 +6,8 @@ import { ages, characters, adventures, places } from '@/app/services/constants/S
 import styles from './components.module.css'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
+import Button from '@/app/components/Story/Button/Button'
+import { useMessageTime } from '@/app/hooks/useMessageTime'
 
 const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLowerCase())) ? 'an' : 'a'
 
@@ -14,19 +16,22 @@ const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLow
 function PreSelectedHistory () {
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
-  const [answer, setAnswer] = React.useState('')
-  const [isCheckedStreamedAPI, setIsCheckedStreamedAPI] = useState(false)
+  const [answer, setAnswer] = useState<string>('Your Story will be displayed here')
+  const [isCheckedStreamedAPI, setIsCheckedStreamedAPI] = useState<boolean>(false)
+  const [loading, setLoading] = useState<boolean>(false)
+
   // selected options
-  const [age, setAge] = React.useState(ages[0])
-  const [character, setCharacter] = React.useState(characters[0])
-  const [adventure, setAdventure] = React.useState(adventures[0])
-  const [place, setPlace] = React.useState(places[0])
-  const [characterName, setCharacterName] = React.useState('')
-  const [lesson, setLesson] = React.useState('')
+  const [age, setAge] = useState(ages[0])
+  const [character, setCharacter] = useState(characters[0])
+  const [adventure, setAdventure] = useState(adventures[0])
+  const [place, setPlace] = useState(places[0])
+  const [characterName, setCharacterName] = useState('')
+  const [lesson, setLesson] = useState('')
 
   // Send the parameters to the service that communicates with
   // the AI and wait for its response to be displayed.
   async function handleClickTellMe () {
+    setLoading(true)
     if (isCheckedStreamedAPI) {
       const paragraphs = 3
       await getAiStoryWithStreamBE(age, character, adventure, characterName, place, lesson, setAnswer, paragraphs, isCheckedStreamedAPI)
@@ -34,6 +39,7 @@ function PreSelectedHistory () {
       const response = await getAiStory(age, character, adventure, characterName, place, lesson)
       if (response.status === 'error') {
         setAnswer('An server error')
+        setLoading(false)
         return
       }
       setAnswer(response.res)
@@ -49,7 +55,11 @@ function PreSelectedHistory () {
         })
       }
     }
+    setLoading(false)
   }
+
+  // Set loading messages
+  const loadingMessage = useMessageTime(loading)
 
   const handleOnChangeCheckboxStreamedAPI = () => {
     setIsCheckedStreamedAPI(!isCheckedStreamedAPI)
@@ -135,11 +145,12 @@ function PreSelectedHistory () {
         <div>
           <input type='checkbox' id='useStreamedAPI' name='useStreamedAPI' onChange={handleOnChangeCheckboxStreamedAPI} /> use Streamed API
         </div>
-        <button onClick={handleClickTellMe} className={styles.button}>Tell Me!</button>
+        <Button enabled={!loading} onClick={handleClickTellMe} buttonText='Get a story' />
       </div>
 
       <div className={styles.row}>
-        {answer}
+        {loading && <div>{loadingMessage}</div>}
+        {!loading && <div>{answer}</div>}
       </div>
     </div>
   )
