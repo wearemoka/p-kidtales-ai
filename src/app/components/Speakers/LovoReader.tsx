@@ -7,7 +7,7 @@ interface Props {
 
 const LovoReader = ({ text }: Props) => {
   const audioRef = useRef<HTMLAudioElement>(null)
-  const [skinVoices, setSkinVoices] = useState()
+  const [skinVoices, setSkinVoices] = useState([])
   const [providers, setProviders] = useState('Jemima Taylor')
 
   useEffect(() => {
