@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, Dispatch, SetStateAction, useState } from 'react'
+import React, { createContext, useContext, Dispatch, SetStateAction, useState } from 'react'
 
 interface ContextProps {
     BGMusic: boolean,
@@ -16,7 +16,11 @@ const GlobalContext = createContext<ContextProps>({
   setGlobalStory: string => ''
 })
 
-export const GlobalContextProvider = ({ children }) => {
+interface Props {
+  children: React.ReactNode
+}
+
+export const GlobalContextProvider = ({ children }: Props) => {
   const [BGMusic, setBGMusic] = useState(false)
   const [globalStory, setGlobalStory] = useState('Your Story will be displayed here')
 
