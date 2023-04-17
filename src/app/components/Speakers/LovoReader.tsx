@@ -3,7 +3,9 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useGlobalContext } from '@/app/context/store'
 
 const LovoReader = () => {
-  const { BGMusic, setBGMusic, globalStory } = useGlobalContext()
+  const { BGMusic, setBGMusic, globalStory, currentStoryPage } = useGlobalContext()
+  const storyPaginated = globalStory.split('\n').filter((value) => value !== '')
+
   const [BGMusicPrevState, setBGMusicPrevState] = useState(BGMusic)
   const audioRef = useRef<HTMLAudioElement>(null)
   const [skinVoices, setSkinVoices] = useState([])
@@ -25,7 +27,7 @@ const LovoReader = () => {
 
   const handleClick = async () => {
     const bodyRequest = {
-      text: globalStory.slice(0, 500),
+      text: storyPaginated[currentStoryPage],
       speaker_id: providers
     }
 

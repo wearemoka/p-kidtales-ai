@@ -3,6 +3,7 @@ import PreSelectedHistory from '@/app/components/generators/PreSelectedHistory'
 import DeviceReader from '@/app/components/Speakers/DeviceReader'
 import EdenaiReader from '@/app/components/Speakers/EdenaiReader'
 import LovoReader from '@/app/components/Speakers/LovoReader'
+import { StoryPagination } from '@/app/components/StoryPagination/StoryPagination'
 import RandomStory from '../random/RandomStory'
 import styles from './generate.module.css'
 
@@ -14,6 +15,11 @@ function StoryFormPage () {
   return (
 
     <main className={styles.main}>
+
+      <h2 className={styles.title}>Your story</h2>
+      <StoryPagination />
+      <hr />
+
       <h2 className={styles.title}>Generate a Story</h2>
 
       <PreSelectedHistory />

@@ -33,6 +33,7 @@ function PreSelectedHistory () {
   // Send the parameters to the service that communicates with
   // the AI and wait for its response to be displayed.
   async function handleClickTellMe () {
+    setGlobalStory('Your Story will be displayed here')
     setLoading(true)
     if (isCheckedStreamedAPI) {
       const paragraphs = 3
@@ -152,7 +153,6 @@ function PreSelectedHistory () {
 
       <div className={styles.row}>
         {loading && <div>{loadingMessage}</div>}
-        {!loading && <div>{answer}</div>}
       </div>
     </div>
   )

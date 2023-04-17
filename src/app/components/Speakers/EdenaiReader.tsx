@@ -3,7 +3,8 @@ import React, { useState } from 'react'
 import { useGlobalContext } from '@/app/context/store'
 
 const EdenaiReader = () => {
-  const { BGMusic, setBGMusic, globalStory } = useGlobalContext()
+  const { BGMusic, setBGMusic, globalStory, currentStoryPage } = useGlobalContext()
+  const storyPaginated = globalStory.split('\n').filter((value) => value !== '')
   const [BGMusicPrevState, setBGMusicPrevState] = useState(BGMusic)
   const [audioSrc, setAudioSrc] = useState<string | undefined>()
   const [providers, setProviders] = useState('microsoft')
@@ -11,7 +12,7 @@ const EdenaiReader = () => {
 
   const handleClick = async () => {
     const bodyRequest = {
-      text: globalStory,
+      text: storyPaginated[currentStoryPage],
       providers,
       language: 'en',
       option: gender

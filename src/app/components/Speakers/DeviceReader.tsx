@@ -3,13 +3,14 @@ import { useGlobalContext } from '@/app/context/store'
 import React from 'react'
 
 const DeviceReader = () => {
-  const { BGMusic, setBGMusic, globalStory } = useGlobalContext()
+  const { BGMusic, setBGMusic, globalStory, currentStoryPage } = useGlobalContext()
   const BGMusicOriginalState = BGMusic
+  const storyPaginated = globalStory.split('\n').filter((value) => value !== '')
 
   const playClickButton = async () => {
     setBGMusic(false)
     try {
-      await readTextWithNativeDeviceSpeaker(globalStory)
+      await readTextWithNativeDeviceSpeaker(storyPaginated[currentStoryPage])
       setBGMusic(BGMusicOriginalState)
     } catch (e) {
       console.log('error', e)
