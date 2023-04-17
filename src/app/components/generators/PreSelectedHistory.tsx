@@ -9,6 +9,7 @@ import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import Button from '@/app/components/Story/Button/Button'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
 import { useGlobalContext } from '@/app/context/store'
+import { TextArea } from '../TextArea/TextArea'
 
 const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLowerCase())) ? 'an' : 'a'
 
@@ -30,6 +31,10 @@ function PreSelectedHistory () {
   const [characterName, setCharacterName] = useState('')
   const [lesson, setLesson] = useState('')
 
+  // TODO: this is only for improve the prompt
+  const [prompt, setPrompt] = useState('')
+  const [promptExtended, setPromptExtended] = useState('')
+
   // Send the parameters to the service that communicates with
   // the AI and wait for its response to be displayed.
   async function handleClickTellMe () {
@@ -38,12 +43,14 @@ function PreSelectedHistory () {
       const paragraphs = 3
       await getAiStoryWithStreamBE(age, character, adventure, characterName, place, lesson, setAnswer, paragraphs, isCheckedStreamedAPI)
     } else {
-      const response = await getAiStory(age, character, adventure, characterName, place, lesson)
+      const response = await getAiStory(age, character, adventure, characterName, place, lesson, 3, promptExtended)
       if (response.status === 'error') {
         setAnswer('An server error')
         setLoading(false)
         return
       }
+      console.log(response)
+      setPrompt(response.prompt.messages[0].content)
       setAnswer(response.res)
       setGlobalStory(response.res)
       const storyTitle = getStoryTitle(response.res)
@@ -140,6 +147,27 @@ function PreSelectedHistory () {
             setLesson(e.target.value)
           }}
         />
+
+        <hr />
+
+        <div>
+          <TextArea
+            label='Extra values to define prompt'
+            placeHolder='extend de prompt'
+            name='promptSettings'
+            value={promptExtended}
+            onChange={function (value: string, name: string): void {
+              setPromptExtended(value)
+            }}
+          />
+        </div>
+        <hr />
+
+        <h2>current prompt</h2>
+        <span>
+          {prompt}
+        </span>
+        <hr />
 
       </div>
 
