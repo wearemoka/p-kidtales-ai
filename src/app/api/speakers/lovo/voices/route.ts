@@ -17,7 +17,8 @@ export async function GET (request: Request) {
   try {
     const res = await fetch(`${API_URL}/skins`, {
       method: 'GET',
-      headers: header
+      headers: header,
+      cache: 'no-cache'
     })
     const jsonData = await res.json()
 

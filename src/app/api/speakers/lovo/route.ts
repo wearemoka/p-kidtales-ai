@@ -20,7 +20,8 @@ export async function POST (request: Request) {
     const res = await fetch(`${API_URL}/conversion`, {
       method: 'POST',
       body: JSON.stringify(body),
-      headers: header
+      headers: header,
+      cache: 'no-cache'
     })
 
     const buffer = await res.arrayBuffer()
