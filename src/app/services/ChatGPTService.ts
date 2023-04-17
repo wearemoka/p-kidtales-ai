@@ -34,13 +34,13 @@ export async function getAiIllustration (about: string) {
  * @param paragraphs number of paragraphs expected
  * @returns promise
  */
-export async function getAiStory (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson:string = '', paragraphs: number = 3) {
+export async function getAiStory (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson: string = '', paragraphs: number = 3, promptExtended: string = '') {
   const response = await fetch('/api/story', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ ageRange, character, adventure, characterName, place, lesson, paragraphs: 3 })
+    body: JSON.stringify({ ageRange, character, adventure, characterName, place, lesson, paragraphs, promptExtended })
   })
 
   const jsonResponse = await response.json()
