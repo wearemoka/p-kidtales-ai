@@ -25,6 +25,7 @@
     "typescript": "4.9.5"
   },
   "devDependencies": {
+    "@types/webspeechapi": "^0.0.29",
     "standard": "^17.0.0"
   }
 }
