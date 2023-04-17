@@ -8,12 +8,14 @@ import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import Button from '@/app/components/Story/Button/Button'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
+import { useGlobalContext } from '@/app/context/store'
 
 const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLowerCase())) ? 'an' : 'a'
 
 // Generic component to request a story in written format.
 // you can choice options from a selectors
 function PreSelectedHistory () {
+  const { setGlobalStory } = useGlobalContext()
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
   const [answer, setAnswer] = useState<string>('Your Story will be displayed here')
@@ -43,7 +45,7 @@ function PreSelectedHistory () {
         return
       }
       setAnswer(response.res)
-
+      setGlobalStory(response.res)
       const storyTitle = getStoryTitle(response.res)
       const slug = createSlugWithTimeStamp(storyTitle)
       if (storyTitle && slug) {

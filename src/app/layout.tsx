@@ -5,6 +5,7 @@ import { config } from './firebase/Config/Config'
 import StoreProvider from './firebase/StoreProvider/StoreProvider'
 import AudioPlayer from './components/generators/AudioPlayer'
 import './globals.css'
+import { GlobalContextProvider } from './context/store'
 /**
  * For future use
  * @param param0
@@ -24,18 +25,21 @@ export default function RootLayout ({
   return (
     <html lang='en'>
       <body>
-        <Header />
-        <div className='positionTopRight'>
-          <AudioPlayer />
-        </div>
+        <GlobalContextProvider>
 
-        <FirebaseAppProvider firebaseConfig={config}>
-          <StoreProvider>
-            <div className='main'>
-              {children}
-            </div>
-          </StoreProvider>
-        </FirebaseAppProvider>
+          <Header />
+          <div className='positionTopRight'>
+            <AudioPlayer />
+          </div>
+
+          <FirebaseAppProvider firebaseConfig={config}>
+            <StoreProvider>
+              <div className='main'>
+                {children}
+              </div>
+            </StoreProvider>
+          </FirebaseAppProvider>
+        </GlobalContextProvider>
       </body>
     </html>
   )

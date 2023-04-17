@@ -3,7 +3,14 @@ import { usePathname } from 'next/navigation'
 import Style from './View.module.css'
 import { useFetchStoryItem } from '@/app/hooks/useFetchStoryItem'
 import { createMarkup } from '@/app/utils/helper'
+import DeviceReader from '@/app/components/Speakers/DeviceReader'
+import EdenaiReader from '@/app/components/Speakers/EdenaiReader'
+import LovoReader from '@/app/components/Speakers/LovoReader'
+import { useGlobalContext } from '@/app/context/store'
+import { useEffect } from 'react'
+
 const View = () => {
+  const { setGlobalStory } = useGlobalContext()
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
   const path = usePathname()
   const splitPath = path.split('/')
@@ -21,12 +28,51 @@ const View = () => {
       }
     })
   }
+
+  useEffect(() => {
+    setGlobalStory(data?.story)
+  }, [data])
+
   return (
-    <div className={box}>
+    <>
+      <div className={box}>
+        {status === 'success'
+          ? splitStory(data?.story)
+          : 'Loading...'}
+      </div>
+
+      <h2>Readers</h2>
+
       {status === 'success'
-        ? splitStory(data?.story)
+        ? <>
+          <div>
+            <p>This example uses the Reader operating system </p>
+            <DeviceReader />
+          </div>
+
+          <hr />
+
+          <div>
+            <div>
+              This example uses a API with AI.
+              <br />First Push Load Edenai AI
+            </div>
+            <EdenaiReader />
+          </div>
+
+          <hr />
+
+          <div>
+            <div>
+              This example uses a API with AI. It has a limit of 500 characters. So you have to pass the text in sections.'
+              <br />First Push Load Lovo AI
+            </div>
+            <LovoReader />
+          </div>
+          </>
         : 'Loading...'}
-    </div>
+
+    </>
   )
 }
 export default View
