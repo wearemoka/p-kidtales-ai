@@ -19,6 +19,6 @@ export async function POST (request: Request) {
 
     return NextResponse.json({ res: jsonData.choices[0].message.content, prompt })
   } catch (err) {
-    return NextResponse.json({ status: 'error', error: 'An internal server error' })
+    return NextResponse.json({ status: 'error', error: 'An internal server error', message: JSON.stringify(err) })
   }
 }
