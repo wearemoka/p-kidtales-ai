@@ -31,6 +31,7 @@ const View = () => {
 
   useEffect(() => {
     setGlobalStory(data?.story)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
   return (
@@ -44,32 +45,34 @@ const View = () => {
       <h2>Readers</h2>
 
       {status === 'success'
-        ? <>
-          <div>
-            <p>This example uses the Reader operating system </p>
-            <DeviceReader />
-          </div>
-
-          <hr />
-
-          <div>
+        ? (
+          <>
             <div>
-              This example uses a API with AI.
-              <br />First Push Load Edenai AI
+              <p>This example uses the Reader operating system </p>
+              <DeviceReader />
             </div>
-            <EdenaiReader />
-          </div>
 
-          <hr />
+            <hr />
 
-          <div>
             <div>
-              This example uses a API with AI. It has a limit of 500 characters. So you have to pass the text in sections.'
-              <br />First Push Load Lovo AI
+              <div>
+                This example uses a API with AI.
+                <br />First Push Load Edenai AI
+              </div>
+              <EdenaiReader />
             </div>
-            <LovoReader />
-          </div>
+
+            <hr />
+
+            <div>
+              <div>
+                This example uses a API with AI. It has a limit of 500 characters. So you have to pass the text in sections.'
+                <br />First Push Load Lovo AI
+              </div>
+              <LovoReader />
+            </div>
           </>
+          )
         : 'Loading...'}
 
     </>

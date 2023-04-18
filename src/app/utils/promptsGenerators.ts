@@ -9,18 +9,18 @@ export const headerOpenAiRequest = {
   Authorization: `Bearer ${API_KEY}`
 }
 
-export const getStoryPrompt = (character: string, characterName: string, adventure: string, place: string, ageRange: string, lesson: string, paragraphs: number) => {
-  return `Generate a story about a ${character} whose name should be ${characterName} who embarks on a ${adventure} adventure in ${place}. The story should be appropriate for children ${ageRange} years old. Add a lesson of ${lesson}. The story should have ${paragraphs} paragraphs. Be creative and feel free to add any other details or plot twists that you think would make the story more interesting. Return the story title, content and lesson learnt from the story in 50 words as different parameters`
+export const getStoryPrompt = (character: string, characterName: string, adventure: string, place: string, ageRange: string, lesson: string, paragraphs: number, promptExtended:string) => {
+  return `Generate a story about a ${character} whose name is ${characterName} who embarks on a ${adventure} adventure in a ${place}. The story must be appropriate for children between ${ageRange} years old. The story must have ${paragraphs} paragraphs. Add a lesson of ${lesson} using 50 - 70 words in a new paragraph. Add a title in the beginning with this format Title: . ${promptExtended}`
 }
 
-export function getStoryPayload (character: string, characterName: string, adventure: string, place: string, ageRange: string, lesson: string, paragraphs: number, streamed: boolean = false) {
+export function getStoryPayload (character: string, characterName: string, adventure: string, place: string, ageRange: string, lesson: string, paragraphs: number = 3, streamed: boolean = false, promptExtended: string = '') {
   let payload: OpenAIStreamPayload = {
     model: MODEL_COMPLETIONS,
     stream: streamed,
     messages: [
       {
         role: 'user',
-        content: getStoryPrompt(character, characterName, adventure, place, ageRange, lesson, paragraphs)
+        content: getStoryPrompt(character, characterName, adventure, place, ageRange, lesson, paragraphs, promptExtended)
       }
     ]
   }
