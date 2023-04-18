@@ -1,14 +1,29 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useGlobalContext } from '@/app/context/store'
 
 const EdenaiReader = () => {
-  const { BGMusic, setBGMusic, globalStory, currentStoryPage } = useGlobalContext()
+  const { BGMusic, setBGMusic, globalStory, currentStoryPage, setCurrentStoryPage } = useGlobalContext()
   const storyPaginated = globalStory.split('\n').filter((value) => value !== '')
   const [BGMusicPrevState, setBGMusicPrevState] = useState(BGMusic)
   const [audioSrc, setAudioSrc] = useState<string | undefined>()
   const [providers, setProviders] = useState('microsoft')
   const [gender, setGender] = useState('FEMALE')
+
+  const audioRef = useRef<HTMLAudioElement>(null)
+
+  useEffect(() => {
+    if (storyPaginated[currentStoryPage]) {
+      handleClick()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStoryPage])
+
+  useEffect(() => {
+    if (audioRef.current && audioSrc) {
+      audioRef.current.play()
+    }
+  }, [audioSrc])
 
   const handleClick = async () => {
     const bodyRequest = {
@@ -59,6 +74,7 @@ const EdenaiReader = () => {
 
       <audio
         controls
+        ref={audioRef}
         src={audioSrc}
         onPlay={() => {
           setBGMusicPrevState(BGMusic)
@@ -69,6 +85,9 @@ const EdenaiReader = () => {
         }}
         onEnded={() => {
           setBGMusic(BGMusicPrevState)
+          if (currentStoryPage < storyPaginated.length) {
+            setCurrentStoryPage(currentStoryPage + 1)
+          }
         }}
       />
     </>

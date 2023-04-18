@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useGlobalContext } from '@/app/context/store'
 
 const LovoReader = () => {
-  const { BGMusic, setBGMusic, globalStory, currentStoryPage } = useGlobalContext()
+  const { BGMusic, setBGMusic, globalStory, currentStoryPage, setCurrentStoryPage } = useGlobalContext()
   const storyPaginated = globalStory.split('\n').filter((value) => value !== '')
 
   const [BGMusicPrevState, setBGMusicPrevState] = useState(BGMusic)
@@ -24,6 +24,12 @@ const LovoReader = () => {
         setSkinVoices(voices)
       })
   }, [])
+
+  useEffect(() => {
+    if (storyPaginated[currentStoryPage]) {
+      handleClick()
+    }
+  }, [currentStoryPage])
 
   const handleClick = async () => {
     const bodyRequest = {
@@ -76,6 +82,9 @@ const LovoReader = () => {
         }}
         onEnded={() => {
           setBGMusic(BGMusicPrevState)
+          if (currentStoryPage < storyPaginated.length) {
+            setCurrentStoryPage(currentStoryPage + 1)
+          }
         }}
       />
     </>

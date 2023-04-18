@@ -28,6 +28,6 @@ export async function POST (request: Request) {
     const blob = new Blob([buffer], { type: 'audio/mpeg' })
     return new Response(blob)
   } catch (err) {
-    return NextResponse.json({ status: 'error', error: 'An internal server error' })
+    return NextResponse.json({ status: 'error', error: 'An internal server error', message: JSON.stringify(err) })
   }
 }

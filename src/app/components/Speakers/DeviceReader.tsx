@@ -1,9 +1,9 @@
 'use client'
 import { useGlobalContext } from '@/app/context/store'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const DeviceReader = () => {
-  const { BGMusic, setBGMusic, globalStory, currentStoryPage } = useGlobalContext()
+  const { BGMusic, setBGMusic, globalStory, currentStoryPage, setCurrentStoryPage } = useGlobalContext()
   const BGMusicOriginalState = BGMusic
   const storyPaginated = globalStory.split('\n').filter((value) => value !== '')
 
@@ -18,6 +18,20 @@ const DeviceReader = () => {
     }
   }
 
+  useEffect(() => {
+    console.log('Device Reader, page change, n: ', currentStoryPage)
+    if (storyPaginated[currentStoryPage]) {
+      playClickButton()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStoryPage])
+
+  const onDeviceReaderFinish = () => {
+    if (currentStoryPage < storyPaginated.length) {
+      setCurrentStoryPage(currentStoryPage + 1)
+    }
+  }
+
   /**
    * Read text with the device's native reader
    * @param text Text to read
@@ -27,6 +41,7 @@ const DeviceReader = () => {
     const audio = new SpeechSynthesisUtterance()
     audio.text = text
     audio.rate = 0.8
+    audio.addEventListener('end', onDeviceReaderFinish)
     speechSynthesis.speak(audio)
     return new Promise(resolve => {
       audio.onend = resolve
