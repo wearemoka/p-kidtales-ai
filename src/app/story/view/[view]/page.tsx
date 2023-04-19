@@ -1,11 +1,11 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import Style from './View.module.css'
 import { useFetchStoryItem } from '@/app/hooks/useFetchStoryItem'
-import { createMarkup } from '@/app/utils/helper'
 import { useGlobalContext } from '@/app/context/store'
 import { useEffect } from 'react'
+import { StoryPagination } from '@/app/components/StoryPagination/StoryPagination'
 import SelectSpeaker from '@/app/components/Speakers/SelectSpeaker'
+import style from './View.module.css'
 
 const View = () => {
   const { setGlobalStory } = useGlobalContext()
@@ -13,19 +13,6 @@ const View = () => {
   const path = usePathname()
   const splitPath = path.split('/')
   const { status, data } = useFetchStoryItem(splitPath[3] as string, fireBaseStoryCollection)
-  const { box, description } = Style
-
-  const splitStory = (story:string) => {
-    const storyDescription = createMarkup(story)
-    return storyDescription?.map((item, index) => {
-      const removeTitle = item.split('Title:')[1] ? item.split('Title:')[1] : item
-      if (index === 0) {
-        return <h2 key={`${index}`}>{removeTitle}</h2>
-      } else {
-        return <p className={description} key={`${index}`}>{item}</p>
-      }
-    })
-  }
 
   useEffect(() => {
     setGlobalStory(data?.story)
@@ -34,9 +21,9 @@ const View = () => {
 
   return (
     <>
-      <div className={box}>
-        {status === 'success'
-          ? splitStory(data?.story)
+      <div className={style.box}>
+        {(status === 'success')
+          ? <StoryPagination />
           : 'Loading...'}
       </div>
 
