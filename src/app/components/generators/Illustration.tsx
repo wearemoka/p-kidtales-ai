@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { getAiIllustration } from '@/app/services/ChatGPTService'
-import styles from './components.module.css'
+import styles from './components.module.scss'
 import Image from 'next/image'
 import Button from '../Story/Button/Button'
 import { useMessageTime } from '@/app/hooks/useMessageTime'

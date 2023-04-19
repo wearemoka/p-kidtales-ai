@@ -4,7 +4,7 @@ import Header from './components/Header/Header'
 import { config } from './firebase/Config/Config'
 import StoreProvider from './firebase/StoreProvider/StoreProvider'
 import AudioPlayer from './components/generators/AudioPlayer'
-import './globals.css'
+import './globals.scss'
 import { GlobalContextProvider } from './context/store'
 /**
  * For future use

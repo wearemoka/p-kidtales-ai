@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "@types/webspeechapi": "^0.0.29",
+    "sass": "^1.62.0",
     "standard": "^17.0.0"
   }
 }

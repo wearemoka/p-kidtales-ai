@@ -3,7 +3,7 @@
 import { useFetchStory } from '@/app/hooks/useFetchStory'
 import { updateDocumentInFireStore } from '@/app/services/FirebaseService'
 import Link from 'next/link'
-import Style from './list.module.css'
+import Style from './list.module.scss'
 
 const List = () => {
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string

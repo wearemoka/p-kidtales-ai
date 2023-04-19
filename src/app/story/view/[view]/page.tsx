@@ -1,6 +1,6 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import Style from './View.module.css'
+import Style from './View.module.scss'
 import { useFetchStoryItem } from '@/app/hooks/useFetchStoryItem'
 import { createMarkup } from '@/app/utils/helper'
 import DeviceReader from '@/app/components/Speakers/DeviceReader'

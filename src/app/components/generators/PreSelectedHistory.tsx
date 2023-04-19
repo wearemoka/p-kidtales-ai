@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { getAiStory, getAiStoryWithStreamBE } from '@/app/services/ChatGPTService'
 import { ages, characters, adventures, places } from '@/app/services/constants/StoryParams'
-import styles from './components.module.css'
+import styles from './components.module.scss'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import Button from '@/app/components/Story/Button/Button'

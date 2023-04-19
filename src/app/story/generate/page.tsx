@@ -4,7 +4,7 @@ import DeviceReader from '@/app/components/Speakers/DeviceReader'
 import EdenaiReader from '@/app/components/Speakers/EdenaiReader'
 import LovoReader from '@/app/components/Speakers/LovoReader'
 import RandomStory from '../random/RandomStory'
-import styles from './generate.module.css'
+import styles from './generate.module.scss'
 
 /**
  * This is a general page to show the different integrations with AI,

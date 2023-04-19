@@ -1,5 +1,5 @@
 'use client'
-import styles from './page.module.css'
+import styles from './page.module.scss'
 import Button from '@/app/components/Story/Button/Button'
 import { useState } from 'react'
 import { ages, characters, adventures, places } from '../../services/constants/StoryParams'
