@@ -24,7 +24,7 @@ const DeviceReader = () => {
       playClickButton()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStoryPage])
+  }, [currentStoryPage, globalStory])
 
   const onDeviceReaderFinish = () => {
     if (currentStoryPage < storyPaginated.length) {

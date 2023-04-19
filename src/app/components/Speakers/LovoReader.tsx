@@ -29,7 +29,8 @@ const LovoReader = () => {
     if (storyPaginated[currentStoryPage]) {
       handleClick()
     }
-  }, [currentStoryPage])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentStoryPage, globalStory])
 
   const handleClick = async () => {
     const bodyRequest = {

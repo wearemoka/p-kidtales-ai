@@ -17,7 +17,7 @@ const EdenaiReader = () => {
       handleClick()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStoryPage])
+  }, [currentStoryPage, globalStory])
 
   useEffect(() => {
     if (audioRef.current && audioSrc) {

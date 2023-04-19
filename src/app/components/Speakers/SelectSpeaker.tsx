@@ -6,16 +6,18 @@ import { useState } from 'react'
 import styles from './generate.module.css'
 
 function SelectSpeaker () {
-  const [reader, setReader] = useState('deviceReader')
+  const [reader, setReader] = useState<string>('')
 
   return (
     <>
       <select
         value={reader}
+        placeholder='Select a Reader'
         onChange={(e) => {
           setReader(e.target.value)
         }}
       >
+        <option value=''>Select a Reader</option>
         <option value='deviceReader'>device Reader</option>
         <option value='edenaiReader'>edenai Reader</option>
         <option value='lovoReader'>lovo Reader</option>

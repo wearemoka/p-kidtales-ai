@@ -19,6 +19,7 @@ function PreSelectedHistory () {
   const { setGlobalStory } = useGlobalContext()
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
+  // eslint-disable-next-line no-unused-vars
   const [answer, setAnswer] = useState<string>('Your Story will be displayed here')
   const [isCheckedStreamedAPI, setIsCheckedStreamedAPI] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
