@@ -3,7 +3,7 @@ import PreSelectedHistory from '@/app/components/generators/PreSelectedHistory'
 import SelectSpeaker from '@/app/components/Speakers/SelectSpeaker'
 import { StoryPagination } from '@/app/components/StoryPagination/StoryPagination'
 import RandomStory from '../random/RandomStory'
-import styles from './generate.module.css'
+import styles from './generate.module.scss'
 
 /**
  * This is a general page to show the different integrations with AI,

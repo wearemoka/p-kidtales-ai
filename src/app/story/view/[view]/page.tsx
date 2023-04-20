@@ -5,7 +5,7 @@ import { useGlobalContext } from '@/app/context/store'
 import { useEffect } from 'react'
 import { StoryPagination } from '@/app/components/StoryPagination/StoryPagination'
 import SelectSpeaker from '@/app/components/Speakers/SelectSpeaker'
-import style from './View.module.css'
+import style from './View.module.scss'
 
 const View = () => {
   const { setGlobalStory } = useGlobalContext()

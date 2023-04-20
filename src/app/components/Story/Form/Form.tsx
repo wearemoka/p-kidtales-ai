@@ -1,5 +1,5 @@
 'use client'
-import Style from './index.module.css'
+import Style from './index.module.scss'
 import React, { BaseSyntheticEvent, useEffect, useState } from 'react'
 
 export interface StoryFormState {
