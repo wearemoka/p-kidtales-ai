@@ -1,13 +1,11 @@
 'use client'
 import { usePathname } from 'next/navigation'
-import Style from './View.module.scss'
 import { useFetchStoryItem } from '@/app/hooks/useFetchStoryItem'
-import { createMarkup } from '@/app/utils/helper'
-import DeviceReader from '@/app/components/Speakers/DeviceReader'
-import EdenaiReader from '@/app/components/Speakers/EdenaiReader'
-import LovoReader from '@/app/components/Speakers/LovoReader'
 import { useGlobalContext } from '@/app/context/store'
 import { useEffect } from 'react'
+import { StoryPagination } from '@/app/components/StoryPagination/StoryPagination'
+import SelectSpeaker from '@/app/components/Speakers/SelectSpeaker'
+import style from './View.module.scss'
 
 const View = () => {
   const { setGlobalStory } = useGlobalContext()
@@ -15,19 +13,6 @@ const View = () => {
   const path = usePathname()
   const splitPath = path.split('/')
   const { status, data } = useFetchStoryItem(splitPath[3] as string, fireBaseStoryCollection)
-  const { box, description } = Style
-
-  const splitStory = (story:string) => {
-    const storyDescription = createMarkup(story)
-    return storyDescription?.map((item, index) => {
-      const removeTitle = item.split('Title:')[1] ? item.split('Title:')[1] : item
-      if (index === 0) {
-        return <h2 key={`${index}`}>{removeTitle}</h2>
-      } else {
-        return <p className={description} key={`${index}`}>{item}</p>
-      }
-    })
-  }
 
   useEffect(() => {
     setGlobalStory(data?.story)
@@ -36,9 +21,9 @@ const View = () => {
 
   return (
     <>
-      <div className={box}>
-        {status === 'success'
-          ? splitStory(data?.story)
+      <div className={style.box}>
+        {(status === 'success')
+          ? <StoryPagination />
           : 'Loading...'}
       </div>
 
@@ -46,32 +31,7 @@ const View = () => {
 
       {status === 'success'
         ? (
-          <>
-            <div>
-              <p>This example uses the Reader operating system </p>
-              <DeviceReader />
-            </div>
-
-            <hr />
-
-            <div>
-              <div>
-                This example uses a API with AI.
-                <br />First Push Load Edenai AI
-              </div>
-              <EdenaiReader />
-            </div>
-
-            <hr />
-
-            <div>
-              <div>
-                This example uses a API with AI. It has a limit of 500 characters. So you have to pass the text in sections.'
-                <br />First Push Load Lovo AI
-              </div>
-              <LovoReader />
-            </div>
-          </>
+          <SelectSpeaker />
           )
         : 'Loading...'}
 
