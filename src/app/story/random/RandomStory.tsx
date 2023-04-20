@@ -16,10 +16,10 @@ import { useGlobalContext } from '@/app/context/store'
 function RandomStory () {
   const { setGlobalStory } = useGlobalContext()
   const [loading, setLoading] = useState<boolean>(false)
-  const [storyResponse, setStoryResponse] = useState('')
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
   const handlerClickOnGenerateRandomStory = async () => {
+    setGlobalStory('Your Story will be displayed here')
     setLoading(true)
     const randomAge = generateRandomIndex(ages)
     const randomCharacters = generateRandomIndex(characters)
@@ -42,7 +42,6 @@ function RandomStory () {
       })
     }
     setLoading(false)
-    setStoryResponse(response.res)
     setGlobalStory(response.res)
   }
 
@@ -57,7 +56,6 @@ function RandomStory () {
 
       <div className={styles.loader}>
         {loading && <div>{loadingMessage}</div>}
-        {!loading && <div>{storyResponse}</div>}
       </div>
 
     </main>

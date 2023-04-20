@@ -18,8 +18,6 @@ const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLow
 function PreSelectedHistory () {
   const { setGlobalStory } = useGlobalContext()
   const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
-
-  const [answer, setAnswer] = useState<string>('Your Story will be displayed here')
   const [isCheckedStreamedAPI, setIsCheckedStreamedAPI] = useState<boolean>(false)
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -38,20 +36,20 @@ function PreSelectedHistory () {
   // Send the parameters to the service that communicates with
   // the AI and wait for its response to be displayed.
   async function handleClickTellMe () {
+    setGlobalStory('Your Story will be displayed here')
     setLoading(true)
     if (isCheckedStreamedAPI) {
       const paragraphs = 3
-      await getAiStoryWithStreamBE(age, character, adventure, characterName, place, lesson, setAnswer, paragraphs, isCheckedStreamedAPI)
+      await getAiStoryWithStreamBE(age, character, adventure, characterName, place, lesson, setGlobalStory, paragraphs, isCheckedStreamedAPI)
     } else {
       const response = await getAiStory(age, character, adventure, characterName, place, lesson, 3, promptExtended)
       if (response.status === 'error') {
-        setAnswer('An server error')
+        console.log('An server error')
         setLoading(false)
         return
       }
       console.log(response)
       setPrompt(response.prompt.messages[0].content)
-      setAnswer(response.res)
       setGlobalStory(response.res)
       const storyTitle = getStoryTitle(response.res)
       const slug = createSlugWithTimeStamp(storyTitle)
@@ -180,7 +178,6 @@ function PreSelectedHistory () {
 
       <div className={styles.row}>
         {loading && <div>{loadingMessage}</div>}
-        {!loading && <div>{answer}</div>}
       </div>
     </div>
   )
