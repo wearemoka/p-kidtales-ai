@@ -41,6 +41,7 @@ export default function RootLayout ({
                 </div>
               </StoreProvider>
             </FirebaseAppProvider>
+
           </ThemeProvider>
         </GlobalContextProvider>
       </body>
