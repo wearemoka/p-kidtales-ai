@@ -1,13 +1,12 @@
 'use client'
 import { FirebaseAppProvider } from 'reactfire'
-import Header from './components/Header/Header'
 import { config } from './firebase/Config/Config'
 import StoreProvider from './firebase/StoreProvider/StoreProvider'
 import AudioPlayer from './components/generators/AudioPlayer'
 import { GlobalContextProvider } from './context/store'
 import { ThemeProvider } from './ThemeProvider'
 import TopBar from './components/TopBar/TopBar'
-import './globals.scss'
+import './styles/globals.scss'
 /**
  * For future use
  * @param param0
@@ -30,7 +29,6 @@ export default function RootLayout ({
         <GlobalContextProvider>
           <ThemeProvider>
 
-            {/* <Header /> */}
             <TopBar />
             <div className='positionTopRight'>
               <AudioPlayer />
