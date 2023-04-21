@@ -6,6 +6,7 @@ import StoreProvider from './firebase/StoreProvider/StoreProvider'
 import AudioPlayer from './components/generators/AudioPlayer'
 import { GlobalContextProvider } from './context/store'
 import { ThemeProvider } from './ThemeProvider'
+import TopBar from './components/TopBar/TopBar'
 import './globals.scss'
 /**
  * For future use
@@ -29,7 +30,8 @@ export default function RootLayout ({
         <GlobalContextProvider>
           <ThemeProvider>
 
-            <Header />
+            {/* <Header /> */}
+            <TopBar />
             <div className='positionTopRight'>
               <AudioPlayer />
             </div>
