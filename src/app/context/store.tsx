@@ -2,6 +2,23 @@
 
 import React, { createContext, useContext, Dispatch, SetStateAction, useState } from 'react'
 
+interface IUserPromptSelection {
+  step: number,
+  age: string,
+  character: string,
+  name: string,
+  scenario: string,
+  lesson: string,
+}
+
+const emptyPrompt: IUserPromptSelection = {
+  step: 1,
+  age: '',
+  character: '',
+  name: '',
+  scenario: '',
+  lesson: ''
+}
 interface Props {
   children: React.ReactNode
 }
@@ -11,7 +28,9 @@ interface ContextProps {
     globalStory: string,
     setGlobalStory: Dispatch<SetStateAction<string>>,
     currentStoryPage: number,
-    setCurrentStoryPage: Dispatch<SetStateAction<number>>
+    setCurrentStoryPage: Dispatch<SetStateAction<number>>,
+    globalPrompt: IUserPromptSelection,
+    setGlobalPrompt: Dispatch<SetStateAction<IUserPromptSelection>>
 }
 
 const GlobalContext = createContext<ContextProps>({
@@ -20,16 +39,29 @@ const GlobalContext = createContext<ContextProps>({
   globalStory: '',
   setGlobalStory: string => '',
   currentStoryPage: 0,
-  setCurrentStoryPage: number => 0
+  setCurrentStoryPage: number => 0,
+  globalPrompt: emptyPrompt,
+  setGlobalPrompt: IUserPromptSelection => {}
 })
 
 export const GlobalContextProvider = ({ children }: Props) => {
   const [BGMusic, setBGMusic] = useState(false)
   const [globalStory, setGlobalStory] = useState('Your Story will be displayed here')
   const [currentStoryPage, setCurrentStoryPage] = useState(0)
+  const [globalPrompt, setGlobalPrompt] = useState(emptyPrompt)
 
   return (
-    <GlobalContext.Provider value={{ BGMusic, setBGMusic, globalStory, setGlobalStory, currentStoryPage, setCurrentStoryPage }}>
+    <GlobalContext.Provider value={{
+      BGMusic,
+      setBGMusic,
+      globalStory,
+      setGlobalStory,
+      currentStoryPage,
+      setCurrentStoryPage,
+      globalPrompt,
+      setGlobalPrompt
+    }}
+    >
       {children}
     </GlobalContext.Provider>
   )
