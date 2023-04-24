@@ -2,7 +2,7 @@
 import { useGlobalContext } from '@/app/context/store'
 import React, { useEffect, useRef } from 'react'
 
-function AudioPlayer () {
+function BGMusicPlayer () {
   const { BGMusic, setBGMusic } = useGlobalContext() // global background music
   const audioRef = useRef<HTMLAudioElement>(null)
 
@@ -21,7 +21,7 @@ function AudioPlayer () {
   return (
     <div>
       <audio
-        id='audioPlayer'
+        id='bgMusicPlayer'
         controls
         loop
         src='https://files.freemusicarchive.org/storage-freemusicarchive-org/music/ccCommunity/SalmonLikeTheFish/Music_for_the_Sleepy_Traveler/SalmonLikeTheFish_-_03_-_Glacier.mp3'
@@ -33,4 +33,4 @@ function AudioPlayer () {
   )
 }
 
-export default AudioPlayer
+export default BGMusicPlayer
