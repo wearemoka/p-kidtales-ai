@@ -25,10 +25,11 @@ body{
 }
 
 .chakra-radio{
-  padding: 14px 24px;
+  padding: 8px 24px;
   border-radius: 100px;
   border: 1px solid white;
   transition: all .3s ease-in-out;
+  white-space: nowrap;
   &[data-checked]{
     background-color: var(--white);
     color: var(--black);

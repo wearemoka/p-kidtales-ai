@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Container, Image, Heading, Text, Radio, RadioGroup, Stack } from '@chakra-ui/react'
+import { Container, Image, Heading, Text, Radio, RadioGroup, Stack, Button } from '@chakra-ui/react'
 import styles from './initial.module.scss'
 
 const Initial = () => {
@@ -22,6 +22,16 @@ const Initial = () => {
             </Stack>
           </RadioGroup>
           <Text className='caption text-center text-secondary'>Choosing the age for a story is important because it affects the length, language, and other aspects of the story.</Text>
+        </div>
+        <div className={styles.buttonBottom}>
+          <Stack direction='column'>
+            <Button aria-label='Create custom tale' rightIcon={<Image src='icons/Stars.svg' alt='' />} className='big primary'>
+              <label>Start creating my story</label>
+            </Button>
+            <Button aria-label='Create random tale' rightIcon={<Image src='icons/Dice.svg' alt='' />} className='big secondary'>
+              <label>Let KidsTales create it for me</label>
+            </Button>
+          </Stack>
         </div>
       </Container>
     </div>

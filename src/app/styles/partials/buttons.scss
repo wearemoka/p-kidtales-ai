@@ -1,3 +1,18 @@
 .chakra-button{
     border-radius: 100px;
+    height: auto;
+    &.big{
+        padding: 19px 32px;
+        font-size: 16px;
+        line-height: 20px;
+        font-weight: 600;
+    }
+    &.primary{
+        background: linear-gradient(180deg, #8826FF 0%, #A154FF 100%);
+        border: 1px solid #BE89FF;
+    }
+    &.secondary{
+        background: linear-gradient(182.48deg, rgba(255, 255, 255, 0.05) 2.09%, rgba(255, 255, 255, 0.1) 66.35%, rgba(255, 255, 255, 0.2) 97.55%);
+        border: 1px solid var(--white70);
+    }
  }

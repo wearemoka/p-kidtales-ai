@@ -1,11 +1,19 @@
 .initialPage{
     position: relative;
-    img{
+    height: 100vh;
+    &>img{
         position: absolute;
         top: -12vh;
         z-index: -1;
     }
     .contentWrapper{
-        padding-top: 40vh;
+        padding-top: 35vh;
+    }
+    .buttonBottom{
+        position: absolute;
+        width: 100%;
+        padding: 0 15px;
+        left: 0;
+        bottom: 12vh;
     }
 }
