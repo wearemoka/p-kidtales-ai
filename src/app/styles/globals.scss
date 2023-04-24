@@ -1,0 +1,17 @@
+@import './variables.css';
+@import './fonts.scss';
+
+body{
+  font-family: 'Plus Jakarta Sans';
+}
+
+.chakra-container{
+  max-width: 100%;
+  @media screen and (min-width: 767px) {
+    max-width: 80vw;
+  }
+}
+
+.chakra-button{
+   border-radius: 100px;
+}
