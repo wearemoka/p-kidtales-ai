@@ -1,8 +1,12 @@
 @import './variables.css';
-@import './fonts.scss';
+@import './partials/fonts.scss';
+@import './partials/text-styles.scss';
+@import './partials/buttons.scss';
 
 body{
   font-family: 'Plus Jakarta Sans';
+  background: radial-gradient(50% 50% at 50% 50%, rgba(151, 69, 251, 0.2) 0%, rgba(151, 69, 251, 0) 100%), #0C0416;
+  color: var(--white);
 }
 
 .chakra-container{
@@ -12,6 +16,27 @@ body{
   }
 }
 
-.chakra-button{
-   border-radius: 100px;
+/* --- text --- */
+.text-center{
+  text-align: center;
+}
+.text-secondary{
+  color: var(--white70);
+}
+
+.chakra-radio{
+  padding: 14px 24px;
+  border-radius: 100px;
+  border: 1px solid white;
+  transition: all .3s ease-in-out;
+  &[data-checked]{
+    background-color: var(--white);
+    color: var(--black);
+  }
+  .chakra-radio__control{
+    display: none;
+  }
+  .chakra-radio__label{
+    margin: 0;
+  }
 }

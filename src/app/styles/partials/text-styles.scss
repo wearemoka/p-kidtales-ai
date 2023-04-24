@@ -1,0 +1,60 @@
+.heading{
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 130%;
+    @media screen and (min-width: 767px) {
+        font-size: 56px;
+    }
+}
+
+.heading-small{
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 130%;
+    @media screen and (min-width: 767px) {
+        font-size: 28px;
+    }
+}
+
+.lead{
+    font-weight: 300;
+    font-size: 18px;
+    line-height: 140%;
+    @media screen and (min-width: 767px) {
+        font-size: 28px;
+    }
+}
+
+.body-big{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    &.bold{
+        font-weight: 600;
+    }
+    @media screen and (min-width: 767px) {
+        font-size: 18px;
+    }
+}
+
+
+.body{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    &.bold{
+        font-weight: 600;
+    }
+    @media screen and (min-width: 767px) {
+        font-size: 16px;
+    }
+}
+
+.caption{
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 140%;
+    &.bold{
+        font-weight: 600;
+    }
+}

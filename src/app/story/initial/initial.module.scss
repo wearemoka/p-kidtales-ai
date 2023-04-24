@@ -1,0 +1,11 @@
+.initialPage{
+    position: relative;
+    img{
+        position: absolute;
+        top: -12vh;
+        z-index: -1;
+    }
+    .contentWrapper{
+        padding-top: 40vh;
+    }
+}
