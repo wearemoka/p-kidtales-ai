@@ -15,7 +15,7 @@ const TopBar = () => {
 
   useEffect(() => {
     setShowBackButton(pathname !== '/')
-    setShowFlagButton(pathname === '/story/generate')
+    setShowFlagButton(pathname.startsWith('/story/view/'))
   }, [pathname])
 
   /**
@@ -38,7 +38,7 @@ const TopBar = () => {
           <Stack direction='row' spacing={{ base: 1, md: 4 }} className={styles.actions}>
             <Button
               aria-label='Go to Library'
-              rightIcon={<Image src='icons/Library.svg' alt='Books outline white icon' />}
+              rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
               onClick={() => {
                 router.push('/story/list')
               }}
@@ -48,7 +48,7 @@ const TopBar = () => {
 
             <Button
               aria-label='Music on/off'
-              rightIcon={<Image src='icons/Music.svg' alt='Books outline white icon' />}
+              rightIcon={<Image src='/icons/Music.svg' alt='Books outline white icon' />}
               onClick={musicOnOffButtonClick}
             >
               {
@@ -60,7 +60,7 @@ const TopBar = () => {
 
             <Button
               aria-label='About us'
-              rightIcon={<Image src='icons/Info.svg' alt='Books outline white icon' />}
+              rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
               onClick={() => {
                 router.push('/disclaimer')
               }}
@@ -71,7 +71,7 @@ const TopBar = () => {
             {showFlagButton &&
               <Button
                 aria-label='Flag tale as inappropriate'
-                rightIcon={<Image src='icons/Flag.svg' alt='Books outline white icon' />}
+                rightIcon={<Image src='/icons/Flag.svg' alt='Books outline white icon' />}
                 onClick={() => {
                   console.log('Flag this story.')
                 }}
