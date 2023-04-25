@@ -15,6 +15,7 @@ function NameSelect ({ title, saveOn }: Props) {
     const newStep: any = { ...globalPrompt }
     const index = saveOn as keyof typeof globalPrompt
     newStep[index] = enteredName
+    newStep.step = globalPrompt.step + 1
     setGlobalPrompt(newStep)
   }
 

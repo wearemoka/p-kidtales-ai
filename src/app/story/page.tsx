@@ -8,22 +8,9 @@ import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/uti
 const StoryPage = () => {
   const { globalPrompt, setGlobalPrompt } = useGlobalContext()
 
-  const clickChangeStep = (change:number) => {
-    const newStep = globalPrompt.step + change
-    const gp = { ...globalPrompt, step: newStep }
-    setGlobalPrompt(gp)
-  }
-
   return (
     // Remove this style
     <div className='dark'>
-
-      <div>
-        <h3>Only for devs</h3>
-        <button onClick={() => clickChangeStep(-1)}>Back </button>
-        <button onClick={() => clickChangeStep(+1)}>Next </button>
-        <hr />
-      </div>
 
       <div>Create a story for a 3-5yrs</div>
 

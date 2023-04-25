@@ -14,6 +14,7 @@ function GalleryItem ({ option, saveOn }: Props) {
     const newStep:any = { ...globalPrompt }
     const index = saveOn as keyof typeof globalPrompt
     newStep[index] = option.label
+    newStep.step = globalPrompt.step + 1
     setGlobalPrompt(newStep)
   }
 
