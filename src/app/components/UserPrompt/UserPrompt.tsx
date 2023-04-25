@@ -19,17 +19,19 @@ function UserPrompt ({ promptOptions, steps }: Props) {
 
   return (
     <>
-      <div className={step === steps.CHARACTER ? styles.active : ''}>
+      <div className={`${step === steps.CHARACTER ? styles.active : ''} ${character ? styles.seted : styles.unseted}`}>
         Once upon a time a <span onClick={() => { jumpToStepHandler(steps.CHARACTER) }}>{character || '...'}</span>
       </div>
 
-      <div className={step === steps.NAME ? styles.active : ''}>
+      <div className={`${step === steps.NAME ? styles.active : ''} ${name ? styles.seted : styles.unseted}`}>
         Called <span onClick={() => { jumpToStepHandler(steps.NAME) }}>{name || '...'}</span>
       </div>
-      <div className={step === steps.SCENARIO ? styles.active : ''}>
+
+      <div className={`${step === steps.SCENARIO ? styles.active : ''} ${scenario ? styles.seted : styles.unseted}`}>
         had an amazing adventure in the  <span onClick={() => { jumpToStepHandler(steps.SCENARIO) }}>{scenario || '...'}</span>
       </div>
-      <div className={step === steps.LESSON ? styles.active : ''}>
+
+      <div className={`${step === steps.LESSON ? styles.active : ''} ${lesson ? styles.seted : styles.unseted}`}>
         to learn about  <span onClick={() => { jumpToStepHandler(steps.LESSON) }}>{lesson || '...'}</span>
       </div>
     </>

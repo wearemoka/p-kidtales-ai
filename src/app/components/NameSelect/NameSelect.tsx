@@ -1,5 +1,5 @@
 import { useGlobalContext } from '@/app/context/store'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface Props {
     title: string,
@@ -19,10 +19,17 @@ function NameSelect ({ title, saveOn }: Props) {
     setGlobalPrompt(newStep)
   }
 
+  useEffect(() => {
+    if (inputNameRef && inputNameRef.current && globalPrompt) {
+      inputNameRef.current.value = globalPrompt.name
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   return (
     <>
       <div>{title}</div>
-      <input type='text' placeholder='name' ref={inputNameRef} value={globalPrompt.name} />
+      <input type='text' placeholder='name' ref={inputNameRef} />
       <button onClick={saveNameHandler}>GO!</button>
     </>
   )
