@@ -1,6 +1,7 @@
 'use client'
-import GallerySelect from '../components/GallerySelect/GallerySelect'
-import { useGlobalContext } from '../context/store'
+import GallerySelect from '@/app/components/GallerySelect/GallerySelect'
+import NameSelector from '@/app/components/NameSelector/NameSelector'
+import { useGlobalContext } from '@/app/context/store'
 import styles from './page.module.scss'
 
 const PROMPT_STEPS = {
@@ -58,16 +59,16 @@ const StoryPage = () => {
       <div className={globalPrompt.step === PROMPT_STEPS.LESSON ? styles.active : ''}>to learn about ...</div>
 
       {/* Display Character options */}
-      {globalPrompt.step === PROMPT_STEPS.CHARACTER && <GallerySelect title='Select a character' options={characterOpts} />}
+      {globalPrompt.step === PROMPT_STEPS.CHARACTER && <GallerySelect title='Select a character' options={characterOpts} saveOn='character' />}
 
       {/* Display Name input */}
-      {globalPrompt.step === PROMPT_STEPS.NAME && <input type='text' name='text' />}
+      {globalPrompt.step === PROMPT_STEPS.NAME && <NameSelector title='Name your character' saveOn='name' />}
 
       {/* Display Scensario options */}
-      {globalPrompt.step === PROMPT_STEPS.SCENARIO && <GallerySelect title='Select a scenario' options={scenarioOpts} />}
+      {globalPrompt.step === PROMPT_STEPS.SCENARIO && <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' />}
 
       {/* Display Lesson options */}
-      {globalPrompt.step === PROMPT_STEPS.LESSON && <GallerySelect title='Select a lesson' options={lessonOpts} />}
+      {globalPrompt.step === PROMPT_STEPS.LESSON && <GallerySelect title='Select a lesson' options={lessonOpts} saveOn='lesson' />}
     </div>
   )
 }

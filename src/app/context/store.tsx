@@ -2,7 +2,7 @@
 
 import React, { createContext, useContext, Dispatch, SetStateAction, useState } from 'react'
 
-interface IUserPromptSelection {
+export interface IUserPromptSelection {
   step: number,
   age: string,
   character: string,

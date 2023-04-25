@@ -1,4 +1,4 @@
-import GalleryItem from './GalleryItem/GalleryItem'
+import GalleryItem from '@/app/components/GallerySelect/GalleryItem/GalleryItem'
 
 interface IOptions {
   label: string,
@@ -7,16 +7,17 @@ interface IOptions {
 }
 interface Props {
   title: string,
-  options: IOptions[]
+  options: IOptions[],
+  saveOn: string
 }
 
-function GallerySelect ({ title, options }: Props) {
+function GallerySelect ({ title, options, saveOn }: Props) {
   return (
     <>
       <div>{title}</div>
       {options.map((opt, index) => (
         <div key={index}>
-          <GalleryItem option={opt} />
+          <GalleryItem option={opt} saveOn={saveOn} />
         </div>
       ))}
     </>
