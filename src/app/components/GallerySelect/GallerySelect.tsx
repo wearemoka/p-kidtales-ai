@@ -1,10 +1,6 @@
 import GalleryItem from '@/app/components/GallerySelect/GalleryItem/GalleryItem'
+import { IOptions } from '@/app/utils/interfaces'
 
-interface IOptions {
-  label: string,
-  imgPath?: string,
-  alt?: string
-}
 interface Props {
   title: string,
   options: IOptions[],

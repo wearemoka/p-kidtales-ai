@@ -1,35 +1,9 @@
 'use client'
 import GallerySelect from '@/app/components/GallerySelect/GallerySelect'
-import NameSelector from '@/app/components/NameSelector/NameSelector'
+import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
-import styles from './page.module.scss'
-
-const PROMPT_STEPS = {
-  CHARACTER: 1,
-  NAME: 2,
-  SCENARIO: 3,
-  LESSON: 4
-}
-
-const characterOpts = [
-  { label: 'Giraffe', imgPath: '/thirteen.svg', alt: 'Giraffe' },
-  { label: 'Whale', imgPath: '/thirteen.svg', alt: 'Whale' },
-  { label: 'Dog', imgPath: '/thirteen.svg', alt: 'Dog' },
-  { label: 'Rabbit', imgPath: '/thirteen.svg', alt: 'Rabbit' }
-]
-
-const scenarioOpts = [
-  { label: 'Ocean', imgPath: '/thirteen.svg', alt: 'Ocean' },
-  { label: 'Jungle', imgPath: '/thirteen.svg', alt: 'Jungle' },
-  { label: 'Castle', imgPath: '/thirteen.svg', alt: 'Castle' },
-  { label: 'Moon', imgPath: '/thirteen.svg', alt: 'Moon' }
-]
-const lessonOpts = [
-  { label: 'Friendship' },
-  { label: 'Family' },
-  { label: 'Inclusivity' },
-  { label: 'Respect' }
-]
+import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
+import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
 
 const StoryPage = () => {
   const { globalPrompt, setGlobalPrompt } = useGlobalContext()
@@ -53,16 +27,14 @@ const StoryPage = () => {
 
       <div>Create a story for a 3-5yrs</div>
 
-      <div className={globalPrompt.step === PROMPT_STEPS.CHARACTER ? styles.active : ''}>Once upon a time a ...</div>
-      <div className={globalPrompt.step === PROMPT_STEPS.NAME ? styles.active : ''}>Called...</div>
-      <div className={globalPrompt.step === PROMPT_STEPS.SCENARIO ? styles.active : ''}>had an amazing adventure in the ...</div>
-      <div className={globalPrompt.step === PROMPT_STEPS.LESSON ? styles.active : ''}>to learn about ...</div>
+      {/* Display the User prompt */}
+      <UserPrompt promptOptions={globalPrompt} steps={PROMPT_STEPS} />
 
       {/* Display Character options */}
       {globalPrompt.step === PROMPT_STEPS.CHARACTER && <GallerySelect title='Select a character' options={characterOpts} saveOn='character' />}
 
       {/* Display Name input */}
-      {globalPrompt.step === PROMPT_STEPS.NAME && <NameSelector title='Name your character' saveOn='name' />}
+      {globalPrompt.step === PROMPT_STEPS.NAME && <NameSelect title='Name your character' saveOn='name' />}
 
       {/* Display Scensario options */}
       {globalPrompt.step === PROMPT_STEPS.SCENARIO && <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' />}

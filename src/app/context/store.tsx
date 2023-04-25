@@ -1,15 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, Dispatch, SetStateAction, useState } from 'react'
-
-export interface IUserPromptSelection {
-  step: number,
-  age: string,
-  character: string,
-  name: string,
-  scenario: string,
-  lesson: string,
-}
+import { IUserPromptSelection } from '@/app/utils/interfaces'
 
 const emptyPrompt: IUserPromptSelection = {
   step: 1,

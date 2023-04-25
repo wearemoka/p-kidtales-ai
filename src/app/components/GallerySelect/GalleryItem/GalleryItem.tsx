@@ -1,11 +1,7 @@
 import { useGlobalContext } from '@/app/context/store'
+import { IOptions } from '@/app/utils/interfaces'
 import Image from 'next/image'
 import React from 'react'
-interface IOptions {
-  label: string,
-  imgPath?: string,
-  alt?: string
-}
 
 interface Props {
   option: IOptions,

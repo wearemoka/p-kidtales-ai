@@ -1,4 +1,4 @@
-import { IUserPromptSelection } from '@/app/context/store'
+import { IUserPromptSelection } from '@/app/utils/interfaces'
 import styles from './userprompt.module.scss'
 
 interface Props {
