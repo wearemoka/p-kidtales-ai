@@ -22,7 +22,7 @@ function NameSelect ({ title, saveOn }: Props) {
   return (
     <>
       <div>{title}</div>
-      <input type='text' placeholder='name' ref={inputNameRef} />
+      <input type='text' placeholder='name' ref={inputNameRef} value={globalPrompt.name} />
       <button onClick={saveNameHandler}>GO!</button>
     </>
   )

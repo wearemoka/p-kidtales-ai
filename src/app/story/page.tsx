@@ -6,7 +6,7 @@ import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
 import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
 
 const StoryPage = () => {
-  const { globalPrompt, setGlobalPrompt } = useGlobalContext()
+  const { globalPrompt } = useGlobalContext()
 
   return (
     // Remove this style
