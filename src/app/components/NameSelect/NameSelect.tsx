@@ -6,7 +6,7 @@ interface Props {
     saveOn: string
 }
 
-function NameSelector ({ title, saveOn }: Props) {
+function NameSelect ({ title, saveOn }: Props) {
   const { globalPrompt, setGlobalPrompt } = useGlobalContext()
   const inputNameRef = useRef<HTMLInputElement>(null)
 
@@ -27,4 +27,4 @@ function NameSelector ({ title, saveOn }: Props) {
   )
 }
 
-export default NameSelector
+export default NameSelect
