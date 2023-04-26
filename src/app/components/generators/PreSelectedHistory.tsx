@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { getAiStory, getAiStoryWithStreamBE } from '@/app/services/ChatGPTService'
-import { ages, characters, places } from '@/app/services/constants/StoryParams'
+import { ages, characters, lessons, places } from '@/app/services/constants/StoryParams'
 import styles from './components.module.scss'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
@@ -120,15 +120,17 @@ function PreSelectedHistory () {
           {places.map(e => <option key={`opt-place-${e}`} value={e}>{e.toLowerCase()}</option>)}
         </select>
 
-        <input
-          type='text'
+        withe a lesson about
+        <select
+          className={styles.selectors}
           value={lesson}
-          placeholder='Lesson'
-          name='lesson'
           onChange={(e) => {
+            console.log(e.target.value)
             setLesson(e.target.value)
           }}
-        />
+        >
+          {lessons.map(e => <option key={`opt-lesson-${e}`} value={e}>{e.toLocaleLowerCase()}</option>)}
+        </select>
 
         <hr />
 
