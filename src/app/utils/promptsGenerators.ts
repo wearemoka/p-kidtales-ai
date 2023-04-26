@@ -12,11 +12,9 @@ const OPENAI_PRESENCE_PENALTY = process.env.OPENAI_PRESENCE_PENALTY ? parseInt(p
 const OPENAI_MAX_TOKENS = process.env.OPENAI_MAX_TOKENS ? parseInt(process.env.OPENAI_MAX_TOKENS) : 100
 const OPENAI_N = process.env.OPENAI_N ? parseInt(process.env.OPENAI_N) : 1
 
-const PROMPT_TEMPLATE_UNDER_2 = 'I want you to act as a storyteller and come up with an entertaining story that is engaging, imaginative, and captivating for the audience. I need you to create a tale for children under two years.The tone of voice for this tale should be warm, gentle, enthusiastic, and smooth.The language should be very simple. The story should be very short. I want to create between 4 and 8 short paragraph with a minimum of 3 and a maximum of 10 words. I need you to add word rhythm in the sentences like poetry style. In this story, the character is a {CHARACTER} named {CHARACTERNAME}. The story is placed on a {PLACE}. It should have a lesson included about {LESSON}. Add a fun, interesting short title.'
-
-const PROMPT_TEMPLATE_BETWEEN_2_5 = 'I want you to act as a storyteller and come up with entertaining stories that are engaging, imaginative, and captivating for the audience. I need you to create a tale for children between 3 and 5 years.The tone of voice for this tale should be lively, fun, and engaging.The language should be simple.The story will between 6 and 12 paragraphs with no more than 20 words.Describe a little the characters and scenario.Do not add rhythm in sentences, and please do not talk directly to the audience. In this story, the character is a {CHARACTER} named {CHARACTERNAME}. The story is placed on a {PLACE}. It should have a lesson included about {LESSON}. The lesson has to be implicit in the story. Add an attractive and fun title.'
-
-const PROMPT_TEMPLATE_BETWEEN_6_9 = 'I want you to act as a storyteller and come up with entertaining stories that are engaging, imaginative, and captivating for the audience. I need you to create a tale for children between 6 and 9 years.The tone of voice for this tale should be engaging and informative.Language should be a little complex and I need you to build a complete plot.Describe the characters, scenarios, and situations. The story will have between 12 and 16 paragraphs with no more than 30 words per paragraph.Do not add rhythm in sentences, and please do not talk directly to the audience. In this story, the character is a {CHARACTER} named {CHARACTERNAME}. The story is placed on a {PLACE}. It should have a lesson included about {LESSON}. Add a title to the tale.'
+const PROMPT_TEMPLATE_UNDER_2 = process.env.PROMPT_TEMPLATE_UNDER_2 || ''
+const PROMPT_TEMPLATE_BETWEEN_2_5 = process.env.PROMPT_TEMPLATE_BETWEEN_2_5 || ''
+const PROMPT_TEMPLATE_BETWEEN_6_9 = process.env.PROMPT_TEMPLATE_BETWEEN_6_9 || ''
 
 export const headerOpenAiRequest = {
   'Content-Type': 'application/json',
@@ -28,15 +26,12 @@ export const getStoryPrompt = (character: string, characterName: string, place: 
 
   switch (ageRange) {
     case ages[0]:
-      console.log('prompt ', ages[0])
       templateStory = PROMPT_TEMPLATE_UNDER_2
       break
     case ages[1]:
-      console.log('prompt ', ages[1])
       templateStory = PROMPT_TEMPLATE_BETWEEN_2_5
       break
     case ages[2]:
-      console.log('prompt ', ages[2])
       templateStory = PROMPT_TEMPLATE_BETWEEN_6_9
       break
   }
