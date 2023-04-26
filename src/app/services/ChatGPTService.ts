@@ -34,13 +34,13 @@ export async function getAiIllustration (about: string) {
  * @param paragraphs number of paragraphs expected
  * @returns promise
  */
-export async function getAiStory (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson: string = '', paragraphs: number = 3, promptExtended: string = '') {
+export async function getAiStory (ageRange: string, character: string, characterName: string = '', place: string, lesson: string = '', paragraphs: number = 3, promptExtended: string = '') {
   const response = await fetch('/api/story', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({ ageRange, character, adventure, characterName, place, lesson, paragraphs, promptExtended })
+    body: JSON.stringify({ ageRange, character, characterName, place, lesson })
   })
 
   const jsonResponse = await response.json()
@@ -52,14 +52,13 @@ export async function getAiStory (ageRange: string, character: string, adventure
  * adds constraints to the story.
  * @param ageRange the age range, e.g. 5-7
  * @param character a character, e.g. dog
- * @param adventure type of adventure, e.g. fable
  * @param place where the story take place, e.g. farm
  * @param paragraphs number of paragraphs expected
  * @param callback a function to set the streamed response
  * @param paragraphs number of paragraphs
  * @param streamed use a stream on response
  */
-export async function getAiStoryWithStreamBE (ageRange: string, character: string, adventure: string, characterName: string = '', place: string, lesson: string = '', callback: (result: string) => void, paragraphs: number = 3, streamed:boolean = true) {
+export async function getAiStoryWithStreamBE (ageRange: string, character: string, characterName: string = '', place: string, lesson: string = '', callback: (result: string) => void, streamed:boolean = true) {
   const response = await fetch('/api/story/stream', {
     method: 'POST',
     headers: {
@@ -68,11 +67,9 @@ export async function getAiStoryWithStreamBE (ageRange: string, character: strin
     body: JSON.stringify({
       ageRange,
       character,
-      adventure,
       characterName,
       place,
       lesson,
-      paragraphs,
       streamed
     })
   })
