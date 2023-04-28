@@ -42,7 +42,7 @@ function NameSelect ({ title, saveOn }: Props) {
     <>
       <div>{title}</div>
       <input type='text' placeholder='name' ref={inputNameRef} onChange={nameChangeHandle} />
-      <button className={validName ? styles.enabled : styles.disabled} onClick={saveNameHandler} disabled={validName}>GO!</button>
+      <button className={validName ? styles.enabled : styles.disabled} onClick={saveNameHandler}>GO!</button>
     </>
   )
 }
