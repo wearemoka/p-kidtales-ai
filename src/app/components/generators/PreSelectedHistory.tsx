@@ -113,7 +113,6 @@ function PreSelectedHistory () {
           className={styles.selectors}
           value={place}
           onChange={(e) => {
-            console.log(e.target.value)
             setPlace(e.target.value)
           }}
         >
@@ -125,7 +124,6 @@ function PreSelectedHistory () {
           className={styles.selectors}
           value={lesson}
           onChange={(e) => {
-            console.log(e.target.value)
             setLesson(e.target.value)
           }}
         >

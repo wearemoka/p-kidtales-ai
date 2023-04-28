@@ -29,9 +29,9 @@ export async function getAiIllustration (about: string) {
  * Requests a story to the AI using internal API
  * @param ageRange the age range, e.g. 5-7
  * @param character a character, e.g. dog
- * @param adventure type of adventure, e.g. fable
+ * @param characterName the name of character
  * @param place where the story take place, e.g. farm
- * @param paragraphs number of paragraphs expected
+ * @param lesson a lesson for the story, e.g. friendship
  * @returns promise
  */
 export async function getAiStory (ageRange: string, character: string, characterName: string = '', place: string, lesson: string = '') {
@@ -52,10 +52,10 @@ export async function getAiStory (ageRange: string, character: string, character
  * adds constraints to the story.
  * @param ageRange the age range, e.g. 5-7
  * @param character a character, e.g. dog
+ * @param characterName the name of character
  * @param place where the story take place, e.g. farm
- * @param paragraphs number of paragraphs expected
+ * @param lesson a lesson for the story, e.g. friendship
  * @param callback a function to set the streamed response
- * @param paragraphs number of paragraphs
  * @param streamed use a stream on response
  */
 export async function getAiStoryWithStreamBE (ageRange: string, character: string, characterName: string = '', place: string, lesson: string = '', callback: (result: string) => void, streamed:boolean = true) {
