@@ -1,4 +1,5 @@
 import { useGlobalContext } from '@/app/context/store'
+import { PROMPT_STEPS } from '@/app/utils/constants'
 import { IOptions } from '@/app/utils/interfaces'
 import Image from 'next/image'
 import React from 'react'
@@ -14,7 +15,9 @@ function GalleryItem ({ option, saveOn }: Props) {
     const newStep:any = { ...globalPrompt }
     const index = saveOn as keyof typeof globalPrompt
     newStep[index] = option.label
-    newStep.step = globalPrompt.step + 1
+    if (globalPrompt.step !== PROMPT_STEPS.LESSON) {
+      newStep.step = globalPrompt.step + 1
+    }
     setGlobalPrompt(newStep)
   }
 

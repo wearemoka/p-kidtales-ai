@@ -6,6 +6,7 @@ import styles from './page.module.scss'
 import { useRouter } from 'next/navigation'
 import { useGlobalContext } from '@/app/context/store'
 import { PROMPT_STEPS } from '@/app/utils/constants'
+import { ages } from '@/app/services/constants/StoryParams'
 
 const HomePage = () => {
   const router = useRouter()
@@ -33,9 +34,7 @@ const HomePage = () => {
 
           <RadioGroup onChange={setAge} value={age} className='body-big' mb={3}>
             <Stack direction='row' justify='center'>
-              <Radio value='0-2'>0-2 yrs</Radio>
-              <Radio value='3-5'>3-5 yrs</Radio>
-              <Radio value='6-8'>6-8 yrs</Radio>
+              {ages.map((age) => <Radio key={`age-option-${age}`} value={age}>{age} yrs</Radio>)}
             </Stack>
           </RadioGroup>
 

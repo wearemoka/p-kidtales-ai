@@ -4,10 +4,17 @@ import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
 import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
-import { Center, VStack } from '@chakra-ui/react'
+import { Button, Center, VStack } from '@chakra-ui/react'
+import { getAiStory } from '@/app/services/ChatGPTService'
 
 const StoryPage = () => {
   const { globalPrompt } = useGlobalContext()
+
+  const writeStoryHandler = async () => {
+    const { age, character, name, scenario, lesson } = globalPrompt
+    const response = await getAiStory(age, character, name, scenario, lesson)
+    console.log(response)
+  }
 
   return (
     <VStack>
@@ -28,7 +35,16 @@ const StoryPage = () => {
         {globalPrompt.step === PROMPT_STEPS.SCENARIO && <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' />}
 
         {/* Display Lesson options */}
-        {globalPrompt.step === PROMPT_STEPS.LESSON && <GallerySelect title='Select a lesson' options={lessonOpts} saveOn='lesson' />}
+        {globalPrompt.step === PROMPT_STEPS.LESSON &&
+          <VStack>
+            <GallerySelect title='Select a lesson' options={lessonOpts} saveOn='lesson' />
+            <Button
+              variant='outline'
+              onClick={writeStoryHandler}
+            >
+              Write my Own Lesson
+            </Button>
+          </VStack>}
       </Center>
     </VStack>
   )
