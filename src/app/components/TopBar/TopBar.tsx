@@ -39,6 +39,7 @@ const TopBar = () => {
             <Button
               aria-label='Go to Library'
               rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
+              className='md_secondary'
               onClick={() => {
                 router.push('/story/list')
               }}
@@ -49,14 +50,9 @@ const TopBar = () => {
             <Button
               aria-label='Music on/off'
               rightIcon={<Image src='/icons/Music.svg' alt='Books outline white icon' />}
+              display={{ base: 'block', md: 'none' }}
               onClick={musicOnOffButtonClick}
-            >
-              {
-              BGMusic
-                ? <label>Music Off</label>
-                : <label>Music On</label>
-              }
-            </Button>
+            />
 
             <Button
               aria-label='About us'
@@ -64,9 +60,7 @@ const TopBar = () => {
               onClick={() => {
                 router.push('/disclaimer')
               }}
-            >
-              <label>Info</label>
-            </Button>
+            />
 
             {showFlagButton &&
               <Button
