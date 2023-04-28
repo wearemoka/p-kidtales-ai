@@ -1,4 +1,5 @@
 import { OpenAIStreamPayload } from '@/app/utils/openAIStream'
+import { ages } from '@/app/services/constants/StoryParams'
 
 const API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY
 const MODEL_COMPLETIONS = process.env.NEXT_PUBLIC_MODEL_COMPLETIONS || 'gpt-3.5-turbo'
@@ -11,23 +12,47 @@ const OPENAI_PRESENCE_PENALTY = process.env.OPENAI_PRESENCE_PENALTY ? parseInt(p
 const OPENAI_MAX_TOKENS = process.env.OPENAI_MAX_TOKENS ? parseInt(process.env.OPENAI_MAX_TOKENS) : 100
 const OPENAI_N = process.env.OPENAI_N ? parseInt(process.env.OPENAI_N) : 1
 
+const PROMPT_TEMPLATE_UNDER_2 = process.env.PROMPT_TEMPLATE_UNDER_2 || ''
+const PROMPT_TEMPLATE_BETWEEN_2_5 = process.env.PROMPT_TEMPLATE_BETWEEN_2_5 || ''
+const PROMPT_TEMPLATE_BETWEEN_6_9 = process.env.PROMPT_TEMPLATE_BETWEEN_6_9 || ''
+
 export const headerOpenAiRequest = {
   'Content-Type': 'application/json',
   Authorization: `Bearer ${API_KEY}`
 }
 
-export const getStoryPrompt = (character: string, characterName: string, adventure: string, place: string, ageRange: string, lesson: string, paragraphs: number, promptExtended:string) => {
-  return `Generate a story about a ${character} whose name is ${characterName} who embarks on a ${adventure} adventure in a ${place}. The story must be appropriate for children between ${ageRange} years old. The story must have ${paragraphs} paragraphs. Add a lesson of ${lesson} using 50 - 70 words in a new paragraph. Add a title in the beginning with this format Title: . ${promptExtended}`
+export const getStoryPrompt = (character: string, characterName: string, place: string, ageRange: string, lesson: string) => {
+  let templateStory = ''
+
+  switch (ageRange) {
+    case ages[0]:
+      templateStory = PROMPT_TEMPLATE_UNDER_2
+      break
+    case ages[1]:
+      templateStory = PROMPT_TEMPLATE_BETWEEN_2_5
+      break
+    case ages[2]:
+      templateStory = PROMPT_TEMPLATE_BETWEEN_6_9
+      break
+  }
+
+  templateStory = templateStory
+    .replace('{CHARACTER}', character)
+    .replace('{CHARACTERNAME}', characterName)
+    .replace('{PLACE}', place)
+    .replace('{LESSON}', lesson)
+
+  return templateStory
 }
 
-export function getStoryPayload (character: string, characterName: string, adventure: string, place: string, ageRange: string, lesson: string, paragraphs: number = 3, streamed: boolean = false, promptExtended: string = '') {
+export function getStoryPayload (character: string, characterName: string, place: string, ageRange: string, lesson: string, streamed: boolean = false) {
   let payload: OpenAIStreamPayload = {
     model: MODEL_COMPLETIONS,
     stream: streamed,
     messages: [
       {
         role: 'user',
-        content: getStoryPrompt(character, characterName, adventure, place, ageRange, lesson, paragraphs, promptExtended)
+        content: getStoryPrompt(character, characterName, place, ageRange, lesson)
       }
     ],
     temperature: OPENAI_TEMPERATURE,
