@@ -3,12 +3,19 @@
 import { useState } from 'react'
 import { Container, Image, Heading, Text, Radio, RadioGroup, Stack, Button } from '@chakra-ui/react'
 import styles from './page.module.scss'
+import { useRouter } from 'next/navigation'
+import { useGlobalContext } from '@/app/context/store'
+import { PROMPT_STEPS } from '@/app/utils/constants'
 
 const HomePage = () => {
+  const router = useRouter()
   const [age, setAge] = useState<string>('')
+  const { globalPrompt, setGlobalPrompt } = useGlobalContext()
 
   const startCreateStoryButtonHandler = () => {
-    console.log('Start creating my story')
+    const newStep: any = { ...globalPrompt, age, step: PROMPT_STEPS.CHARACTER }
+    setGlobalPrompt(newStep)
+    router.push('/story')
   }
 
   const randomizesStoryButtonHandler = () => {
