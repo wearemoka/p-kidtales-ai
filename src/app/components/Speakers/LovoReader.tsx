@@ -4,7 +4,7 @@ import { useGlobalContext } from '@/app/context/store'
 
 const LovoReader = () => {
   const { BGMusic, setBGMusic, globalStory, currentStoryPage, setCurrentStoryPage } = useGlobalContext()
-  const storyPaginated = globalStory.split('\n').filter((value) => value !== '')
+  const storyPaginated = globalStory.split('\n\n').filter((value) => value !== '')
 
   const [BGMusicPrevState, setBGMusicPrevState] = useState(BGMusic)
   const audioRef = useRef<HTMLAudioElement>(null)
