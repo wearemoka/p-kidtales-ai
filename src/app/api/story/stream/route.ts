@@ -7,9 +7,9 @@ export const config = {
 }
 
 export async function POST (req: Request, res: NextApiResponse): Promise<Response> {
-  const { ageRange, character, adventure, characterName, place, lesson, paragraphs, streamed } = await req.json()
+  const { ageRange, character, characterName, place, lesson, streamed } = await req.json()
 
-  const prompt = getStoryPayload(character, characterName, adventure, place, ageRange, lesson, paragraphs, streamed)
+  const prompt = getStoryPayload(character, characterName, place, ageRange, lesson, streamed)
 
   const stream = await OpenAIStream(prompt)
   return new Response(stream)
