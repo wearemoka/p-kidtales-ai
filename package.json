@@ -11,6 +11,7 @@
   "dependencies": {
     "@chakra-ui/next-js": "^2.1.2",
     "@chakra-ui/react": "^2.5.5",
+    "@ducanh2912/next-pwa": "^8.3.0",
     "@emotion/react": "^11.10.6",
     "@emotion/styled": "^11.10.6",
     "@types/node": "18.15.1",

@@ -6,6 +6,7 @@ import StoreProvider from './firebase/StoreProvider/StoreProvider'
 import AudioPlayer from './components/generators/AudioPlayer'
 import { GlobalContextProvider } from './context/store'
 import { ThemeProvider } from './ThemeProvider'
+import RegisterPWA from './RegisterPWA'
 import './globals.scss'
 /**
  * For future use
@@ -25,7 +26,15 @@ export default function RootLayout ({
 }) {
   return (
     <html lang='en'>
+
+      <head>
+        <meta name='viewport' content='width=device-width,initial-scale=1' />
+        <link rel='manifest' href='/manifest.json' />
+      </head>
+
       <body>
+        <RegisterPWA />
+
         <GlobalContextProvider>
           <ThemeProvider>
 
