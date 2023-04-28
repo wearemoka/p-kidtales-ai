@@ -2,14 +2,13 @@
 
 import React, { useState } from 'react'
 import { getAiStory, getAiStoryWithStreamBE } from '@/app/services/ChatGPTService'
-import { ages, characters, adventures, places } from '@/app/services/constants/StoryParams'
+import { ages, characters, lessons, places } from '@/app/services/constants/StoryParams'
 import styles from './components.module.scss'
 import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import Button from '@/app/components/Story/Button/Button'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
 import { useGlobalContext } from '@/app/context/store'
-import { TextArea } from '../TextArea/TextArea'
 
 const article = (char: String) => (['a', 'e', 'i', 'o', 'u'].includes(char.toLowerCase())) ? 'an' : 'a'
 
@@ -24,14 +23,12 @@ function PreSelectedHistory () {
   // selected options
   const [age, setAge] = useState(ages[0])
   const [character, setCharacter] = useState(characters[0])
-  const [adventure, setAdventure] = useState(adventures[0])
   const [place, setPlace] = useState(places[0])
   const [characterName, setCharacterName] = useState('')
   const [lesson, setLesson] = useState('')
 
   // TODO: this is only for improve the prompt
   const [prompt, setPrompt] = useState('')
-  const [promptExtended, setPromptExtended] = useState('')
 
   // Send the parameters to the service that communicates with
   // the AI and wait for its response to be displayed.
@@ -39,10 +36,9 @@ function PreSelectedHistory () {
     setGlobalStory('Your Story will be displayed here')
     setLoading(true)
     if (isCheckedStreamedAPI) {
-      const paragraphs = 3
-      await getAiStoryWithStreamBE(age, character, adventure, characterName, place, lesson, setGlobalStory, paragraphs, isCheckedStreamedAPI)
+      await getAiStoryWithStreamBE(age, character, characterName, place, lesson, setGlobalStory, isCheckedStreamedAPI)
     } else {
-      const response = await getAiStory(age, character, adventure, characterName, place, lesson, 3, promptExtended)
+      const response = await getAiStory(age, character, characterName, place, lesson)
       if (response.status === 'error') {
         console.log('An server error')
         setLoading(false)
@@ -57,7 +53,7 @@ function PreSelectedHistory () {
         addDocumentInFireStore(fireBaseStoryCollection, {
           title: storyTitle,
           slug,
-          prompt: [age, character, adventure, characterName, place],
+          prompt: [age, character, characterName, place],
           story: response.res
         })
       }
@@ -111,54 +107,29 @@ function PreSelectedHistory () {
           }}
         />
 
-        who embarks on {article(adventure.charAt(0))}
-
-        <select
-          className={styles.selectors}
-          value={adventure}
-          onChange={(e) => {
-            setAdventure(e.target.value)
-          }}
-        >
-          {adventures.map(e => <option key={`opt-adventure-${e}`} value={e}>{e.toLowerCase()}</option>)}
-        </select>
-
         in {article(place.charAt(0))}
 
         <select
           className={styles.selectors}
           value={place}
           onChange={(e) => {
-            console.log(e.target.value)
             setPlace(e.target.value)
           }}
         >
           {places.map(e => <option key={`opt-place-${e}`} value={e}>{e.toLowerCase()}</option>)}
         </select>
 
-        <input
-          type='text'
+        withe a lesson about
+        <select
+          className={styles.selectors}
           value={lesson}
-          placeholder='Lesson'
-          name='lesson'
           onChange={(e) => {
             setLesson(e.target.value)
           }}
-        />
+        >
+          {lessons.map(e => <option key={`opt-lesson-${e}`} value={e}>{e.toLocaleLowerCase()}</option>)}
+        </select>
 
-        <hr />
-
-        <div>
-          <TextArea
-            label='Extra values to define prompt'
-            placeHolder='extend de prompt'
-            name='promptSettings'
-            value={promptExtended}
-            onChange={function (value: string, name: string): void {
-              setPromptExtended(value)
-            }}
-          />
-        </div>
         <hr />
 
         <h2>current prompt</h2>

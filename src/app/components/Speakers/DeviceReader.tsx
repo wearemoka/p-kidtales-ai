@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 const DeviceReader = () => {
   const { BGMusic, setBGMusic, globalStory, currentStoryPage, setCurrentStoryPage } = useGlobalContext()
   const BGMusicOriginalState = BGMusic
-  const storyPaginated = globalStory.split('\n').filter((value) => value !== '')
+  const storyPaginated = globalStory.split('\n\n').filter((value) => value !== '')
 
   const playClickButton = async () => {
     setBGMusic(false)

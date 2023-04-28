@@ -2,7 +2,7 @@
 import styles from './page.module.scss'
 import Button from '@/app/components/Story/Button/Button'
 import { useState } from 'react'
-import { ages, characters, adventures, places } from '../../services/constants/StoryParams'
+import { ages, characters, places, lessons } from '../../services/constants/StoryParams'
 import { getAiStory } from '../../services/ChatGPTService'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 import { createSlugWithTimeStamp, generateRandomIndex, getStoryTitle } from '@/app/utils/helper'
@@ -23,10 +23,10 @@ function RandomStory () {
     setLoading(true)
     const randomAge = generateRandomIndex(ages)
     const randomCharacters = generateRandomIndex(characters)
-    const randomAdventures = generateRandomIndex(adventures)
     const randomPlace = generateRandomIndex(places)
+    const randomLesson = generateRandomIndex(lessons)
 
-    const response = await getAiStory(randomAge, randomCharacters, randomAdventures, 'Steve', randomPlace)
+    const response = await getAiStory(randomAge, randomCharacters, 'Steve', randomPlace, randomLesson)
     if (response.status === 'error') {
       setLoading(false)
       return
@@ -37,7 +37,7 @@ function RandomStory () {
       addDocumentInFireStore(fireBaseStoryCollection, {
         title: storyTitle,
         slug,
-        prompt: [randomAge, randomCharacters, randomAdventures, 'Steve', randomPlace],
+        prompt: [randomAge, randomCharacters, 'Steve', randomPlace, randomLesson],
         story: response.res
       })
     }

@@ -5,7 +5,7 @@ import styles from './components.module.css'
 
 export function StoryPagination () {
   const { globalStory, setGlobalStory, currentStoryPage, setCurrentStoryPage } = useGlobalContext()
-  const storyPaginated = globalStory?.split('\n').filter((value) => value !== '')
+  const storyPaginated = globalStory?.split('\n\n').filter((value) => value !== '')
   const storyLength = Array.isArray(storyPaginated) ? storyPaginated.length : 1
 
   useEffect(() => {

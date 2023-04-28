@@ -5,10 +5,10 @@ import { NextResponse } from 'next/server'
 const URI_API = process.env.NEXT_PUBLIC_OPENAI_API_URL
 
 export async function POST (request: Request) {
-  const { ageRange, character, adventure, characterName, place, lesson, paragraphs, promptExtended } = await request.json()
+  const { ageRange, character, characterName, place, lesson } = await request.json()
 
   try {
-    const prompt = getStoryPayload(character, characterName, adventure, place, ageRange, lesson, paragraphs, false, promptExtended)
+    const prompt = getStoryPayload(character, characterName, place, ageRange, lesson, false)
 
     const res = await fetch(`${URI_API}/chat/completions`, {
       method: 'POST',
