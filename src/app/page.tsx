@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Container, Image, Heading, Text, Radio, RadioGroup, Stack, Button } from '@chakra-ui/react'
+import { Container, Image, Heading, Text, Radio, RadioGroup, Stack, Button, Grid, GridItem, Box } from '@chakra-ui/react'
 import styles from './page.module.scss'
 import { useRouter } from 'next/navigation'
 import { useGlobalContext } from '@/app/context/store'
@@ -29,40 +29,48 @@ const HomePage = () => {
       <Container>
 
         <div className={styles.contentWrapper}>
-          <Heading as='h1' className='heading text-center' mb={10}>Create your own unique story with AI.</Heading>
-          <Text className='lead text-center' mb={3}>Create a story for </Text>
+          <Grid templateColumns='repeat(12, 1fr)' gap={4}>
+            <GridItem colSpan={{ lg: 2, md: 0, base: 0 }} />
+            <GridItem colSpan={{ lg: 9, md: 12, base: 12 }}>
+              <Heading as='h1' className='heading text-center' mb={10}>Unleash your imagination with AI-powered story creation</Heading>
+              <Text className='body-big text-center' mb={3}>Create a story for </Text>
 
-          <RadioGroup onChange={setAge} value={age} className='body-big' mb={3}>
-            <Stack direction='row' justify='center'>
-              {ages.map((age) => <Radio key={`age-option-${age}`} value={age}>{age} yrs</Radio>)}
-            </Stack>
-          </RadioGroup>
+              <RadioGroup onChange={setAge} value={age} className='body-big' mb={3}>
+                <Stack direction='row' justify='center' spacing={{ md: '20px', base: '10px' }}>
+                  {ages.map((age) => <Radio key={`age-option-${age}`} value={age}>{age} yrs</Radio>)}
+                </Stack>
+              </RadioGroup>
 
-          <Text className='caption text-center text-secondary'>Choosing the age for a story is important because it affects the length, language, and other aspects of the story.</Text>
+              <Box px={[0, 24, 24, 36]}>
+                <Text className='caption text-center text-secondary'>Choosing the age for a story is important because it affects the length, language, and other aspects of the story.</Text>
+              </Box>
+
+              {age &&
+                <div className={styles.buttonBottom}>
+                  <Stack direction={{ md: 'row', base: 'column' }} justify='center' spacing={{ md: '20px', base: '10px' }}>
+                    <Button
+                      aria-label='Create custom tale'
+                      rightIcon={<Image src='icons/Stars.svg' alt='' />}
+                      className='big primary'
+                      onClick={startCreateStoryButtonHandler}
+                    >
+                      <label>Start creating my story</label>
+                    </Button>
+
+                    <Button
+                      aria-label='Create random tale'
+                      rightIcon={<Image src='icons/Dice.svg' alt='' />}
+                      className='big secondary'
+                      onClick={randomizesStoryButtonHandler}
+                    >
+                      <label>Let KidsTales create it for me</label>
+                    </Button>
+                  </Stack>
+                </div>}
+            </GridItem>
+            <GridItem colSpan={{ lg: 2, md: 0, base: 0 }} />
+          </Grid>
         </div>
-
-        {age &&
-          <div className={styles.buttonBottom}>
-            <Stack direction='column'>
-              <Button
-                aria-label='Create custom tale'
-                rightIcon={<Image src='icons/Stars.svg' alt='' />}
-                className='big primary'
-                onClick={startCreateStoryButtonHandler}
-              >
-                <label>Start creating my story</label>
-              </Button>
-
-              <Button
-                aria-label='Create random tale'
-                rightIcon={<Image src='icons/Dice.svg' alt='' />}
-                className='big secondary'
-                onClick={randomizesStoryButtonHandler}
-              >
-                <label>Let KidsTales create it for me</label>
-              </Button>
-            </Stack>
-          </div>}
 
       </Container>
     </div>
