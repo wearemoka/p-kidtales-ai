@@ -15,4 +15,11 @@
         background: linear-gradient(182.48deg, rgba(255, 255, 255, 0.05) 2.09%, rgba(255, 255, 255, 0.1) 66.35%, rgba(255, 255, 255, 0.2) 97.55%);
         border: 1px solid var(--white70);
     }
+    &.md_secondary{
+        @media screen and (min-width: 767px) {
+            background: linear-gradient(182.48deg, rgba(255, 255, 255, 0.05) 2.09%, rgba(255, 255, 255, 0.1) 66.35%, rgba(255, 255, 255, 0.2) 97.55%) !important;
+            border: 1px solid var(--white70);
+            padding: 8px 28px 8px 24px !important;
+        }
+    }
  }
