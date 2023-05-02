@@ -5,15 +5,16 @@ import { Box, Heading, SimpleGrid, VStack } from '@chakra-ui/react'
 interface Props {
   title: string,
   options: IOptions[],
-  saveOn: string
+  saveOn: string,
+  columns: number[]
 }
 
-function GallerySelect ({ title, options, saveOn }: Props) {
+function GallerySelect ({ title, options, saveOn, columns }: Props) {
   return (
     <VStack>
       <Heading>{title}</Heading>
 
-      <SimpleGrid columns={2} spacing={10}>
+      <SimpleGrid columns={columns} spacing={10}>
         {options.map((opt, index) => (
           <Box key={index}>
             <GalleryItem option={opt} saveOn={saveOn} />
