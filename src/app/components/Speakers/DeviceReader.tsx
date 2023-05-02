@@ -3,13 +3,14 @@ import { useGlobalContext } from '@/app/context/store'
 import React, { useEffect } from 'react'
 
 const DeviceReader = () => {
-  const { BGMusic, setBGMusic, globalStory, currentStoryPage, setCurrentStoryPage } = useGlobalContext()
+  const { BGMusic, setBGMusic, globalStory, setGlobalStory } = useGlobalContext()
   const BGMusicOriginalState = BGMusic
-  const storyPaginated = globalStory.split('\n\n').filter((value) => value !== '')
+  const storyPaginated = globalStory.storyPaged
 
   const playClickButton = async () => {
     setBGMusic(false)
     try {
+      const currentStoryPage = globalStory.currentPage
       await readTextWithNativeDeviceSpeaker(storyPaginated[currentStoryPage])
       setBGMusic(BGMusicOriginalState)
     } catch (e) {
@@ -19,16 +20,19 @@ const DeviceReader = () => {
   }
 
   useEffect(() => {
+    const currentStoryPage = globalStory.currentPage
     console.log('Device Reader, page change, n: ', currentStoryPage)
     if (storyPaginated[currentStoryPage]) {
       playClickButton()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStoryPage, globalStory])
+  }, [globalStory])
 
   const onDeviceReaderFinish = () => {
-    if (currentStoryPage < storyPaginated.length) {
-      setCurrentStoryPage(currentStoryPage + 1)
+    if (globalStory.currentPage < storyPaginated.length) {
+      const tmpStory = { ...globalStory }
+      tmpStory.currentPage = globalStory.currentPage + 1
+      setGlobalStory(tmpStory)
     }
   }
 

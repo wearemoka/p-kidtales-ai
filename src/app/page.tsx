@@ -3,12 +3,20 @@
 import { useState } from 'react'
 import { Container, Image, Heading, Text, Radio, RadioGroup, Stack, Button, Grid, GridItem, Box } from '@chakra-ui/react'
 import styles from './page.module.scss'
+import { useRouter } from 'next/navigation'
+import { useGlobalContext } from '@/app/context/store'
+import { PROMPT_STEPS } from '@/app/utils/constants'
+import { ages } from '@/app/services/constants/StoryParams'
 
 const HomePage = () => {
+  const router = useRouter()
   const [age, setAge] = useState<string>('')
+  const { globalPrompt, setGlobalPrompt } = useGlobalContext()
 
   const startCreateStoryButtonHandler = () => {
-    console.log('Start creating my story')
+    const newStep: any = { ...globalPrompt, age, step: PROMPT_STEPS.CHARACTER }
+    setGlobalPrompt(newStep)
+    router.push('/story')
   }
 
   const randomizesStoryButtonHandler = () => {
@@ -29,9 +37,7 @@ const HomePage = () => {
 
               <RadioGroup onChange={setAge} value={age} className='body-big' mb={3}>
                 <Stack direction='row' justify='center' spacing={{ md: '20px', base: '10px' }}>
-                  <Radio value='0-2'>0-2 yrs</Radio>
-                  <Radio value='3-5'>3-5 yrs</Radio>
-                  <Radio value='6-8'>6-8 yrs</Radio>
+                  {ages.map((age) => <Radio key={`age-option-${age}`} value={age}>{age} yrs</Radio>)}
                 </Stack>
               </RadioGroup>
 
