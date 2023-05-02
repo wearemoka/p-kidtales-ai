@@ -25,7 +25,8 @@ const StoryPage = () => {
 
     const story: IStoryStore = {
       story: response.res,
-      storyPaged: response.res.split('\n\n').filter((value: string) => value !== '')
+      storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
+      currentPage: 0
     }
 
     setGlobalStory(story)

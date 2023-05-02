@@ -3,17 +3,22 @@
 import { StoryPagination } from '@/app/components/StoryPagination/StoryPagination'
 import { useGlobalContext } from '@/app/context/store'
 import { Center, Heading, VStack } from '@chakra-ui/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 function viewPage () {
   const { globalStory, setGlobalStory } = useGlobalContext()
-
-  const title = globalStory.storyPaged[0].replace('Title: ', '')
+  const [title, setTitle] = useState<string>('')
 
   useEffect(() => {
     const tmpStory = { ...globalStory }
     tmpStory.currentPage = 0
     setGlobalStory(tmpStory)
+
+    const story = globalStory.storyPaged || null
+    if (story && story.length > 0) {
+      const cleanTitle = story[0].replace('Title: ', '')
+      setTitle(cleanTitle)
+    }
   }, [])
 
   return (
