@@ -17,19 +17,20 @@ interface Props {
 
 const emptyStoryStore: IStoryStore = {
   story: '',
-  storyPaged: []
+  storyPaged: [],
+  currentPage: 0
 }
 
 interface ContextProps {
-    // BG Music on/off
-    BGMusic: boolean,
-    setBGMusic: Dispatch<SetStateAction<boolean>>,
-    // story object
-    globalStory: IStoryStore,
-    setGlobalStory: Dispatch<SetStateAction<IStoryStore>>,
-    // object with prompt values
-    globalPrompt: IUserPromptSelection,
-    setGlobalPrompt: Dispatch<SetStateAction<IUserPromptSelection>>
+  // BG Music on/off
+  BGMusic: boolean,
+  setBGMusic: Dispatch<SetStateAction<boolean>>,
+  // story object
+  globalStory: IStoryStore,
+  setGlobalStory: Dispatch<SetStateAction<IStoryStore>>,
+  // object with prompt values
+  globalPrompt: IUserPromptSelection,
+  setGlobalPrompt: Dispatch<SetStateAction<IUserPromptSelection>>
 }
 
 const GlobalContext = createContext<ContextProps>({

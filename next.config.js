@@ -4,8 +4,7 @@ const path = require('path')
 const withPWA = require('@ducanh2912/next-pwa').default({
   dest: 'public',
   register: false,
-  skipWaiting: true,
-  disable: process.env.NODE_ENV === 'development'
+  skipWaiting: true
 })
 
 const nextConfig = {

@@ -1,20 +1,27 @@
 'use client'
+/* eslint-disable react-hooks/rules-of-hooks */
 import { StoryPagination } from '@/app/components/StoryPagination/StoryPagination'
 import { useGlobalContext } from '@/app/context/store'
-import { Center, VStack } from '@chakra-ui/react'
+import { Center, Heading, VStack } from '@chakra-ui/react'
+import { useEffect } from 'react'
 
 function viewPage () {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const { globalStory } = useGlobalContext()
+  const { globalStory, setGlobalStory } = useGlobalContext()
 
   const title = globalStory.storyPaged[0].replace('Title: ', '')
-  const story = globalStory.storyPaged.slice(1)
+
+  useEffect(() => {
+    const tmpStory = { ...globalStory }
+    tmpStory.currentPage = 0
+    setGlobalStory(tmpStory)
+  }, [])
 
   return (
     <Center>
       <VStack>
 
-        <StoryPagination title={title} story={story} />
+        <Heading>{title}</Heading>
+        <StoryPagination />
 
       </VStack>
     </Center>

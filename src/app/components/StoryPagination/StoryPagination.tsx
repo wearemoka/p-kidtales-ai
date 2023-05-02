@@ -1,42 +1,39 @@
-'use client'
-
-import { Button, Heading, HStack, Text } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useGlobalContext } from '@/app/context/store'
+import { Button, HStack, Text } from '@chakra-ui/react'
 import Steps from '../Steps/Steps'
 
-interface Props {
-  title: string,
-  story: string[]
-}
+export function StoryPagination () {
+  const { globalStory, setGlobalStory } = useGlobalContext()
+  const pages = globalStory.storyPaged.length
 
-export function StoryPagination ({ title, story } : Props) {
-  const [currentStoryPage, setCurrentStoryPage] = useState<number>(0)
-  const pages = story.length
+  const setCurrentStoryPage = (page: number) => {
+    const tmpStory = { ...globalStory }
+    tmpStory.currentPage = page
+    setGlobalStory(tmpStory)
+  }
 
   const handleNextPage = () => {
-    if (currentStoryPage < pages) {
-      setCurrentStoryPage(currentStoryPage + 1)
+    if (globalStory.currentPage < pages - 1) {
+      setCurrentStoryPage(globalStory.currentPage + 1)
     }
   }
 
   const handlePrevPage = () => {
-    if (currentStoryPage > 0) {
-      setCurrentStoryPage(currentStoryPage - 1)
+    if (globalStory.currentPage > 0) {
+      setCurrentStoryPage(globalStory.currentPage - 1)
     }
   }
 
   return (
     <>
-      <Heading>{title}</Heading>
-
       <Text>
-        {story[currentStoryPage]}
+        {globalStory.storyPaged[globalStory.currentPage]}
       </Text>
 
       <HStack>
-        <Button disabled={currentStoryPage <= 0} onClick={handlePrevPage}>Prev</Button>
-        <Steps currentStep={currentStoryPage} size={pages} />
-        <Button disabled={currentStoryPage >= pages - 1} onClick={handleNextPage}>Next</Button>
+        <Button disabled={globalStory.currentPage <= 0} onClick={handlePrevPage}>Prev</Button>
+        <Steps currentStep={globalStory.currentPage} size={pages} />
+        <Button disabled={globalStory.currentPage >= pages - 1} onClick={handleNextPage}>Next</Button>
       </HStack>
 
     </>
