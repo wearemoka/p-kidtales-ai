@@ -4,13 +4,16 @@ import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
 import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
-import { Button, Center, Image, VStack } from '@chakra-ui/react'
+import { Button, Center, Image, Input, VStack } from '@chakra-ui/react'
 import { getAiStory } from '@/app/services/ChatGPTService'
 import { useState } from 'react'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
+import { IStoryStore } from '@/app/utils/interfaces'
+import { useRouter } from 'next/navigation'
 
 const StoryPage = () => {
-  const { globalPrompt } = useGlobalContext()
+  const router = useRouter()
+  const { globalPrompt, setGlobalPrompt, setGlobalStory } = useGlobalContext()
   const [isLoadingStory, setIsLoadingStory] = useState<boolean>(false)
   const loadingMessages = useMessageTime(isLoadingStory)
 
@@ -18,8 +21,22 @@ const StoryPage = () => {
     setIsLoadingStory(true)
     const { age, character, name, scenario, lesson } = globalPrompt
     const response = await getAiStory(age, character, name, scenario, lesson)
-    console.log(response)
     setIsLoadingStory(false)
+
+    const story: IStoryStore = {
+      story: response.res,
+      storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
+      storyPage: 0
+    }
+
+    setGlobalStory(story)
+
+    router.push('/story/view')
+  }
+
+  const customLessonHandler = (lesson: string) => {
+    const newStep: any = { ...globalPrompt, lesson }
+    setGlobalPrompt(newStep)
   }
 
   return (
@@ -43,12 +60,20 @@ const StoryPage = () => {
           {/* Display Lesson options */}
           {globalPrompt.step === PROMPT_STEPS.LESSON &&
             <VStack>
+
               <GallerySelect title='Select a lesson' options={lessonOpts} saveOn='lesson' />
+
+              <Input
+                placeholder='Write my Own Lesson'
+                onChange={(e) => {
+                  customLessonHandler(e.target.value)
+                }}
+              />
               <Button
                 variant='outline'
                 onClick={writeStoryHandler}
               >
-                Write my Own Lesson
+                Write!
               </Button>
             </VStack>}
         </Center>

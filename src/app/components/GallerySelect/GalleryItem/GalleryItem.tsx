@@ -2,7 +2,6 @@ import { useGlobalContext } from '@/app/context/store'
 import { PROMPT_STEPS } from '@/app/utils/constants'
 import { IOptions } from '@/app/utils/interfaces'
 import Image from 'next/image'
-import React from 'react'
 
 interface Props {
   option: IOptions,

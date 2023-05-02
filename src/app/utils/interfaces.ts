@@ -12,6 +12,11 @@ export interface IUserPromptSelection {
     lesson: string,
 }
 
+export interface IStoryStore {
+    story: string,
+    storyPaged: string[],
+    storyPage: number
+}
 export interface IOptions {
     label: string,
     imgPath?: string,

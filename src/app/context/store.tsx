@@ -1,7 +1,7 @@
 'use client'
 
 import React, { createContext, useContext, Dispatch, SetStateAction, useState } from 'react'
-import { IUserPromptSelection } from '@/app/utils/interfaces'
+import { IStoryStore, IUserPromptSelection } from '@/app/utils/interfaces'
 
 const emptyPrompt: IUserPromptSelection = {
   step: 1,
@@ -14,13 +14,21 @@ const emptyPrompt: IUserPromptSelection = {
 interface Props {
   children: React.ReactNode
 }
+
+const emptyStoryStore: IStoryStore = {
+  story: '',
+  storyPaged: [],
+  storyPage: 0
+}
+
 interface ContextProps {
+    // BG Music on/off
     BGMusic: boolean,
     setBGMusic: Dispatch<SetStateAction<boolean>>,
-    globalStory: string,
-    setGlobalStory: Dispatch<SetStateAction<string>>,
-    currentStoryPage: number,
-    setCurrentStoryPage: Dispatch<SetStateAction<number>>,
+    // story object
+    globalStory: IStoryStore,
+    setGlobalStory: Dispatch<SetStateAction<IStoryStore>>,
+    // object with prompt values
     globalPrompt: IUserPromptSelection,
     setGlobalPrompt: Dispatch<SetStateAction<IUserPromptSelection>>
 }
@@ -28,18 +36,15 @@ interface ContextProps {
 const GlobalContext = createContext<ContextProps>({
   BGMusic: false,
   setBGMusic: (): boolean => false,
-  globalStory: '',
-  setGlobalStory: string => '',
-  currentStoryPage: 0,
-  setCurrentStoryPage: number => 0,
+  globalStory: emptyStoryStore,
+  setGlobalStory: IStoryStore => {},
   globalPrompt: emptyPrompt,
   setGlobalPrompt: IUserPromptSelection => {}
 })
 
 export const GlobalContextProvider = ({ children }: Props) => {
   const [BGMusic, setBGMusic] = useState(false)
-  const [globalStory, setGlobalStory] = useState('Your Story will be displayed here')
-  const [currentStoryPage, setCurrentStoryPage] = useState(0)
+  const [globalStory, setGlobalStory] = useState(emptyStoryStore)
   const [globalPrompt, setGlobalPrompt] = useState(emptyPrompt)
 
   return (
@@ -48,8 +53,6 @@ export const GlobalContextProvider = ({ children }: Props) => {
       setBGMusic,
       globalStory,
       setGlobalStory,
-      currentStoryPage,
-      setCurrentStoryPage,
       globalPrompt,
       setGlobalPrompt
     }}
