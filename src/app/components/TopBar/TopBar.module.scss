@@ -1,0 +1,41 @@
+.topbar{
+    .topbarWrapper{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 40px 0px 20px;
+        .brand {
+            img{
+                height: 20px;
+                @media screen and (min-width: 767px) {
+                    height: 20px;
+                }
+            }
+            .backButton{
+                background-color: var(--white);
+                padding: 10px 7px;
+                span{
+                    margin: 0;
+                }
+            }
+        }
+        .actions button {
+            background: transparent;
+            padding: 0;
+            span{
+                margin: 0;
+                @media screen and (min-width: 767px) {
+                    margin: 5px;
+                }
+            }
+            label{
+                display: none;
+                color: var(--white);
+                @media screen and (min-width: 767px) {
+                    display: inline;
+                    cursor: pointer;
+                }
+            }   
+        }
+    }
+}

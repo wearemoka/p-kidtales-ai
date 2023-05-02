@@ -1,0 +1,56 @@
+@import './variables.css';
+@import './partials/fonts.scss';
+@import './partials/text-styles.scss';
+@import './partials/buttons.scss';
+
+:root{
+  font-family: 'Plus Jakarta Sans' !important;
+  --chakra-fonts-heading: 'Plus Jakarta Sans';
+  --chakra-fonts-body: 'Plus Jakarta Sans';
+}
+
+body{
+  background: radial-gradient(50% 50% at 50% 50%, rgba(151, 69, 251, 0.2) 0%, rgba(151, 69, 251, 0) 100%), #0C0416;
+  background-repeat: no-repeat;
+  color: var(--white);
+}
+
+.chakra-container{
+  max-width: 100%;
+  @media screen and (min-width: 767px) {
+    max-width: 90vw;
+  }
+  @media screen and (min-width: 991px) {
+    max-width: 80vw;
+  }
+}
+
+/* --- text --- */
+.text-center{
+  text-align: center;
+}
+.text-secondary{
+  color: var(--white70);
+}
+
+.chakra-radio{
+  padding: 8px 24px;
+  border-radius: 100px;
+  border: 1px solid white;
+  transition: all .3s ease-in-out;
+  white-space: nowrap;
+  @media screen and (min-width: 601px) {
+    padding: 12px 43px;
+  }
+  &[data-checked]{
+    background-color: var(--white);
+    color: var(--black);
+  }
+  .chakra-radio__control{
+    display: none;
+  }
+  .chakra-radio__label{
+    margin: 0;
+    font-size: 18px;
+  }
+}
