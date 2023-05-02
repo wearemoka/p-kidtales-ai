@@ -1,45 +1,44 @@
 'use client'
-import { useGlobalContext } from '@/app/context/store'
-import React, { useEffect } from 'react'
-import styles from './components.module.css'
 
-export function StoryPagination () {
-  const { globalStory, setGlobalStory, currentStoryPage, setCurrentStoryPage } = useGlobalContext()
-  const storyPaginated = globalStory?.split('\n\n').filter((value) => value !== '')
-  const storyLength = Array.isArray(storyPaginated) ? storyPaginated.length : 1
+import { Button, Heading, HStack, Text } from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
+import Steps from '../Steps/Steps'
 
-  useEffect(() => {
-    setCurrentStoryPage(0)
-    setGlobalStory('')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+interface Props {
+  title: string,
+  story: string[]
+}
+
+export function StoryPagination ({ title, story } : Props) {
+  const [currentStoryPage, setCurrentStoryPage] = useState<number>(0)
+  const pages = story.length
 
   const handleNextPage = () => {
-    setCurrentStoryPage(currentStoryPage + 1)
+    if (currentStoryPage < pages) {
+      setCurrentStoryPage(currentStoryPage + 1)
+    }
   }
 
   const handlePrevPage = () => {
-    setCurrentStoryPage(currentStoryPage - 1)
+    if (currentStoryPage > 0) {
+      setCurrentStoryPage(currentStoryPage - 1)
+    }
   }
 
-  useEffect(() => {
-    setCurrentStoryPage(0)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [globalStory])
-
   return (
-    <div className={styles.story}>
-      <h4>Paginated story</h4>
-      {Array.isArray(storyPaginated) ? storyPaginated[currentStoryPage] : storyPaginated}
-      <hr />
+    <>
+      <Heading>{title}</Heading>
 
-      <div>
-        <button className={styles.btn} disabled={currentStoryPage <= 0} onClick={handlePrevPage}>Prev</button>
-        <button className={styles.btn} disabled={currentStoryPage >= storyLength - 1} onClick={handleNextPage}>Next</button>
-      </div>
+      <Text>
+        {story[currentStoryPage]}
+      </Text>
 
-      <h4>Complete story</h4>
-      {globalStory}
-    </div>
+      <HStack>
+        <Button disabled={currentStoryPage <= 0} onClick={handlePrevPage}>Prev</Button>
+        <Steps currentStep={currentStoryPage} size={pages} />
+        <Button disabled={currentStoryPage >= pages - 1} onClick={handleNextPage}>Next</Button>
+      </HStack>
+
+    </>
   )
 }

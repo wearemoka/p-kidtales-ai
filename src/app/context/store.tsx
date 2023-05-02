@@ -17,8 +17,7 @@ interface Props {
 
 const emptyStoryStore: IStoryStore = {
   story: '',
-  storyPaged: [],
-  storyPage: 0
+  storyPaged: []
 }
 
 interface ContextProps {

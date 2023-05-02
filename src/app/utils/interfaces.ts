@@ -14,8 +14,7 @@ export interface IUserPromptSelection {
 
 export interface IStoryStore {
     story: string,
-    storyPaged: string[],
-    storyPage: number
+    storyPaged: string[]
 }
 export interface IOptions {
     label: string,
