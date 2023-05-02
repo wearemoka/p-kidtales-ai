@@ -49,19 +49,19 @@ const StoryPage = () => {
       {!isLoadingStory && (
         <Center>
           {/* Display Character options */}
-          {globalPrompt.step === PROMPT_STEPS.CHARACTER && <GallerySelect title='Select a character' options={characterOpts} saveOn='character' />}
+          {globalPrompt.step === PROMPT_STEPS.CHARACTER && <GallerySelect title='Select a character' options={characterOpts} saveOn='character' columns={[2, 2]} />}
 
           {/* Display Name input */}
           {globalPrompt.step === PROMPT_STEPS.NAME && <NameSelect title='Name your character' saveOn='name' />}
 
           {/* Display Scensario options */}
-          {globalPrompt.step === PROMPT_STEPS.SCENARIO && <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' />}
+          {globalPrompt.step === PROMPT_STEPS.SCENARIO && <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2]} />}
 
           {/* Display Lesson options */}
           {globalPrompt.step === PROMPT_STEPS.LESSON &&
             <VStack>
 
-              <GallerySelect title='Select a lesson' options={lessonOpts} saveOn='lesson' />
+              <GallerySelect title='Select a lesson' options={lessonOpts} saveOn='lesson' columns={[4, 2]} />
 
               <Input
                 placeholder='Write my Own Lesson'
