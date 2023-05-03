@@ -1,5 +1,7 @@
 import { useGlobalContext } from '@/app/context/store'
 import { IUserPromptSelection } from '@/app/utils/interfaces'
+import { useEffect, useState } from 'react'
+import AgeSelector from '../AgeSelector/AgeSelector'
 import styles from './userprompt.module.scss'
 
 interface Props {
@@ -11,14 +13,32 @@ function UserPrompt ({ promptOptions, steps }: Props) {
   const { step, character, name, scenario, lesson } = promptOptions
   const { globalPrompt, setGlobalPrompt } = useGlobalContext()
 
+  const [editAge, setEditAge] = useState<boolean>(false)
+  const [age, setAge] = useState<string>('')
+
   // Go to a specific step to change the selection
   const jumpToStepHandler = (step:any) => {
     const gp = { ...globalPrompt, step }
     setGlobalPrompt(gp)
   }
 
+  useEffect(() => {
+    if (age) {
+      const gp = { ...globalPrompt, age }
+      setGlobalPrompt(gp)
+      setEditAge(false)
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [age])
+
   return (
     <>
+      <div>
+        Once upon a time a <span onClick={() => { setEditAge(true) }}>{globalPrompt.age || '...'}</span>
+      </div>
+
+      {editAge && <AgeSelector age={age} setAge={setAge} />}
+
       <div className={`${step === steps.CHARACTER ? styles.active : ''} ${character ? styles.seted : styles.unseted}`}>
         Once upon a time a <span onClick={() => { jumpToStepHandler(steps.CHARACTER) }}>{character || '...'}</span>
       </div>

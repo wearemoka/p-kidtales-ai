@@ -50,8 +50,6 @@ const StoryPage = () => {
 
   return (
     <VStack>
-      <Center>Create a story for {globalPrompt.age}</Center>
-
       {/* Display the User prompt */}
       <UserPrompt promptOptions={globalPrompt} steps={PROMPT_STEPS} />
 
