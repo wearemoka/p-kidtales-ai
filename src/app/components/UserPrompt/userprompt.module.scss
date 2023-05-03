@@ -1,6 +1,6 @@
 .active {
-    font-size: larger;
-    font-weight: bold;
+    //font-size: larger;
+    //font-weight: bold;
 }
 
 .seted {
@@ -8,5 +8,11 @@
 }
 
 .unseted {
-    color: blue
+    color: var(--white);
+}
+.prompt{
+    span{
+        text-decoration: underline;
+        cursor: pointer;
+    }
 }

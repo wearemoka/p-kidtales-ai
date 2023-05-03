@@ -2,6 +2,7 @@ import { useGlobalContext } from '@/app/context/store'
 import { PROMPT_STEPS } from '@/app/utils/constants'
 import { IOptions } from '@/app/utils/interfaces'
 import Image from 'next/image'
+import styles from './GalleryItem.module.scss'
 
 interface Props {
   option: IOptions,
@@ -27,7 +28,7 @@ function GalleryItem ({ option, saveOn, afterClickHandler }: Props) {
   }
 
   return (
-    <button onClick={onOptionClick}>
+    <button onClick={onOptionClick} className={styles.cardGallery}>
       {(option.imgPath && option.alt) &&
         <Image
           src={option.imgPath}
@@ -35,7 +36,7 @@ function GalleryItem ({ option, saveOn, afterClickHandler }: Props) {
           width={100}
           height={100}
         />}
-      <label>{option.label}</label>
+      <label className='body'>{option.label}</label>
     </button>
   )
 }

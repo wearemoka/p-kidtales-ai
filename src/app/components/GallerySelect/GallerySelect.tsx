@@ -13,7 +13,7 @@ interface Props {
 function GallerySelect ({ title, options, saveOn, columns, afterClickHandler }: Props) {
   return (
     <VStack>
-      <Heading>{title}</Heading>
+      <Heading as='h3' className='caption bold'>{title}</Heading>
 
       <SimpleGrid columns={columns} spacing={10}>
         {options.map((opt, index) => (
