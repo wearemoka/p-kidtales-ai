@@ -21,7 +21,7 @@ export const createMarkup = (story: string) => {
   return splitAnswer
 }
 
-const getRandomValue = (data: any[], props: string): string => {
+export const getRandomValue = (data: any[], props: string): string => {
   const randomIndex = Math.floor(Math.random() * data.length)
   const value = data[randomIndex]
   return value[props]

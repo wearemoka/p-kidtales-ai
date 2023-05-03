@@ -3,13 +3,14 @@ import GallerySelect from '@/app/components/GallerySelect/GallerySelect'
 import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
-import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
+import { characterOpts, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
 import { Button, Center, Image, Input, VStack } from '@chakra-ui/react'
 import { getAiStory } from '@/app/services/ChatGPTService'
 import { useEffect, useState } from 'react'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
 import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
+import RandomButton from '../components/RandomButton/RandomButton'
 
 const ROUTE_VIEW_STORY = '/story/view'
 
@@ -54,42 +55,59 @@ const StoryPage = () => {
       <UserPrompt promptOptions={globalPrompt} steps={PROMPT_STEPS} />
 
       {!isLoadingStory && (
-        <Center>
-          {/* Display Character options */}
-          {globalPrompt.step === PROMPT_STEPS.CHARACTER && <GallerySelect title='Select a character' options={characterOpts} saveOn='character' columns={[2, 2]} />}
+        <>
+          <Center>
+            {/* Display Character options */}
+            {globalPrompt.step === PROMPT_STEPS.CHARACTER &&
+              <VStack>
+                <GallerySelect title='Select a character' options={characterOpts} saveOn='character' columns={[2, 2]} />
+                <RandomButton options={characterOpts} saveOn='character' />
+              </VStack>}
 
-          {/* Display Name input */}
-          {globalPrompt.step === PROMPT_STEPS.NAME && <NameSelect title='Name your character' saveOn='name' />}
+            {/* Display Name input */}
+            {globalPrompt.step === PROMPT_STEPS.NAME &&
+              <VStack>
+                <NameSelect title='Name your character' saveOn='name' />
+                <RandomButton options={namesOpts} saveOn='name' />
+              </VStack>}
 
-          {/* Display Scensario options */}
-          {globalPrompt.step === PROMPT_STEPS.SCENARIO && <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2]} />}
+            {/* Display Scensario options */}
+            {globalPrompt.step === PROMPT_STEPS.SCENARIO &&
+              <VStack>
+                <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2]} />
+                <RandomButton options={scenarioOpts} saveOn='scenario' />
+              </VStack>}
 
-          {/* Display Lesson options */}
-          {globalPrompt.step === PROMPT_STEPS.LESSON &&
-            <VStack>
+            {/* Display Lesson options */}
+            {globalPrompt.step === PROMPT_STEPS.LESSON &&
+              <VStack>
 
-              <GallerySelect
-                title='Select a lesson'
-                options={lessonOpts}
-                saveOn='lesson'
-                columns={[4, 2]}
-                afterClickHandler={writeStoryHandler}
-              />
+                <GallerySelect
+                  title='Select a lesson'
+                  options={lessonOpts}
+                  saveOn='lesson'
+                  columns={[4, 2]}
+                  afterClickHandler={writeStoryHandler}
+                />
 
-              <Input
-                placeholder='Write my Own Lesson'
-                onChange={(e) => {
-                  customLessonHandler(e.target.value)
-                }}
-              />
-              <Button
-                variant='outline'
-                onClick={writeStoryHandler}
-              >
-                Write!
-              </Button>
-            </VStack>}
-        </Center>
+                <Input
+                  placeholder='Write my Own Lesson'
+                  onChange={(e) => {
+                    customLessonHandler(e.target.value)
+                  }}
+                />
+                <Button
+                  variant='outline'
+                  onClick={writeStoryHandler}
+                >
+                  Write!
+                </Button>
+
+                <RandomButton options={lessonOpts} saveOn='lesson' actionAfterSave={writeStoryHandler} />
+              </VStack>}
+          </Center>
+
+        </>
       )}
 
       {isLoadingStory && (
