@@ -6,10 +6,11 @@ interface Props {
   title: string,
   options: IOptions[],
   saveOn: string,
-  columns: number[]
+  columns: number[],
+  afterClickHandler?:any
 }
 
-function GallerySelect ({ title, options, saveOn, columns }: Props) {
+function GallerySelect ({ title, options, saveOn, columns, afterClickHandler }: Props) {
   return (
     <VStack>
       <Heading>{title}</Heading>
@@ -17,7 +18,7 @@ function GallerySelect ({ title, options, saveOn, columns }: Props) {
       <SimpleGrid columns={columns} spacing={10}>
         {options.map((opt, index) => (
           <Box key={index}>
-            <GalleryItem option={opt} saveOn={saveOn} />
+            <GalleryItem option={opt} saveOn={saveOn} afterClickHandler={afterClickHandler} />
           </Box>
         ))}
       </SimpleGrid>

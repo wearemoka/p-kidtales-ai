@@ -5,9 +5,10 @@ import Image from 'next/image'
 
 interface Props {
   option: IOptions,
-  saveOn: string
+  saveOn: string,
+  afterClickHandler?:any
 }
-function GalleryItem ({ option, saveOn }: Props) {
+function GalleryItem ({ option, saveOn, afterClickHandler }: Props) {
   const { globalPrompt, setGlobalPrompt } = useGlobalContext()
 
   const onOptionClick = () => {
@@ -18,6 +19,11 @@ function GalleryItem ({ option, saveOn }: Props) {
       newStep.step = globalPrompt.step + 1
     }
     setGlobalPrompt(newStep)
+
+    // if the function is defined, run it
+    if (afterClickHandler) {
+      afterClickHandler()
+    }
   }
 
   return (

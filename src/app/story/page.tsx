@@ -41,8 +41,6 @@ const StoryPage = () => {
 
   return (
     <VStack>
-      <Center>Create a story for {globalPrompt.age}</Center>
-
       {/* Display the User prompt */}
       <UserPrompt promptOptions={globalPrompt} steps={PROMPT_STEPS} />
 
@@ -61,7 +59,13 @@ const StoryPage = () => {
           {globalPrompt.step === PROMPT_STEPS.LESSON &&
             <VStack>
 
-              <GallerySelect title='Select a lesson' options={lessonOpts} saveOn='lesson' columns={[4, 2]} />
+              <GallerySelect
+                title='Select a lesson'
+                options={lessonOpts}
+                saveOn='lesson'
+                columns={[4, 2]}
+                afterClickHandler={writeStoryHandler}
+              />
 
               <Input
                 placeholder='Write my Own Lesson'
