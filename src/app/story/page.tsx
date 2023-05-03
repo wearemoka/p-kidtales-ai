@@ -6,16 +6,25 @@ import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
 import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
 import { Button, Center, Image, Input, VStack } from '@chakra-ui/react'
 import { getAiStory } from '@/app/services/ChatGPTService'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
 import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
+
+const ROUTE_VIEW_STORY = '/story/view'
 
 const StoryPage = () => {
   const router = useRouter()
   const { globalPrompt, setGlobalPrompt, setGlobalStory } = useGlobalContext()
   const [isLoadingStory, setIsLoadingStory] = useState<boolean>(false)
   const loadingMessages = useMessageTime(isLoadingStory)
+
+  useEffect(() => {
+    if (globalPrompt.step === PROMPT_STEPS.GENERATION && writeStoryHandler) {
+      writeStoryHandler()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const writeStoryHandler = async () => {
     setIsLoadingStory(true)
@@ -31,7 +40,7 @@ const StoryPage = () => {
 
     setGlobalStory(story)
 
-    router.push('/story/view')
+    router.push(ROUTE_VIEW_STORY)
   }
 
   const customLessonHandler = (lesson: string) => {

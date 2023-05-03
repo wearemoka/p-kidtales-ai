@@ -1,3 +1,6 @@
+import { characterOpts, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from './constants'
+import { IUserPromptSelection } from './interfaces'
+
 const specialCharactersRegex = /[\s~`!@#$%^&*()_+\-={[}\]|\\:;"'<,>.?/]+/g
 export const generateRandomIndex = (data: string[]) => {
   const randomIndex = Math.floor(Math.random() * data.length)
@@ -16,4 +19,28 @@ export const getStoryTitle = (message: string) => {
 export const createMarkup = (story: string) => {
   const splitAnswer = story.split('\n').filter((text) => text !== '')
   return splitAnswer
+}
+
+const getRandomValue = (data: any[], props: string): string => {
+  const randomIndex = Math.floor(Math.random() * data.length)
+  const value = data[randomIndex]
+  return value[props]
+}
+
+export const getRandomUserPrompt = (age: string): IUserPromptSelection => {
+  const character = getRandomValue(characterOpts, 'label')
+  const name = getRandomValue(namesOpts, 'label')
+  const lesson = getRandomValue(lessonOpts, 'label')
+  const scenario = getRandomValue(scenarioOpts, 'label')
+
+  const randomStory: IUserPromptSelection = {
+    step: PROMPT_STEPS.GENERATION,
+    age,
+    character,
+    name,
+    scenario,
+    lesson
+  }
+
+  return randomStory
 }
