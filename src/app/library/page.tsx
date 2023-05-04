@@ -1,4 +1,4 @@
-import Stories from '../components/Library/Stories/Stories'
+import Stories from '../components/Library/Library'
 import { ages } from '@/app/services/constants/StoryParams'
 
 function LibraryPage () {
