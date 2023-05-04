@@ -6,7 +6,10 @@ import styles from './page.module.scss'
 import { useRouter } from 'next/navigation'
 import { useGlobalContext } from '@/app/context/store'
 import { PROMPT_STEPS } from '@/app/utils/constants'
+import { getRandomUserPrompt } from './utils/helper'
 import AgeSelector from './components/AgeSelector/AgeSelector'
+
+const ROUTE_STORY_PAGE = '/story'
 
 const HomePage = () => {
   const router = useRouter()
@@ -16,11 +19,13 @@ const HomePage = () => {
   const startCreateStoryButtonHandler = () => {
     const newStep: any = { ...globalPrompt, age, step: PROMPT_STEPS.CHARACTER }
     setGlobalPrompt(newStep)
-    router.push('/story')
+    router.push(ROUTE_STORY_PAGE)
   }
 
   const randomizesStoryButtonHandler = () => {
-    console.log('Let KidsTales create a random story')
+    const randomStory = getRandomUserPrompt(age)
+    setGlobalPrompt(randomStory)
+    router.push(ROUTE_STORY_PAGE)
   }
 
   return (

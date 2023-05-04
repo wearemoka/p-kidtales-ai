@@ -19,7 +19,7 @@ export function StoryPagination () {
   }
 
   const handlePrevPage = () => {
-    if (globalStory.currentPage > 0) {
+    if (globalStory.currentPage > 1) {
       setCurrentStoryPage(globalStory.currentPage - 1)
     }
   }
@@ -31,7 +31,7 @@ export function StoryPagination () {
       </Text>
 
       <HStack>
-        <Button disabled={globalStory.currentPage <= 0} onClick={handlePrevPage}>Prev</Button>
+        <Button disabled={globalStory.currentPage <= 1} onClick={handlePrevPage}>Prev</Button>
         <Steps currentStep={globalStory.currentPage} size={pages} />
         <Button disabled={globalStory.currentPage >= pages - 1} onClick={handleNextPage}>Next</Button>
       </HStack>
