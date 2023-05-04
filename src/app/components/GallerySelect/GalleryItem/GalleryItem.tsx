@@ -7,9 +7,10 @@ import styles from './GalleryItem.module.scss'
 interface Props {
   option: IOptions,
   saveOn: string,
-  afterClickHandler?:any
+  afterClickHandler?:any,
+  value: string,
 }
-function GalleryItem ({ option, saveOn, afterClickHandler }: Props) {
+function GalleryItem ({ option, saveOn, afterClickHandler, value }: Props) {
   const { globalPrompt, setGlobalPrompt } = useGlobalContext()
 
   const onOptionClick = () => {
@@ -28,7 +29,7 @@ function GalleryItem ({ option, saveOn, afterClickHandler }: Props) {
   }
 
   return (
-    <button onClick={onOptionClick} className={styles.cardGallery}>
+    <button onClick={onOptionClick} className={`${styles.cardGallery} ${value === 'noImg' ? styles.noImg : ''}`}>
       {(option.imgPath && option.alt) &&
         <Image
           src={option.imgPath}

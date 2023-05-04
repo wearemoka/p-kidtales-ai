@@ -37,4 +37,18 @@
         left: 0;
         position: absolute;
     }
+    &.noImg{
+        width: 150px;
+        height: 50px;
+        @media screen and (min-width: 767px) {
+            width: 200px;
+        }
+        label{
+            position: static;
+            padding: 10px;
+        }
+        &::before{
+            display: none;
+        }
+    }
 }

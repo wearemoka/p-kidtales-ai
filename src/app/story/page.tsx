@@ -4,7 +4,7 @@ import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
 import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
-import { Button, Center, Image, Input, VStack } from '@chakra-ui/react'
+import { Box, Button, Center, Image, Input, VStack } from '@chakra-ui/react'
 import { getAiStory } from '@/app/services/ChatGPTService'
 import { useState } from 'react'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
@@ -53,7 +53,7 @@ const StoryPage = () => {
           {globalPrompt.step === PROMPT_STEPS.NAME && <NameSelect title='Name your character' saveOn='name' />}
 
           {/* Display Scensario options */}
-          {globalPrompt.step === PROMPT_STEPS.SCENARIO && <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2]} />}
+          {globalPrompt.step === PROMPT_STEPS.SCENARIO && <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2, 2, 4]} />}
 
           {/* Display Lesson options */}
           {globalPrompt.step === PROMPT_STEPS.LESSON &&
@@ -63,29 +63,26 @@ const StoryPage = () => {
                 title='Select a lesson'
                 options={lessonOpts}
                 saveOn='lesson'
-                columns={[4, 2]}
+                columns={[2]}
                 afterClickHandler={writeStoryHandler}
+                type='noImg'
               />
 
               <Input
+                className='mt-20'
                 placeholder='Write my Own Lesson'
                 onChange={(e) => {
                   customLessonHandler(e.target.value)
                 }}
               />
-              <Button
-                variant='outline'
-                onClick={writeStoryHandler}
-              >
-                Write!
-              </Button>
+              <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className='big primary only-icon' onClick={writeStoryHandler} />
             </VStack>}
         </Center>
       )}
 
       {isLoadingStory && (
         <VStack>
-          <Image src='images/Initial.png' alt='Wizard magic loading' />
+          <Image src='images/Loading.png' alt='Wizard magic loading' />
           <h3>{loadingMessages}</h3>
         </VStack>
       )}

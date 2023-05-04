@@ -3,7 +3,7 @@ import { IUserPromptSelection } from '@/app/utils/interfaces'
 import { useEffect, useState } from 'react'
 import AgeSelector from '../AgeSelector/AgeSelector'
 import styles from './userprompt.module.scss'
-import { Box, Text } from '@chakra-ui/react'
+import { Box, Stack, Text } from '@chakra-ui/react'
 
 interface Props {
     promptOptions: IUserPromptSelection,
@@ -22,6 +22,9 @@ function UserPrompt ({ promptOptions, steps }: Props) {
     const gp = { ...globalPrompt, step }
     setGlobalPrompt(gp)
   }
+
+  const blurArray = ['noBlur', 'blur1', 'blur2', 'blur3']
+  console.log(blurArray[step])
 
   useEffect(() => {
     if (age) {
@@ -42,22 +45,27 @@ function UserPrompt ({ promptOptions, steps }: Props) {
         {editAge && <AgeSelector age={age} setAge={setAge} />}
       </Box>
 
-      <Box className='big-lead' mb={4}>
-        <Text textAlign='center' className={`${step === steps.CHARACTER ? styles.active : ''} ${character ? styles.seted : styles.unseted}`}>
-          Once upon a time a <span onClick={() => { jumpToStepHandler(steps.CHARACTER) }}>{character || '...'}</span>
-        </Text>
+      <Box className='big-lead' mb={8}>
+        <Stack direction={{ lg: 'row', base: 'column' }} justify='center'>
+          <Text textAlign='center' className={`${blurArray[steps.CHARACTER - step] ?? ''} ${step === steps.CHARACTER ? styles.active : ''} ${character ? styles.seted : styles.unseted}`}>
+            Once upon a time a <span onClick={() => { jumpToStepHandler(steps.CHARACTER) }}>{character || '...'}</span>
+          </Text>
 
-        <Text textAlign='center' className={`${step === steps.NAME ? styles.active : ''} ${name ? styles.seted : styles.unseted}`}>
-          Called <span onClick={() => { jumpToStepHandler(steps.NAME) }}>{name || '...'} </span>
-        </Text>
+          <Text textAlign='center' className={`${blurArray[steps.NAME - step] ?? ''} ${step === steps.NAME ? styles.active : ''} ${name ? styles.seted : styles.unseted}`}>
+            called <span onClick={() => { jumpToStepHandler(steps.NAME) }}>{name || '...'} </span>
+          </Text>
+        </Stack>
 
-        <Text textAlign='center' className={`${step === steps.SCENARIO ? styles.active : ''} ${scenario ? styles.seted : styles.unseted}`}>
-          had an amazing adventure in the  <span onClick={() => { jumpToStepHandler(steps.SCENARIO) }}>{scenario || '...'}</span>
-        </Text>
+        <Stack direction={{ lg: 'row', base: 'column' }} justify='center'>
+          <Text textAlign='center' className={`${blurArray[steps.SCENARIO - step] ?? ''} ${step === steps.SCENARIO ? styles.active : ''} ${scenario ? styles.seted : styles.unseted}`}>
+            had an amazing adventure in the  <span onClick={() => { jumpToStepHandler(steps.SCENARIO) }}>{scenario || '...'}</span>
+          </Text>
 
-        <Text textAlign='center' className={`${step === steps.LESSON ? styles.active : ''} ${lesson ? styles.seted : styles.unseted}`}>
-          to learn about  <span onClick={() => { jumpToStepHandler(steps.LESSON) }}>{lesson || '...'}</span>
-        </Text>
+          <Text textAlign='center' className={`${blurArray[steps.LESSON - step] ?? ''} ${step === steps.LESSON ? styles.active : ''} ${lesson ? styles.seted : styles.unseted}`}>
+            to learn about  <span onClick={() => { jumpToStepHandler(steps.LESSON) }}>{lesson || '...'}</span>
+          </Text>
+        </Stack>
+
       </Box>
     </div>
   )
