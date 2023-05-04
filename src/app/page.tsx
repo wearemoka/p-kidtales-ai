@@ -1,14 +1,22 @@
 'use client'
 
 import { useState } from 'react'
-import { Container, Image, Heading, Text, Radio, RadioGroup, Stack, Button, Grid, GridItem, Box } from '@chakra-ui/react'
+import { Container, Image, Heading, Text, Stack, Button, Grid, GridItem } from '@chakra-ui/react'
 import styles from './page.module.scss'
+import { useRouter } from 'next/navigation'
+import { useGlobalContext } from '@/app/context/store'
+import { PROMPT_STEPS } from '@/app/utils/constants'
+import AgeSelector from './components/AgeSelector/AgeSelector'
 
 const HomePage = () => {
+  const router = useRouter()
   const [age, setAge] = useState<string>('')
+  const { globalPrompt, setGlobalPrompt } = useGlobalContext()
 
   const startCreateStoryButtonHandler = () => {
-    console.log('Start creating my story')
+    const newStep: any = { ...globalPrompt, age, step: PROMPT_STEPS.CHARACTER }
+    setGlobalPrompt(newStep)
+    router.push('/story')
   }
 
   const randomizesStoryButtonHandler = () => {
@@ -27,17 +35,7 @@ const HomePage = () => {
               <Heading as='h1' className='heading text-center' mb={10}>Unleash your imagination with AI-powered story creation</Heading>
               <Text className='body-big text-center' mb={3}>Create a story for </Text>
 
-              <RadioGroup onChange={setAge} value={age} className='body-big' mb={3}>
-                <Stack direction='row' justify='center' spacing={{ md: '20px', base: '10px' }}>
-                  <Radio value='0-2'>0-2 yrs</Radio>
-                  <Radio value='3-5'>3-5 yrs</Radio>
-                  <Radio value='6-8'>6-8 yrs</Radio>
-                </Stack>
-              </RadioGroup>
-
-              <Box px={[0, 24, 24, 36]}>
-                <Text className='caption text-center text-secondary'>Choosing the age for a story is important because it affects the length, language, and other aspects of the story.</Text>
-              </Box>
+              <AgeSelector age={age} setAge={setAge} />
 
               {age &&
                 <div className={styles.buttonBottom}>
