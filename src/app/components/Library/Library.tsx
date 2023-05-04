@@ -2,6 +2,7 @@
 
 import { useGlobalContext } from '@/app/context/store'
 import { useFetchStory } from '@/app/hooks/useFetchStory'
+import { paginateStory } from '@/app/utils/helper'
 import { ROUTES } from '@/app/utils/routes'
 import { Box, Button, SimpleGrid, VStack } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
@@ -31,7 +32,7 @@ function Stories ({ age }:Props) {
 
     storyToLoad.story = story
     storyToLoad.currentPage = 1
-    storyToLoad.storyPaged = story.story.split('\n\n').filter((value: string) => value !== '')
+    storyToLoad.storyPaged = paginateStory(story)
 
     setGlobalStory(storyToLoad)
     router.push(ROUTES.STORY_VIEW)

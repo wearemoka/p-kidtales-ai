@@ -12,6 +12,7 @@ import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
 import RandomButton from '../components/RandomButton/RandomButton'
 import { ROUTES } from '@/app/utils/routes'
+import { paginateStory } from '@/app/utils/helper'
 
 const StoryPage = () => {
   const router = useRouter()
@@ -34,7 +35,7 @@ const StoryPage = () => {
 
     const story: IStoryStore = {
       story: response.res,
-      storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
+      storyPaged: paginateStory(response.res),
       currentPage: 0
     }
 
