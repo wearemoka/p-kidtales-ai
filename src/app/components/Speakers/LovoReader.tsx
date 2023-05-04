@@ -3,8 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useGlobalContext } from '@/app/context/store'
 
 const LovoReader = () => {
-  const { BGMusic, setBGMusic, globalStory, currentStoryPage, setCurrentStoryPage } = useGlobalContext()
-  const storyPaginated = globalStory.split('\n\n').filter((value) => value !== '')
+  const { BGMusic, setBGMusic, globalStory, setGlobalStory } = useGlobalContext()
 
   const [BGMusicPrevState, setBGMusicPrevState] = useState(BGMusic)
   const audioRef = useRef<HTMLAudioElement>(null)
@@ -26,15 +25,15 @@ const LovoReader = () => {
   }, [])
 
   useEffect(() => {
-    if (storyPaginated[currentStoryPage]) {
+    if (globalStory.storyPaged[globalStory.currentPage]) {
       handleClick()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentStoryPage, globalStory])
+  }, [globalStory])
 
   const handleClick = async () => {
     const bodyRequest = {
-      text: storyPaginated[currentStoryPage],
+      text: globalStory.storyPaged[globalStory.currentPage],
       speaker_id: providers
     }
 
@@ -83,8 +82,10 @@ const LovoReader = () => {
         }}
         onEnded={() => {
           setBGMusic(BGMusicPrevState)
-          if (currentStoryPage < storyPaginated.length) {
-            setCurrentStoryPage(currentStoryPage + 1)
+          if (globalStory.currentPage < globalStory.storyPaged.length) {
+            const tmpStory = { ...globalStory }
+            tmpStory.currentPage = globalStory.currentPage + 1
+            setGlobalStory(tmpStory)
           }
         }}
       />
