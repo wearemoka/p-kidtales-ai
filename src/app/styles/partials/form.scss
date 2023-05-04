@@ -39,4 +39,9 @@
     &.mt-20{
         margin-top: 20px;
     }
+    &:focus,
+    &:focus-visible{
+        border-color: var(--purple);
+        box-shadow: 0 0 0 1px var(--purple);
+    }
   }

@@ -1,0 +1,14 @@
+.loading{
+    position: relative;
+    background: red !important;
+    img{
+        position: static;
+        @media screen and (min-width: 991px) {
+            position: absolute;
+            z-index: -1;
+            top: 25vh;
+            left: 0;
+            left: -10vw;
+        }
+    }
+}

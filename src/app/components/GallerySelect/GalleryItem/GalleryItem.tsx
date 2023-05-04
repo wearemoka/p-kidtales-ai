@@ -8,7 +8,7 @@ interface Props {
   option: IOptions,
   saveOn: string,
   afterClickHandler?:any,
-  value: string,
+  value?: string,
 }
 function GalleryItem ({ option, saveOn, afterClickHandler, value }: Props) {
   const { globalPrompt, setGlobalPrompt } = useGlobalContext()

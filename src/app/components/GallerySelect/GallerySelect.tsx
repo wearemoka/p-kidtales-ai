@@ -8,7 +8,7 @@ interface Props {
   saveOn: string,
   columns: number[],
   afterClickHandler?:any,
-  type: string,
+  type?: string,
 }
 
 function GallerySelect ({ title, options, saveOn, columns, afterClickHandler, type }: Props) {

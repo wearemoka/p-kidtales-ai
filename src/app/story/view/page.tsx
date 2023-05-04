@@ -24,14 +24,14 @@ function viewPage () {
   return (
     <Container>
       <Grid templateColumns='repeat(12, 1fr)' gap={4}>
-        <GridItem colSpan={{ lg: 3, md: 2, base: 0 }} />
+        <GridItem colSpan={{ lg: 3, md: 1, base: 0 }} />
         <GridItem colSpan={{ lg: 6, md: 10, base: 12 }}>
 
           <Heading>{title}</Heading>
           <StoryPagination />
 
         </GridItem>
-        <GridItem colSpan={{ lg: 3, md: 2, base: 0 }} />
+        <GridItem colSpan={{ lg: 3, md: 1, base: 0 }} />
       </Grid>
     </Container>
   )
