@@ -1,14 +1,16 @@
 .active {
-    //font-size: larger;
-    //font-weight: bold;
+    opacity: 1 !important;
+    filter: none !important;
 }
 
 .seted {
-    color: red
+    color: var(--white);
 }
 
 .unseted {
     color: var(--white);
+    opacity: 0.5;
+    filter: blur(2px);
 }
 .prompt{
     span{

@@ -1,10 +1,14 @@
 .cardGallery {
     border-radius: 8px;
     border: 1px solid var(--white70);
-    width: 200px;
-    height: 200px;
     position: relative;
     overflow: hidden;
+    width: 150px;
+    height: 150px;
+    @media screen and (min-width: 767px) {
+        width: 200px;
+        height: 200px;
+    }
     img{
         position: absolute;
         width: 100%;

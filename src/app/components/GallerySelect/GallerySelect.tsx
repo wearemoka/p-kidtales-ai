@@ -13,9 +13,9 @@ interface Props {
 function GallerySelect ({ title, options, saveOn, columns, afterClickHandler }: Props) {
   return (
     <VStack>
-      <Heading as='h3' className='caption bold'>{title}</Heading>
+      <Heading as='h3' className='caption bold' mb={3}>{title}</Heading>
 
-      <SimpleGrid columns={columns} spacing={10}>
+      <SimpleGrid columns={columns} spacing={[4, 10]}>
         {options.map((opt, index) => (
           <Box key={index}>
             <GalleryItem option={opt} saveOn={saveOn} afterClickHandler={afterClickHandler} />

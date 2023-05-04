@@ -47,7 +47,7 @@ const StoryPage = () => {
       {!isLoadingStory && (
         <Center>
           {/* Display Character options */}
-          {globalPrompt.step === PROMPT_STEPS.CHARACTER && <GallerySelect title='Select a character' options={characterOpts} saveOn='character' columns={[2, 2]} />}
+          {globalPrompt.step === PROMPT_STEPS.CHARACTER && <GallerySelect title='Select a character' options={characterOpts} saveOn='character' columns={[2, 2, 2, 4]} />}
 
           {/* Display Name input */}
           {globalPrompt.step === PROMPT_STEPS.NAME && <NameSelect title='Name your character' saveOn='name' />}
