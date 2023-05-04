@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Button, Stack, Image, Container } from '@chakra-ui/react'
 import BackButton from './BackButton'
 import { useGlobalContext } from '@/app/context/store'
+import { ROUTES } from '@/app/utils/routes'
 
 const TopBar = () => {
   const router = useRouter()
@@ -14,8 +15,8 @@ const TopBar = () => {
   const { BGMusic, setBGMusic } = useGlobalContext()
 
   useEffect(() => {
-    setShowBackButton(pathname !== '/')
-    setShowFlagButton(pathname.startsWith('/story/view/'))
+    setShowBackButton(pathname !== ROUTES.HOME)
+    setShowFlagButton(pathname.startsWith(ROUTES.STORY_VIEW))
   }, [pathname])
 
   /**
@@ -41,7 +42,7 @@ const TopBar = () => {
               rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
               className='md_secondary'
               onClick={() => {
-                router.push('/story/list')
+                router.push(ROUTES.LIBRARY)
               }}
             >
               <label>Library</label>
@@ -58,7 +59,7 @@ const TopBar = () => {
               aria-label='About us'
               rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
               onClick={() => {
-                router.push('/disclaimer')
+                console.log('open modal')
               }}
             />
 

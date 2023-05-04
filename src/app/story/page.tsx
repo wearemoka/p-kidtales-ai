@@ -11,8 +11,7 @@ import { useMessageTime } from '@/app/hooks/useMessageTime'
 import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
 import RandomButton from '../components/RandomButton/RandomButton'
-
-const ROUTE_VIEW_STORY = '/story/view'
+import { ROUTES } from '@/app/utils/routes'
 
 const StoryPage = () => {
   const router = useRouter()
@@ -41,7 +40,7 @@ const StoryPage = () => {
 
     setGlobalStory(story)
 
-    router.push(ROUTE_VIEW_STORY)
+    router.push(ROUTES.STORY_VIEW)
   }
 
   const customLessonHandler = (lesson: string) => {

@@ -8,8 +8,7 @@ import { useGlobalContext } from '@/app/context/store'
 import { PROMPT_STEPS } from '@/app/utils/constants'
 import { getRandomUserPrompt } from './utils/helper'
 import AgeSelector from './components/AgeSelector/AgeSelector'
-
-const ROUTE_STORY_PAGE = '/story'
+import { ROUTES } from '@/app/utils/routes'
 
 const HomePage = () => {
   const router = useRouter()
@@ -19,13 +18,13 @@ const HomePage = () => {
   const startCreateStoryButtonHandler = () => {
     const newStep: any = { ...globalPrompt, age, step: PROMPT_STEPS.CHARACTER }
     setGlobalPrompt(newStep)
-    router.push(ROUTE_STORY_PAGE)
+    router.push(ROUTES.STORY_GENERATE)
   }
 
   const randomizesStoryButtonHandler = () => {
     const randomStory = getRandomUserPrompt(age)
     setGlobalPrompt(randomStory)
-    router.push(ROUTE_STORY_PAGE)
+    router.push(ROUTES.STORY_GENERATE)
   }
 
   return (
