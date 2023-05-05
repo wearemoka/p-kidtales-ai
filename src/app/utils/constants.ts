@@ -21,6 +21,7 @@ export const scenarioOpts = [
   { label: 'Castle', imgPath: '/next.svg', alt: 'Castle' },
   { label: 'Moon', imgPath: '/vercel.svg', alt: 'Moon' }
 ]
+
 export const lessonOpts = [
   { label: 'Friendship' },
   { label: 'Family' },
@@ -28,9 +29,19 @@ export const lessonOpts = [
   { label: 'Respect' }
 ]
 
+export const namesOpts = [
+  { label: 'Alice' },
+  { label: 'Molly' },
+  { label: 'Bella' },
+  { label: 'Max' },
+  { label: 'Oliver' },
+  { label: 'Leo' }
+]
+
 export const PROMPT_STEPS = {
   CHARACTER: 1,
   NAME: 2,
   SCENARIO: 3,
-  LESSON: 4
+  LESSON: 4,
+  GENERATION: 5
 }

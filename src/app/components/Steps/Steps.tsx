@@ -14,7 +14,7 @@ function Steps ({ currentStep, size }: Props) {
 
   return (
     <div>
-      {steps.map((e) => {
+      {steps.filter((e) => e.index > 0).map((e) => {
         return (
           <small
             key={e.index}
