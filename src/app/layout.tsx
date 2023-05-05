@@ -7,7 +7,8 @@ import { ThemeProvider } from './ThemeProvider'
 import TopBar from './components/TopBar/TopBar'
 import RegisterPWA from './RegisterPWA'
 import './styles/globals.scss'
-import BGMusicPlayer from './components/BGMusic/BGMusicPlayer'
+// import BGMusicPlayer from './components/BGMusic/BGMusicPlayer'
+
 /**
  * For future use
  * @param param0
