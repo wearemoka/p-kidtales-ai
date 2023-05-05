@@ -15,9 +15,18 @@ const TopBar = () => {
   const { BGMusic, setBGMusic } = useGlobalContext()
   const { isOpen, onOpen, onClose } = useDisclosure()
 
+  const initialModalData = {
+    title: '',
+    content: '',
+    primaryActionLabel: '',
+    secondaryActionLabel: ''
+  }
+
+  const [modalData, setModalData] = useState(initialModalData)
+
   useEffect(() => {
     setShowBackButton(pathname !== '/')
-    setShowFlagButton(pathname.startsWith('/story/view/'))
+    setShowFlagButton(pathname.startsWith('/story/view'))
   }, [pathname])
 
   /**
@@ -25,6 +34,31 @@ const TopBar = () => {
    */
   const musicOnOffButtonClick = () => {
     setBGMusic(!BGMusic)
+  }
+
+  const openModalAbout = () => {
+    setModalData({
+      title: 'About KidTales',
+      content: "KidTales is an innovative bedtime story generator that uses cutting-edge artificial intelligence to create unique and engaging stories for children. This user-friendly application is perfect for parents who want to spend quality time with their kids before bedtime, without the hassle of creating their own stories. With KidTales, parents can choose from a variety of settings, characters, and themes to customize their child's bedtime story. The AI-powered generator then uses natural language processing to craft a unique and captivating tale that is tailored to the child's interests and reading level.",
+      primaryActionLabel: '',
+      secondaryActionLabel: ''
+    })
+    onOpen()
+  }
+
+  const flagTheStory = () => {
+    console.log('flag')
+    onClose()
+  }
+
+  const openModalFlag = () => {
+    setModalData({
+      title: 'Flag this story',
+      content: 'Are you sure you want to flag this story as inappropriate?',
+      primaryActionLabel: 'Yes',
+      secondaryActionLabel: 'No'
+    })
+    onOpen()
   }
 
   return (
@@ -59,23 +93,25 @@ const TopBar = () => {
             <Button
               aria-label='About us'
               rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
-              onClick={onOpen}
+              onClick={openModalAbout}
             />
 
             <ModalWrapper
               isOpen={isOpen}
               onClose={onClose}
-              modalTitle='About KidTales'
-              content="KidTales is an innovative bedtime story generator that uses cutting-edge artificial intelligence to create unique and engaging stories for children. This user-friendly application is perfect for parents who want to spend quality time with their kids before bedtime, without the hassle of creating their own stories. With KidTales, parents can choose from a variety of settings, characters, and themes to customize their child's bedtime story. The AI-powered generator then uses natural language processing to craft a unique and captivating tale that is tailored to the child's interests and reading level."
+              modalTitle={modalData.title}
+              content={modalData.content}
+              primaryActionLabel={modalData.primaryActionLabel}
+              secondaryActionLabel={modalData.secondaryActionLabel}
+              primaryAction={flagTheStory}
+              secondaryAction={onClose}
             />
 
             {showFlagButton &&
               <Button
                 aria-label='Flag tale as inappropriate'
                 rightIcon={<Image src='/icons/Flag.svg' alt='Books outline white icon' />}
-                onClick={() => {
-                  console.log('Flag this story.')
-                }}
+                onClick={openModalFlag}
               >
                 <label>Flag tale</label>
               </Button>}

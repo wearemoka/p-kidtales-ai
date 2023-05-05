@@ -36,9 +36,9 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, content, primaryActionLabe
               >
                 {primaryActionLabel}
               </Button>}
-            {secondaryAction &&
+            {secondaryActionLabel &&
               <Button
-                variant='ghost'
+                colorScheme='cyan'
                 onClick={secondaryAction}
               >
                 {secondaryActionLabel}
