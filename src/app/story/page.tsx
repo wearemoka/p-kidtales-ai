@@ -3,20 +3,30 @@ import GallerySelect from '@/app/components/GallerySelect/GallerySelect'
 import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
-import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
+import { characterOpts, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
 import { Box, Button, Center, Image, Input, VStack, Text } from '@chakra-ui/react'
 import { getAiStory } from '@/app/services/ChatGPTService'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
 import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
 import styles from './story.module.scss'
+import RandomButton from '../components/RandomButton/RandomButton'
+
+const ROUTE_VIEW_STORY = '/story/view'
 
 const StoryPage = () => {
   const router = useRouter()
   const { globalPrompt, setGlobalPrompt, setGlobalStory } = useGlobalContext()
   const [isLoadingStory, setIsLoadingStory] = useState<boolean>(false)
   const loadingMessages = useMessageTime(isLoadingStory)
+
+  useEffect(() => {
+    if (globalPrompt.step === PROMPT_STEPS.GENERATION && writeStoryHandler) {
+      writeStoryHandler()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const writeStoryHandler = async () => {
     setIsLoadingStory(true)
@@ -32,7 +42,7 @@ const StoryPage = () => {
 
     setGlobalStory(story)
 
-    router.push('/story/view')
+    router.push(ROUTE_VIEW_STORY)
   }
 
   const customLessonHandler = (lesson: string) => {
@@ -50,15 +60,24 @@ const StoryPage = () => {
           <Center>
             {/* Display Character options */}
             {globalPrompt.step === PROMPT_STEPS.CHARACTER &&
-              <GallerySelect title='Select a character' options={characterOpts} saveOn='character' columns={[2, 2, 2, 4]} />}
+              <VStack>
+                <GallerySelect title='Select a character' options={characterOpts} saveOn='character' columns={[2, 2, 2, 4]} />
+                <RandomButton options={characterOpts} saveOn='character' />
+              </VStack>}
 
             {/* Display Name input */}
             {globalPrompt.step === PROMPT_STEPS.NAME &&
-              <NameSelect title='Name your character' saveOn='name' />}
+              <VStack>
+                <NameSelect title='Name your character' saveOn='name' />
+                <RandomButton options={namesOpts} saveOn='name' />
+              </VStack>}
 
             {/* Display Scensario options */}
             {globalPrompt.step === PROMPT_STEPS.SCENARIO &&
-              <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2, 2, 4]} />}
+              <VStack>
+                <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2, 2, 4]} />
+                <RandomButton options={scenarioOpts} saveOn='scenario' />
+              </VStack>}
 
             {/* Display Lesson options */}
             {globalPrompt.step === PROMPT_STEPS.LESSON &&
@@ -81,8 +100,11 @@ const StoryPage = () => {
                   }}
                 />
                 <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className='big primary only-icon' onClick={writeStoryHandler} />
+
+                <RandomButton options={lessonOpts} saveOn='lesson' actionAfterSave={writeStoryHandler} />
               </VStack>}
           </Center>
+
         </>
       )}
 

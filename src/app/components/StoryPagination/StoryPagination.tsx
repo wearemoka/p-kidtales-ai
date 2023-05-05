@@ -19,7 +19,7 @@ export function StoryPagination () {
   }
 
   const handlePrevPage = () => {
-    if (globalStory.currentPage > 0) {
+    if (globalStory.currentPage > 1) {
       setCurrentStoryPage(globalStory.currentPage - 1)
     }
   }
@@ -31,7 +31,7 @@ export function StoryPagination () {
       </Text>
 
       <HStack>
-        <Button className='big secondary only-icon' rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} disabled={globalStory.currentPage <= 0} onClick={handlePrevPage} />
+        <Button className='big secondary only-icon' rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} disabled={globalStory.currentPage <= 1} onClick={handlePrevPage} />
         <Steps currentStep={globalStory.currentPage} size={pages} />
         <Button className='big secondary only-icon' rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} disabled={globalStory.currentPage >= pages - 1} onClick={handleNextPage} />
       </HStack>

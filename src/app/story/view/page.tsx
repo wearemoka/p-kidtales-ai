@@ -11,7 +11,7 @@ function viewPage () {
 
   useEffect(() => {
     const tmpStory = { ...globalStory }
-    tmpStory.currentPage = 0
+    tmpStory.currentPage = 1
     setGlobalStory(tmpStory)
 
     const story = globalStory.storyPaged || null
@@ -19,6 +19,7 @@ function viewPage () {
       const cleanTitle = story[0].replace('Title: ', '')
       setTitle(cleanTitle)
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return (
