@@ -89,14 +89,15 @@ const StoryPage = () => {
       {isLoadingStory && (
         <div className={styles.loading}>
           <VStack justify='center'>
-            <Box className='big-lead' mb={8}>
+            <Text textAlign='center' className='body-big' my={8}>Create a story for {globalPrompt.age}</Text>
+            <Box className='big-lead'>
               <Text textAlign='center'>Once upon a time a {globalPrompt.character}</Text>
               <Text textAlign='center'>called {globalPrompt.name}</Text>
               <Text textAlign='center'>had an amazing adventure in the {globalPrompt.scenario}</Text>
               <Text textAlign='center'>to learn about {globalPrompt.lesson}</Text>
             </Box>
             <Image src='images/Loading.png' alt='Wizard magic loading' />
-            <h3>{loadingMessages}</h3>
+            <Text className={`body ${styles.loadingText}`}>{loadingMessages}</Text>
           </VStack>
         </div>
       )}
