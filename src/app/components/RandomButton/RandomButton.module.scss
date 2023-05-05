@@ -1,0 +1,13 @@
+.randomButton {
+    padding: 0;
+    width: 60px;
+    height: 60px;
+    img{
+        width: 60px;
+        height: 60px;
+    }
+    &:hover{
+        background: transparent;
+        transform: translateY(-10px);
+    }
+}
