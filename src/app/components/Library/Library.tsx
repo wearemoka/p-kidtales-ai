@@ -30,9 +30,9 @@ function Stories ({ age }:Props) {
   const openStoryHandler = (story: any) => {
     const storyToLoad = { ...globalStory }
 
-    storyToLoad.story = story
+    storyToLoad.story = story.story
     storyToLoad.currentPage = 1
-    storyToLoad.storyPaged = paginateStory(story)
+    storyToLoad.storyPaged = paginateStory(story.story)
 
     setGlobalStory(storyToLoad)
     router.push(ROUTES.STORY_VIEW)
