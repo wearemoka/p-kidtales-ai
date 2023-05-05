@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react'
 
 import styles from './TopBar.module.scss'
 import { usePathname, useRouter } from 'next/navigation'
-import { Button, Stack, Image, Container } from '@chakra-ui/react'
+import { Button, Stack, Image, Container, useDisclosure } from '@chakra-ui/react'
 import BackButton from './BackButton'
 import { useGlobalContext } from '@/app/context/store'
+import ModalWrapper from '../ModalWrapper/ModalWrapper'
 
 const TopBar = () => {
   const router = useRouter()
@@ -12,6 +13,7 @@ const TopBar = () => {
   const [showBackButton, setShowBackButton] = useState(false)
   const [showFlagButton, setShowFlagButton] = useState(false)
   const { BGMusic, setBGMusic } = useGlobalContext()
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
   useEffect(() => {
     setShowBackButton(pathname !== '/')
@@ -57,9 +59,14 @@ const TopBar = () => {
             <Button
               aria-label='About us'
               rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
-              onClick={() => {
-                router.push('/disclaimer')
-              }}
+              onClick={onOpen}
+            />
+
+            <ModalWrapper
+              isOpen={isOpen}
+              onClose={onClose}
+              modalTitle='About KidTales'
+              content="KidTales is an innovative bedtime story generator that uses cutting-edge artificial intelligence to create unique and engaging stories for children. This user-friendly application is perfect for parents who want to spend quality time with their kids before bedtime, without the hassle of creating their own stories. With KidTales, parents can choose from a variety of settings, characters, and themes to customize their child's bedtime story. The AI-powered generator then uses natural language processing to craft a unique and captivating tale that is tailored to the child's interests and reading level."
             />
 
             {showFlagButton &&
