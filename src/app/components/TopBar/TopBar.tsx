@@ -14,6 +14,7 @@ const TopBar = () => {
   const [showFlagButton, setShowFlagButton] = useState(false)
   const { BGMusic, setBGMusic } = useGlobalContext()
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const { globalStory, setGlobalStory } = useGlobalContext()
 
   const initialModalData = {
     title: '',
@@ -47,7 +48,7 @@ const TopBar = () => {
   }
 
   const flagTheStory = () => {
-    console.log('flag')
+    console.log('flag', globalStory)
     onClose()
   }
 
@@ -96,17 +97,6 @@ const TopBar = () => {
               onClick={openModalAbout}
             />
 
-            <ModalWrapper
-              isOpen={isOpen}
-              onClose={onClose}
-              modalTitle={modalData.title}
-              content={modalData.content}
-              primaryActionLabel={modalData.primaryActionLabel}
-              secondaryActionLabel={modalData.secondaryActionLabel}
-              primaryAction={flagTheStory}
-              secondaryAction={onClose}
-            />
-
             {showFlagButton &&
               <Button
                 aria-label='Flag tale as inappropriate'
@@ -118,6 +108,18 @@ const TopBar = () => {
           </Stack>
         </div>
       </Container>
+
+      {/* Modal to display */}
+      <ModalWrapper
+        isOpen={isOpen}
+        onClose={onClose}
+        modalTitle={modalData.title}
+        content={modalData.content}
+        primaryActionLabel={modalData.primaryActionLabel}
+        secondaryActionLabel={modalData.secondaryActionLabel}
+        primaryAction={flagTheStory}
+        secondaryAction={onClose}
+      />
     </div>
   )
 }

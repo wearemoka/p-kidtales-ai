@@ -16,38 +16,36 @@ interface Props {
 
 function ModalWrapper ({ isOpen, onClose, modalTitle, content, primaryActionLabel, primaryAction, secondaryActionLabel, secondaryAction }: Props) {
   return (
-    <>
-      <Modal isOpen={isOpen} onClose={onClose}>
-        <ModalOverlay />
-        <ModalContent>
-          <ModalHeader>{modalTitle}</ModalHeader>
-          <ModalCloseButton />
+    <Modal isOpen={isOpen} onClose={onClose}>
+      <ModalOverlay />
+      <ModalContent>
+        <ModalHeader>{modalTitle}</ModalHeader>
+        <ModalCloseButton />
 
-          <ModalBody>
-            {content}
-          </ModalBody>
+        <ModalBody>
+          {content}
+        </ModalBody>
 
-          <ModalFooter>
-            {primaryActionLabel &&
-              <Button
-                colorScheme='blue'
-                mr={3}
-                onClick={primaryAction}
-              >
-                {primaryActionLabel}
-              </Button>}
-            {secondaryActionLabel &&
-              <Button
-                colorScheme='cyan'
-                onClick={secondaryAction}
-              >
-                {secondaryActionLabel}
-              </Button>}
-          </ModalFooter>
+        <ModalFooter>
+          {primaryActionLabel &&
+            <Button
+              colorScheme='blue'
+              mr={3}
+              onClick={primaryAction}
+            >
+              {primaryActionLabel}
+            </Button>}
+          {secondaryActionLabel &&
+            <Button
+              colorScheme='cyan'
+              onClick={secondaryAction}
+            >
+              {secondaryActionLabel}
+            </Button>}
+        </ModalFooter>
 
-        </ModalContent>
-      </Modal>
-    </>
+      </ModalContent>
+    </Modal>
   )
 }
 
