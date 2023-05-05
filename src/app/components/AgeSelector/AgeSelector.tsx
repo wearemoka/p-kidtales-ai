@@ -14,10 +14,6 @@ function AgeSelector ({ age, setAge }:Props) {
           {ages.map((age) => <Radio key={`age-option-${age}`} value={age}>{age} yrs</Radio>)}
         </Stack>
       </RadioGroup>
-
-      <Box px={[0, 24, 24, 36]}>
-        <Text className='caption text-center text-secondary'>Choosing the age for a story is important because it affects the length, language, and other aspects of the story.</Text>
-      </Box>
     </>
   )
 }

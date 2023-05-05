@@ -1,0 +1,47 @@
+:root{
+    --chakra-colors-chakra-placeholder-color: var(--white50) !important;
+}
+
+.chakra-radio{
+    padding: 8px 24px;
+    border-radius: 100px;
+    border: 1px solid white;
+    transition: all .3s ease-in-out;
+    white-space: nowrap;
+    @media screen and (min-width: 601px) {
+      padding: 12px 43px;
+    }
+    &[data-checked]{
+      background-color: var(--white);
+      color: var(--black);
+    }
+    .chakra-radio__control{
+      display: none;
+    }
+    .chakra-radio__label{
+      margin: 0;
+      font-size: 18px;
+      text-decoration: none;
+    }
+  }
+  
+  .chakra-input{
+    border-radius: 8px;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    height: 50px;
+    width: 100%;
+    text-align: center;
+    @media screen and (min-width: 601px) {
+        min-width: 400px;
+    }
+    &.mt-20{
+        margin-top: 20px;
+    }
+    &:focus,
+    &:focus-visible{
+        border-color: var(--purple);
+        box-shadow: 0 0 0 1px var(--purple);
+    }
+  }

@@ -2,6 +2,7 @@
 @import './partials/fonts.scss';
 @import './partials/text-styles.scss';
 @import './partials/buttons.scss';
+@import './partials/form.scss';
 
 :root{
   font-family: 'Plus Jakarta Sans' !important;
@@ -33,24 +34,15 @@ body{
   color: var(--white70);
 }
 
-.chakra-radio{
-  padding: 8px 24px;
-  border-radius: 100px;
-  border: 1px solid white;
-  transition: all .3s ease-in-out;
-  white-space: nowrap;
-  @media screen and (min-width: 601px) {
-    padding: 12px 43px;
-  }
-  &[data-checked]{
-    background-color: var(--white);
-    color: var(--black);
-  }
-  .chakra-radio__control{
-    display: none;
-  }
-  .chakra-radio__label{
-    margin: 0;
-    font-size: 18px;
-  }
+.noBlur{
+  filter: none;
+}
+.blur1{
+  filter: blur(2px);
+}
+.blur2{
+  filter: blur(4px);
+}
+.blur3{
+  filter: blur(6px);
 }

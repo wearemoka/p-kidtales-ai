@@ -1,5 +1,5 @@
 import { useGlobalContext } from '@/app/context/store'
-import { Button, HStack, Text } from '@chakra-ui/react'
+import { Button, HStack, Text, Image } from '@chakra-ui/react'
 import Steps from '../Steps/Steps'
 
 export function StoryPagination () {
@@ -31,11 +31,10 @@ export function StoryPagination () {
       </Text>
 
       <HStack>
-        <Button disabled={globalStory.currentPage <= 1} onClick={handlePrevPage}>Prev</Button>
+        <Button className='big secondary only-icon' rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} disabled={globalStory.currentPage <= 1} onClick={handlePrevPage} />
         <Steps currentStep={globalStory.currentPage} size={pages} />
-        <Button disabled={globalStory.currentPage >= pages - 1} onClick={handleNextPage}>Next</Button>
+        <Button className='big secondary only-icon' rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} disabled={globalStory.currentPage >= pages - 1} onClick={handleNextPage} />
       </HStack>
-
     </>
   )
 }
