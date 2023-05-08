@@ -60,10 +60,9 @@ const TopBar = () => {
     onOpen()
   }
 
-  const flagTheStory = () => {
-    console.log('flag', globalStory.story)
+  const flagTheStory = async () => {
     const storyToFlag = { ...globalStory.story, appropriate: false }
-    updateDocumentInFireStore(fireBaseStoryCollection, storyToFlag, storyToFlag.id).then((r) => { console.log(r) })
+    await updateDocumentInFireStore(fireBaseStoryCollection, storyToFlag, storyToFlag.id)
     onClose()
   }
 
@@ -129,7 +128,6 @@ const TopBar = () => {
         isOpen={isOpen}
         onClose={onClose}
         modalTitle={modalData.title}
-        // children={modalData.children}
         primaryActionLabel={modalData.primaryActionLabel}
         secondaryActionLabel={modalData.secondaryActionLabel}
         primaryAction={flagTheStory}

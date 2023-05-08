@@ -41,15 +41,17 @@ const StoryPage = () => {
     const slug = createSlugWithTimeStamp(storyTitle)
 
     if (storyTitle && slug) {
-      const id = await addDocumentInFireStore(fireBaseStoryCollection, {
+      const myStory = {
         title: storyTitle,
         slug,
         prompt: [age, character, name, scenario, lesson],
         story: response.res
-      })
+      }
+
+      const id = await addDocumentInFireStore(fireBaseStoryCollection, myStory)
 
       const story: IStoryStore = {
-        story: { ...response, id },
+        story: { ...myStory, id },
         storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
         currentPage: 0
       }
