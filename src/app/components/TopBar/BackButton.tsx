@@ -7,7 +7,20 @@ import { PROMPT_STEPS } from '@/app/utils/constants'
 
 function BackButton () {
   const router = useRouter()
-  const { globalStory, setGlobalStory } = useGlobalContext()
+  const { globalStory, setGlobalStory, globalPrompt, setGlobalPrompt } = useGlobalContext()
+
+  const backButtonHandler = () => {
+    const tmpStory = { ...globalStory }
+    tmpStory.storyPaged = []
+    tmpStory.story = ''
+    setGlobalStory(tmpStory)
+
+    const tmpPrompt = { ...globalPrompt }
+    tmpPrompt.step = PROMPT_STEPS.LESSON
+    setGlobalPrompt(tmpPrompt)
+
+    router.back()
+  }
 
   return (
     <Button
@@ -15,14 +28,7 @@ function BackButton () {
       variant='solid'
       aria-label='Go back'
       rightIcon={<Image src='/icons/ArrowLeft.svg' alt='Back arrow outline icon' />}
-      onClick={() => {
-        const tmpStory = { ...globalStory }
-        tmpStory.storyPaged = []
-        tmpStory.currentPage = PROMPT_STEPS.SCENARIO
-        console.log(tmpStory)
-        setGlobalStory(tmpStory)
-        router.back()
-      }}
+      onClick={backButtonHandler}
     />
   )
 }

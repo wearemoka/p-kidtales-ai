@@ -45,13 +45,6 @@ const StoryPage = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useEffect(() => {
-    if (globalPrompt.step === PROMPT_STEPS.GENERATION && writeStoryHandler) {
-      writeStoryHandler()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [globalPrompt.step])
-
   const customLessonHandler = (lesson: string) => {
     const newStep: any = { ...globalPrompt, lesson }
     setGlobalPrompt(newStep)
