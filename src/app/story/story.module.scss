@@ -1,24 +1,33 @@
-.loading{
+.storyPage{
     position: relative;
-    img{
-        position: static;
-        width: 100%;
-        max-width: 250px;
-        @media screen and (min-width: 601px) {
-            max-width: 450px;
-        }
-        @media screen and (min-width: 991px) {
-            min-width: 600px;
-            position: absolute;
-            z-index: -1;
-            top: -10vh;
-            left: -50vw;
-        }
+    min-height: calc(100vh - 108px);
+    .random{
+        position: absolute;
+        bottom: 0;
+        margin: 10px auto;
     }
-    .loadingText{
-        margin-top: 0px;
-        @media screen and (min-width: 991px) {
-            margin-top: 50px;
+    .loading{
+        position: relative;
+        img{
+            position: static;
+            width: 100%;
+            max-width: 250px;
+            @media screen and (min-width: 601px) {
+                max-width: 450px;
+            }
+            @media screen and (min-width: 991px) {
+                min-width: 600px;
+                position: absolute;
+                z-index: -1;
+                top: -10vh;
+                left: -50vw;
+            }
+        }
+        .loadingText{
+            margin-top: 0px;
+            @media screen and (min-width: 991px) {
+                margin-top: 50px;
+            }
         }
     }
 }

@@ -68,7 +68,7 @@ const StoryPage = () => {
   }
 
   return (
-    <VStack>
+    <VStack className={styles.storyPage}>
       {/* Display the User prompt */}
 
       {!isLoadingStory && (
@@ -79,21 +79,21 @@ const StoryPage = () => {
             {globalPrompt.step === PROMPT_STEPS.CHARACTER &&
               <VStack>
                 <GallerySelect title='Select a character' options={characterOpts} saveOn='character' columns={[2, 2, 2, 4]} />
-                <RandomButton options={characterOpts} saveOn='character' />
+                <RandomButton options={characterOpts} saveOn='character' className={styles.random} />
               </VStack>}
 
             {/* Display Name input */}
             {globalPrompt.step === PROMPT_STEPS.NAME &&
               <VStack>
                 <NameSelect title='Name your character' saveOn='name' />
-                <RandomButton options={namesOpts} saveOn='name' />
+                <RandomButton options={namesOpts} saveOn='name' className={styles.random} />
               </VStack>}
 
             {/* Display Scensario options */}
             {globalPrompt.step === PROMPT_STEPS.SCENARIO &&
               <VStack>
                 <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2, 2, 4]} />
-                <RandomButton options={scenarioOpts} saveOn='scenario' />
+                <RandomButton options={scenarioOpts} saveOn='scenario' className={styles.random} />
               </VStack>}
 
             {/* Display Lesson options */}
@@ -118,7 +118,7 @@ const StoryPage = () => {
                 />
                 <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className='big primary only-icon' onClick={writeStoryHandler} />
 
-                <RandomButton options={lessonOpts} saveOn='lesson' actionAfterSave={writeStoryHandler} />
+                <RandomButton options={lessonOpts} saveOn='lesson' actionAfterSave={writeStoryHandler} className={styles.random} />
               </VStack>}
           </Center>
 
