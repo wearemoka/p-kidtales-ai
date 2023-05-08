@@ -20,8 +20,19 @@ function Stories ({ age }:Props) {
   const { data } = useFetchStory(fireBaseStoryCollection) // get stories from the repository
   const [itemsToDisplay, setItemsToDisplay] = useState<number>(8)
 
-  const mappedDataByAge:any = data?.filter((item: any) => item.prompt.includes(age))
-  const toDisplay = mappedDataByAge.slice(0, itemsToDisplay)
+  let mappedDataByAge:any = []
+  let toDisplay = []
+
+  if (data) {
+    mappedDataByAge = data?.filter((item: any) => {
+      if (Array.isArray(item.prompt)) {
+        return item.prompt.includes(age)
+      } else {
+        return false
+      }
+    })
+    toDisplay = mappedDataByAge.slice(0, itemsToDisplay)
+  }
 
   /**
    * Save the story in the corresponding context
@@ -39,34 +50,38 @@ function Stories ({ age }:Props) {
   }
 
   return (
-    <VStack>
-      <h4> For {age} years old kids </h4>
+    <>
+      {itemsToDisplay &&
+        <VStack>
+          <h4> For {age} years old kids </h4>
 
-      <SimpleGrid columns={2} spacing={10}>
-        {toDisplay && toDisplay.map((item: any, index: number) => {
-          return (
-            <Box
-              key={index}
-              onClick={() => { openStoryHandler(item) }}
-              cursor='pointer'
-              borderWidth='1px'
-              borderRadius='lg'
+          <SimpleGrid columns={2} spacing={10}>
+            {toDisplay && toDisplay.map((item: any, index: number) => {
+              return (
+                <Box
+                  key={index}
+                  onClick={() => { openStoryHandler(item) }}
+                  cursor='pointer'
+                  borderWidth='1px'
+                  borderRadius='lg'
+                >
+                  {item.title}
+                </Box>
+              )
+            })}
+          </SimpleGrid>
+
+          {(itemsToDisplay <= 8) &&
+            <Button
+              onClick={() => {
+                setItemsToDisplay(data.length)
+              }}
+              variant='link'
             >
-              {item.title}
-            </Box>
-          )
-        })}
-      </SimpleGrid>
-
-      <Button
-        onClick={() => {
-          setItemsToDisplay(data.length)
-        }}
-        variant='link'
-      >
-        View All
-      </Button>
-    </VStack>
+              View All
+            </Button>}
+        </VStack>}
+    </>
   )
 }
 
