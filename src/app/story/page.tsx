@@ -4,12 +4,13 @@ import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
 import { characterOpts, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
-import { Button, Center, Image, Input, VStack } from '@chakra-ui/react'
+import { Box, Button, Center, Image, Input, VStack, Text } from '@chakra-ui/react'
 import { getAiStory } from '@/app/services/ChatGPTService'
 import { useEffect, useState } from 'react'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
 import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
+import styles from './story.module.scss'
 import RandomButton from '../components/RandomButton/RandomButton'
 import { ROUTES } from '@/app/utils/routes'
 import { paginateStory } from '@/app/utils/helper'
@@ -50,32 +51,32 @@ const StoryPage = () => {
   }
 
   return (
-    <VStack>
+    <VStack className={styles.storyPage}>
       {/* Display the User prompt */}
-      <UserPrompt promptOptions={globalPrompt} steps={PROMPT_STEPS} />
 
       {!isLoadingStory && (
         <>
+          <UserPrompt promptOptions={globalPrompt} steps={PROMPT_STEPS} />
           <Center>
             {/* Display Character options */}
             {globalPrompt.step === PROMPT_STEPS.CHARACTER &&
               <VStack>
-                <GallerySelect title='Select a character' options={characterOpts} saveOn='character' columns={[2, 2]} />
-                <RandomButton options={characterOpts} saveOn='character' />
+                <GallerySelect title='Select a character' options={characterOpts} saveOn='character' columns={[2, 2, 2, 4]} />
+                <RandomButton options={characterOpts} saveOn='character' className={styles.random} />
               </VStack>}
 
             {/* Display Name input */}
             {globalPrompt.step === PROMPT_STEPS.NAME &&
               <VStack>
                 <NameSelect title='Name your character' saveOn='name' />
-                <RandomButton options={namesOpts} saveOn='name' />
+                <RandomButton options={namesOpts} saveOn='name' className={styles.random} />
               </VStack>}
 
             {/* Display Scensario options */}
             {globalPrompt.step === PROMPT_STEPS.SCENARIO &&
               <VStack>
-                <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2]} />
-                <RandomButton options={scenarioOpts} saveOn='scenario' />
+                <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2, 2, 4]} />
+                <RandomButton options={scenarioOpts} saveOn='scenario' className={styles.random} />
               </VStack>}
 
             {/* Display Lesson options */}
@@ -86,24 +87,21 @@ const StoryPage = () => {
                   title='Select a lesson'
                   options={lessonOpts}
                   saveOn='lesson'
-                  columns={[4, 2]}
+                  columns={[2]}
                   afterClickHandler={writeStoryHandler}
+                  type='noImg'
                 />
 
                 <Input
+                  className='mt-20'
                   placeholder='Write my Own Lesson'
                   onChange={(e) => {
                     customLessonHandler(e.target.value)
                   }}
                 />
-                <Button
-                  variant='outline'
-                  onClick={writeStoryHandler}
-                >
-                  Write!
-                </Button>
+                <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className='big primary only-icon' onClick={writeStoryHandler} />
 
-                <RandomButton options={lessonOpts} saveOn='lesson' actionAfterSave={writeStoryHandler} />
+                <RandomButton options={lessonOpts} saveOn='lesson' actionAfterSave={writeStoryHandler} className={styles.random} />
               </VStack>}
           </Center>
 
@@ -111,10 +109,19 @@ const StoryPage = () => {
       )}
 
       {isLoadingStory && (
-        <VStack>
-          <Image src='images/Initial.png' alt='Wizard magic loading' />
-          <h3>{loadingMessages}</h3>
-        </VStack>
+        <div className={styles.loading}>
+          <VStack justify='center'>
+            <Text textAlign='center' className='body-big' my={8}>Create a story for {globalPrompt.age}</Text>
+            <Box className='big-lead'>
+              <Text textAlign='center'>Once upon a time a {globalPrompt.character}</Text>
+              <Text textAlign='center'>called {globalPrompt.name}</Text>
+              <Text textAlign='center'>had an amazing adventure in the {globalPrompt.scenario}</Text>
+              <Text textAlign='center'>to learn about {globalPrompt.lesson}</Text>
+            </Box>
+            <Image src='images/Loading.png' alt='Wizard magic loading' />
+            <Text className={`body ${styles.loadingText}`}>{loadingMessages}</Text>
+          </VStack>
+        </div>
       )}
     </VStack>
   )

@@ -1,5 +1,5 @@
 import { useGlobalContext } from '@/app/context/store'
-import { Button, Heading, Input, VStack } from '@chakra-ui/react'
+import { Button, Heading, Input, VStack, Image } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
 import styles from './nameselect.module.scss'
 
@@ -41,10 +41,10 @@ function NameSelect ({ title, saveOn }: Props) {
 
   return (
     <VStack>
-      <Heading>{title}</Heading>
+      <Heading as='h3' className='caption bold' mb={3}>{title}</Heading>
 
-      <Input type='text' placeholder='name' ref={inputNameRef} onChange={nameChangeHandle} />
-      <Button className={validName ? styles.enabled : styles.disabled} onClick={saveNameHandler}>GO!</Button>
+      <Input type='text' placeholder='e.g. Ziggy' ref={inputNameRef} onChange={nameChangeHandle} />
+      <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className={`big primary only-icon ${validName ? styles.enabled : styles.disabled}`} onClick={saveNameHandler} />
     </VStack>
   )
 }

@@ -9,17 +9,17 @@ export const LoadingMessages = [
 ]
 
 export const characterOpts = [
-  { label: 'Giraffe', imgPath: '/thirteen.svg', alt: 'Giraffe' },
-  { label: 'Whale', imgPath: '/thirteen.svg', alt: 'Whale' },
-  { label: 'Dog', imgPath: '/vercel.svg', alt: 'Dog' },
-  { label: 'Rabbit', imgPath: '/next.svg', alt: 'Rabbit' }
+  { label: 'Giraffe', imgPath: '/images/characters/giraffe.png', alt: 'Giraffe' },
+  { label: 'Whale', imgPath: '/images/characters/whale.png', alt: 'Whale' },
+  { label: 'Dog', imgPath: '/images/characters/dog.png', alt: 'Dog' },
+  { label: 'Rabbit', imgPath: '/images/characters/rabbit.png', alt: 'Rabbit' }
 ]
 
 export const scenarioOpts = [
-  { label: 'Ocean', imgPath: '/next.svg', alt: 'Ocean' },
-  { label: 'Jungle', imgPath: '/thirteen.svg', alt: 'Jungle' },
-  { label: 'Castle', imgPath: '/next.svg', alt: 'Castle' },
-  { label: 'Moon', imgPath: '/vercel.svg', alt: 'Moon' }
+  { label: 'Ocean', imgPath: '/images/scenarios/ocean.png', alt: 'Ocean' },
+  { label: 'Jungle', imgPath: '/images/scenarios/jungle.png', alt: 'Jungle' },
+  { label: 'Castle', imgPath: '/images/scenarios/castle.png', alt: 'Castle' },
+  { label: 'Moon', imgPath: '/images/scenarios/moon.png', alt: 'Moon' }
 ]
 
 export const lessonOpts = [

@@ -39,9 +39,9 @@ export default function RootLayout ({
           <ThemeProvider>
 
             <TopBar />
-            <div className='positionTopRight'>
+            {/* <div className='positionTopRight'>
               <BGMusicPlayer />
-            </div>
+            </div> */}
 
             <FirebaseAppProvider firebaseConfig={config}>
               <StoreProvider>

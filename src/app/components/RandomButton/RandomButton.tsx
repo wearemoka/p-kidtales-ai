@@ -2,14 +2,16 @@ import { useGlobalContext } from '@/app/context/store'
 import { getRandomValue } from '@/app/utils/helper'
 import { IOptions } from '@/app/utils/interfaces'
 import { Button, Image } from '@chakra-ui/react'
+import styles from './RandomButton.module.scss'
 
 interface Props {
     options: IOptions[],
     saveOn: string,
+    className?: string,
     actionAfterSave?: () => void
 }
 
-function RandomButton ({ options, saveOn, actionAfterSave }: Props) {
+function RandomButton ({ options, saveOn, className, actionAfterSave }: Props) {
   const { globalPrompt, setGlobalPrompt } = useGlobalContext()
 
   const buttonDiceHandler = () => {
@@ -25,14 +27,13 @@ function RandomButton ({ options, saveOn, actionAfterSave }: Props) {
   }
 
   return (
-    <div>
-      <Button
-        variant='ghost'
-        onClick={buttonDiceHandler}
-      >
-        <Image src='/icons/Dice.svg' alt='dice' />
-      </Button>
-    </div>
+    <Button
+      variant='ghost'
+      onClick={buttonDiceHandler}
+      className={`${styles.randomButton} ${className}`}
+    >
+      <Image src='/icons/Dice.svg' alt='dice' />
+    </Button>
   )
 }
 
