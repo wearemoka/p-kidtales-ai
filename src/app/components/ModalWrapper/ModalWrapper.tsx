@@ -1,20 +1,20 @@
 'use client'
 
 import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button } from '@chakra-ui/react'
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 interface Props {
     isOpen: boolean,
     onClose: () => void,
     modalTitle: string,
-    content: any
+    children?: ReactNode;
     primaryActionLabel?: string,
     primaryAction?: () => void,
     secondaryActionLabel?: string,
     secondaryAction?: () => void
 }
 
-function ModalWrapper ({ isOpen, onClose, modalTitle, content, primaryActionLabel, primaryAction, secondaryActionLabel, secondaryAction }: Props) {
+function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLabel, primaryAction, secondaryActionLabel, secondaryAction }: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalOverlay />
@@ -23,7 +23,7 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, content, primaryActionLabe
         <ModalCloseButton />
 
         <ModalBody>
-          {content}
+          {children}
         </ModalBody>
 
         <ModalFooter>

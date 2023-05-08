@@ -18,7 +18,7 @@ const TopBar = () => {
 
   const initialModalData = {
     title: '',
-    content: '',
+    children: <></>,
     primaryActionLabel: '',
     secondaryActionLabel: ''
   }
@@ -40,7 +40,17 @@ const TopBar = () => {
   const openModalAbout = () => {
     setModalData({
       title: 'About KidTales',
-      content: "KidTales is an innovative bedtime story generator that uses cutting-edge artificial intelligence to create unique and engaging stories for children. This user-friendly application is perfect for parents who want to spend quality time with their kids before bedtime, without the hassle of creating their own stories. With KidTales, parents can choose from a variety of settings, characters, and themes to customize their child's bedtime story. The AI-powered generator then uses natural language processing to craft a unique and captivating tale that is tailored to the child's interests and reading level.",
+      children: (
+        <>
+          <div>
+            KidTales is an innovative bedtime story generator that uses cutting-edge artificial intelligence to create unique and engaging stories for children. This user-friendly application is perfect for parents who want to spend quality time with their kids before bedtime, without the hassle of creating their own stories.
+          </div>
+          <br />
+          <div>
+            With KidTales, parents can choose from a variety of settings, characters, and themes to customize their child's bedtime story. The AI-powered generator then uses natural language processing to craft a unique and captivating tale that is tailored to the child's interests and reading level.
+          </div>
+        </>
+      ),
       primaryActionLabel: '',
       secondaryActionLabel: ''
     })
@@ -55,7 +65,7 @@ const TopBar = () => {
   const openModalFlag = () => {
     setModalData({
       title: 'Flag this story',
-      content: 'Are you sure you want to flag this story as inappropriate?',
+      children: <div>Are you sure you want to flag this story as inappropriate?</div>,
       primaryActionLabel: 'Yes',
       secondaryActionLabel: 'No'
     })
@@ -114,12 +124,14 @@ const TopBar = () => {
         isOpen={isOpen}
         onClose={onClose}
         modalTitle={modalData.title}
-        content={modalData.content}
+        // children={modalData.children}
         primaryActionLabel={modalData.primaryActionLabel}
         secondaryActionLabel={modalData.secondaryActionLabel}
         primaryAction={flagTheStory}
         secondaryAction={onClose}
-      />
+      >{modalData.children}
+      </ModalWrapper>
+
     </div>
   )
 }
