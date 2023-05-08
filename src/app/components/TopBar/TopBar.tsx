@@ -64,6 +64,7 @@ const TopBar = () => {
     const storyToFlag = { ...globalStory.story, appropriate: false }
     await updateDocumentInFireStore(fireBaseStoryCollection, storyToFlag, storyToFlag.id)
     onClose()
+    router.push('/')
   }
 
   const openModalFlag = () => {
