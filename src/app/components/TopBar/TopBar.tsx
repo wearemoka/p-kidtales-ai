@@ -6,6 +6,9 @@ import { Button, Stack, Image, Container, useDisclosure } from '@chakra-ui/react
 import BackButton from './BackButton'
 import { useGlobalContext } from '@/app/context/store'
 import ModalWrapper from '../ModalWrapper/ModalWrapper'
+import { updateDocumentInFireStore } from '@/app/services/FirebaseService'
+
+const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
 const TopBar = () => {
   const router = useRouter()
@@ -14,7 +17,7 @@ const TopBar = () => {
   const [showFlagButton, setShowFlagButton] = useState(false)
   const { BGMusic, setBGMusic } = useGlobalContext()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { globalStory, setGlobalStory } = useGlobalContext()
+  const { globalStory } = useGlobalContext()
 
   const initialModalData = {
     title: '',
@@ -58,7 +61,9 @@ const TopBar = () => {
   }
 
   const flagTheStory = () => {
-    console.log('flag', globalStory)
+    console.log('flag', globalStory.story)
+    const storyToFlag = { ...globalStory.story, appropriate: false }
+    updateDocumentInFireStore(fireBaseStoryCollection, storyToFlag, storyToFlag.id).then((r) => { console.log(r) })
     onClose()
   }
 
