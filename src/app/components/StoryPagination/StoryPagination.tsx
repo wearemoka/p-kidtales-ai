@@ -32,12 +32,10 @@ export function StoryPagination () {
   }
 
   const openLibrary = () => {
-    console.log('navegar a libreria')
     router.replace('/library')
   }
 
   const generateNewStory = () => {
-    console.log('navegar a home')
     router.replace('/')
   }
 
