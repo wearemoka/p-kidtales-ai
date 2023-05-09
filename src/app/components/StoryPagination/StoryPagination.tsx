@@ -26,15 +26,16 @@ export function StoryPagination () {
 
   return (
     <>
-      <Text>
+      <Text className='lead'>
         {globalStory.storyPaged[globalStory.currentPage]}
       </Text>
 
-      <HStack>
+      <div>
         <Button className='big secondary only-icon' rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} disabled={globalStory.currentPage <= 1} onClick={handlePrevPage} />
-        <Steps currentStep={globalStory.currentPage} size={pages} />
         <Button className='big secondary only-icon' rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} disabled={globalStory.currentPage >= pages - 1} onClick={handleNextPage} />
-      </HStack>
+      </div>
+
+      <Steps currentStep={globalStory.currentPage} size={pages} />
     </>
   )
 }

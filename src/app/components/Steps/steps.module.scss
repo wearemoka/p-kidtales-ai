@@ -1,3 +1,14 @@
-.active {
-    color: red;
+.steps{
+    position: absolute;
+    bottom: 30px;
+}
+.dot{
+    display: block;
+    width: 5px;
+    height: 5px;
+    background:  var(--white20);
+    border-radius: 3px;
+    &.active {
+        background: var(--white);
+    }
 }

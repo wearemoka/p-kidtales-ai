@@ -2,8 +2,9 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { StoryPagination } from '@/app/components/StoryPagination/StoryPagination'
 import { useGlobalContext } from '@/app/context/store'
-import { Center, Heading, VStack, Container, GridItem, Grid } from '@chakra-ui/react'
+import { Heading, Container, GridItem, Grid, Image } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
+import styles from './tale.module.scss'
 
 function viewPage () {
   const { globalStory, setGlobalStory } = useGlobalContext()
@@ -23,18 +24,23 @@ function viewPage () {
   }, [])
 
   return (
-    <Container>
-      <Grid templateColumns='repeat(12, 1fr)' gap={4}>
-        <GridItem colSpan={{ lg: 3, md: 1, base: 0 }} />
-        <GridItem colSpan={{ lg: 6, md: 10, base: 12 }}>
+    <div className={styles.tale}>
+      <div className={styles.image}>
+        <Image src='images/characters/whale.png' alt='' />
+      </div>
+      <Container>
+        <Grid templateColumns='repeat(12, 1fr)' gap={4}>
+          <GridItem colSpan={{ lg: 3, md: 1, base: 0 }} />
+          <GridItem colSpan={{ lg: 6, md: 10, base: 12 }}>
 
-          <Heading>{title}</Heading>
-          <StoryPagination />
+            <Heading as='h1' className='heading-small' mb={3}>{title}</Heading>
+            <StoryPagination />
 
-        </GridItem>
-        <GridItem colSpan={{ lg: 3, md: 1, base: 0 }} />
-      </Grid>
-    </Container>
+          </GridItem>
+          <GridItem colSpan={{ lg: 3, md: 1, base: 0 }} />
+        </Grid>
+      </Container>
+    </div>
   )
 }
 

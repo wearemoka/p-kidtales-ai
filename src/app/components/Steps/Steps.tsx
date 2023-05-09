@@ -1,3 +1,4 @@
+import { Center, Stack } from '@chakra-ui/react'
 import styles from './steps.module.scss'
 
 interface Props {
@@ -13,19 +14,19 @@ function Steps ({ currentStep, size }: Props) {
   }
 
   return (
-    <div>
-      {steps.filter((e) => e.index > 0).map((e) => {
-        return (
-          <small
-            key={e.index}
-            className={`${e.active ? styles.active : ''}`}
-          >
-            {e.index}
-          </small>
-        )
-      }
-      )}
-    </div>
+    <Center>
+      <Stack spacing={1} direction='row' className={styles.steps}>
+        {steps.filter((e) => e.index > 0).map((e) => {
+          return (
+            <span
+              key={e.index}
+              className={`${e.active ? styles.active : ''} ${styles.dot}`}
+            />
+          )
+        }
+        )}
+      </Stack>
+    </Center>
   )
 }
 
