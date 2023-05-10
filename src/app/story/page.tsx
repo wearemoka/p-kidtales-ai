@@ -20,12 +20,27 @@ const StoryPage = () => {
   const { globalPrompt, setGlobalPrompt, globalStory, setGlobalStory } = useGlobalContext()
   const [isLoadingStory, setIsLoadingStory] = useState<boolean>(false)
   const loadingMessages = useMessageTime(isLoadingStory)
+  const [hasError, setHasError] = useState<boolean>(false)
 
   const writeStoryHandler = async () => {
-    setIsLoadingStory(true)
     const { age, character, name, scenario, lesson } = globalPrompt
+
+    if (!age) {
+      setHasError(true)
+      setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
+      return
+    }
+
+    setIsLoadingStory(true)
     const response = await getAiStory(age, character, name, scenario, lesson)
     setIsLoadingStory(false)
+
+    if (response.status === 'error') {
+      setHasError(true)
+      setIsLoadingStory(false)
+      setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
+      return
+    }
 
     const story: IStoryStore = {
       story: response.res,
@@ -123,7 +138,15 @@ const StoryPage = () => {
           </VStack>
         </div>
       )}
+
+      {hasError && !isLoadingStory && (
+        <>
+          <Text>Something went wrong, please try again. Check if all fields have been completed</Text>
+          <Button onClick={() => setHasError(false)} className='big'>Try again</Button>
+        </>
+      )}
     </VStack>
+
   )
 }
 export default StoryPage

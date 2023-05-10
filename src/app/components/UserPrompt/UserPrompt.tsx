@@ -15,7 +15,7 @@ function UserPrompt ({ promptOptions, steps }: Props) {
   const { globalPrompt, setGlobalPrompt } = useGlobalContext()
 
   const [editAge, setEditAge] = useState<boolean>(false)
-  const [age, setAge] = useState<string>('')
+  const [age, setAge] = useState<string>(globalPrompt.age)
 
   // Go to a specific step to change the selection
   const jumpToStepHandler = (step:any) => {
@@ -25,11 +25,14 @@ function UserPrompt ({ promptOptions, steps }: Props) {
 
   const blurArray = ['noBlur', 'blur1', 'blur2', 'blur3']
 
+  // set the Age or display options to select it
   useEffect(() => {
     if (age) {
       const gp = { ...globalPrompt, age }
       setGlobalPrompt(gp)
       setEditAge(false)
+    } else {
+      setEditAge(true)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [age])
