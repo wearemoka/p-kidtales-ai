@@ -65,6 +65,12 @@ const StoryPage = () => {
     setGlobalPrompt(newStep)
   }
 
+  const handleEnter = (e: any) => {
+    if (e.key === 'Enter') {
+      writeStoryHandler()
+    }
+  }
+
   return (
     <VStack className={styles.storyPage}>
       {/* Display the User prompt */}
@@ -113,6 +119,7 @@ const StoryPage = () => {
                   onChange={(e) => {
                     customLessonHandler(e.target.value)
                   }}
+                  onKeyDown={handleEnter}
                 />
                 <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className='big primary only-icon' onClick={writeStoryHandler} />
 
