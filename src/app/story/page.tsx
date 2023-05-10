@@ -13,7 +13,10 @@ import { useRouter } from 'next/navigation'
 import styles from './story.module.scss'
 import RandomButton from '../components/RandomButton/RandomButton'
 import { ROUTES } from '@/app/utils/routes'
-import { paginateStory } from '@/app/utils/helper'
+import { paginateStory, createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
+import { addDocumentInFireStore } from '@/app/services/FirebaseService'
+
+const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
 const StoryPage = () => {
   const router = useRouter()
@@ -34,13 +37,27 @@ const StoryPage = () => {
     const response = await getAiStory(age, character, name, scenario, lesson)
     setIsLoadingStory(false)
 
-    const story: IStoryStore = {
-      story: response.res,
-      storyPaged: paginateStory(response.res),
-      currentPage: 0
-    }
+    const storyTitle = getStoryTitle(response.res)
+    const slug = createSlugWithTimeStamp(storyTitle)
 
-    setGlobalStory(story)
+    if (storyTitle && slug) {
+      const myStory = {
+        title: storyTitle,
+        slug,
+        prompt: [age, character, name, scenario, lesson],
+        story: response.res
+      }
+
+      const id = await addDocumentInFireStore(fireBaseStoryCollection, myStory)
+
+      const story: IStoryStore = {
+        story: { ...myStory, id },
+        storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
+        currentPage: 0
+      }
+
+      setGlobalStory(story)
+    }
 
     router.push(ROUTES.STORY_VIEW)
   }
