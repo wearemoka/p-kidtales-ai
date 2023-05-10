@@ -20,16 +20,9 @@ const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END
 
 const StoryPage = () => {
   const router = useRouter()
-  const { globalPrompt, setGlobalPrompt, setGlobalStory } = useGlobalContext()
+  const { globalPrompt, setGlobalPrompt, globalStory, setGlobalStory } = useGlobalContext()
   const [isLoadingStory, setIsLoadingStory] = useState<boolean>(false)
   const loadingMessages = useMessageTime(isLoadingStory)
-
-  useEffect(() => {
-    if (globalPrompt.step === PROMPT_STEPS.GENERATION && writeStoryHandler) {
-      writeStoryHandler()
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const writeStoryHandler = async () => {
     setIsLoadingStory(true)
@@ -62,6 +55,13 @@ const StoryPage = () => {
     router.push(ROUTES.STORY_VIEW)
   }
 
+  useEffect(() => {
+    if (globalPrompt.step === PROMPT_STEPS.GENERATION && writeStoryHandler) {
+      writeStoryHandler()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const customLessonHandler = (lesson: string) => {
     const newStep: any = { ...globalPrompt, lesson }
     setGlobalPrompt(newStep)
@@ -71,7 +71,7 @@ const StoryPage = () => {
     <VStack className={styles.storyPage}>
       {/* Display the User prompt */}
 
-      {!isLoadingStory && (
+      {!isLoadingStory && globalStory.storyPaged.length === 0 && (
         <>
           <UserPrompt promptOptions={globalPrompt} steps={PROMPT_STEPS} />
           <Center>
