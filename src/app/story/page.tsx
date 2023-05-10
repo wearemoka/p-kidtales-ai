@@ -12,10 +12,10 @@ import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
 import styles from './story.module.scss'
 import RandomButton from '../components/RandomButton/RandomButton'
-import { createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
+import { ROUTES } from '@/app/utils/routes'
+import { paginateStory, createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 
-const ROUTE_VIEW_STORY = '/story/view'
 const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
 const StoryPage = () => {
@@ -59,7 +59,7 @@ const StoryPage = () => {
       setGlobalStory(story)
     }
 
-    router.push(ROUTE_VIEW_STORY)
+    router.push(ROUTES.STORY_VIEW)
   }
 
   const customLessonHandler = (lesson: string) => {

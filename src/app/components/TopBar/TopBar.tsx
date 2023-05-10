@@ -5,6 +5,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import { Button, Stack, Image, Container, useDisclosure } from '@chakra-ui/react'
 import BackButton from './BackButton'
 import { useGlobalContext } from '@/app/context/store'
+import { ROUTES } from '@/app/utils/routes'
 import ModalWrapper from '../ModalWrapper/ModalWrapper'
 import { updateDocumentInFireStore } from '@/app/services/FirebaseService'
 
@@ -29,8 +30,8 @@ const TopBar = () => {
   const [modalData, setModalData] = useState(initialModalData)
 
   useEffect(() => {
-    setShowBackButton(pathname !== '/')
-    setShowFlagButton(pathname.startsWith('/story/view'))
+    setShowBackButton(pathname !== ROUTES.HOME)
+    setShowFlagButton(pathname.startsWith(ROUTES.STORY_VIEW))
   }, [pathname])
 
   /**
@@ -93,7 +94,7 @@ const TopBar = () => {
               rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
               className='md_secondary'
               onClick={() => {
-                router.push('/story/list')
+                router.push(ROUTES.LIBRARY)
               }}
             >
               <label>Library</label>

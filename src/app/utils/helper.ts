@@ -21,12 +21,20 @@ export const createMarkup = (story: string) => {
   return splitAnswer
 }
 
+/**
+ * Get a random value from the array
+ * @param data array of values
+ * @param props property of the value to return
+ */
 export const getRandomValue = (data: any[], props: string): string => {
   const randomIndex = Math.floor(Math.random() * data.length)
   const value = data[randomIndex]
   return value[props]
 }
 
+/**
+ * Generate a Random Prompt for all values
+ */
 export const getRandomUserPrompt = (age: string): IUserPromptSelection => {
   const character = getRandomValue(characterOpts, 'label')
   const name = getRandomValue(namesOpts, 'label')
@@ -43,4 +51,11 @@ export const getRandomUserPrompt = (age: string): IUserPromptSelection => {
   }
 
   return randomStory
+}
+
+/**
+ * Split the story and clean empty lines
+ */
+export const paginateStory = (story: string): string[] => {
+  return story.split('\n\n').filter((value: string) => value !== '')
 }
