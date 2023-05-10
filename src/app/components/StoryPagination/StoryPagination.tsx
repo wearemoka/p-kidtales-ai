@@ -20,7 +20,6 @@ export function StoryPagination () {
     if (globalStory.currentPage < pages - 1) {
       setCurrentStoryPage(globalStory.currentPage + 1)
     } else { // no more pages
-      console.log('next')
       onOpen()
     }
   }

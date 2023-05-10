@@ -12,7 +12,7 @@ import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
 import styles from './story.module.scss'
 import RandomButton from '../components/RandomButton/RandomButton'
-import { checkPromptIsComplete, paginateStory, createSlugWithTimeStamp, getStoryTitle } from '../utils/helper'
+import { checkPromptIsComplete, createSlugWithTimeStamp, getStoryTitle } from '../utils/helper'
 import { ROUTES } from '@/app/utils/routes'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 
@@ -35,7 +35,6 @@ const StoryPage = () => {
       }
       const missingPrompt = checkPromptIsComplete(globalPrompt)
       if (missingPrompt) {
-        console.log(missingPrompt)
         setHasError(true)
         setGlobalPrompt({ ...globalPrompt, step: missingPrompt })
       }
