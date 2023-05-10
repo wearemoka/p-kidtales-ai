@@ -1,4 +1,4 @@
-export const ages = ['0-2', '3-5', '6-8']
+export const ages = ['2-5', '5-7', '7-10']
 
 export const characters = ['Dog', 'Cat', 'Goose', 'Tiger', 'Elephant', 'Rabbit', 'Tortoise', 'Lion', 'Fox', 'Sheep', 'Rat', 'Ant', 'Grasshopper', 'Cow', 'Goat', 'Bear', 'Fish']
 

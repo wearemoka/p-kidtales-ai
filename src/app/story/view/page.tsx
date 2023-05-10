@@ -2,7 +2,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { StoryPagination } from '@/app/components/StoryPagination/StoryPagination'
 import { useGlobalContext } from '@/app/context/store'
-import { Center, Heading, VStack, Container, GridItem, Grid } from '@chakra-ui/react'
+import { Center, Heading, VStack, Container, GridItem, Grid, Heading, Container, GridItem, Grid } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
