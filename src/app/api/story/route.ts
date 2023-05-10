@@ -7,10 +7,6 @@ const URI_API = process.env.NEXT_PUBLIC_OPENAI_API_URL
 export async function POST (request: Request) {
   const { ageRange, character, characterName, place, lesson } = await request.json()
 
-  if (!ageRange || !character || !characterName || !place || !lesson) {
-    return NextResponse.json({ status: 'error', error: 'missing_parameters', message: 'Missing parameters' })
-  }
-
   try {
     const prompt = getStoryPayload(character, characterName, place, ageRange, lesson, false)
 

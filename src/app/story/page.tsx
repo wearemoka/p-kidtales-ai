@@ -12,6 +12,7 @@ import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
 import styles from './story.module.scss'
 import RandomButton from '../components/RandomButton/RandomButton'
+import { checkPromptIsComplete } from '../utils/helper'
 
 const ROUTE_VIEW_STORY = '/story/view'
 
@@ -21,21 +22,31 @@ const StoryPage = () => {
   const [isLoadingStory, setIsLoadingStory] = useState<boolean>(false)
   const loadingMessages = useMessageTime(isLoadingStory)
   const [hasError, setHasError] = useState<boolean>(false)
+  const { age, character, name, scenario, lesson } = globalPrompt
+
+  useEffect(() => {
+    if (globalPrompt.step === PROMPT_STEPS.GENERATION) {
+      if (!age) {
+        setHasError(true)
+        setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
+        return
+      }
+      const missingPrompt = checkPromptIsComplete(globalPrompt)
+      if (missingPrompt) {
+        console.log(missingPrompt)
+        setHasError(true)
+        setGlobalPrompt({ ...globalPrompt, step: missingPrompt })
+      }
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [globalPrompt])
 
   const writeStoryHandler = async () => {
-    const { age, character, name, scenario, lesson } = globalPrompt
-
-    if (!age) {
-      setHasError(true)
-      setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
-      return
-    }
-
     setIsLoadingStory(true)
     const response = await getAiStory(age, character, name, scenario, lesson)
     setIsLoadingStory(false)
 
-    if (response.status === 'error') {
+    if (response.status === 'error' || !response?.res.startsWith('Title:')) {
       setHasError(true)
       setIsLoadingStory(false)
       setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
