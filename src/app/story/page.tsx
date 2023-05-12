@@ -3,7 +3,7 @@ import GallerySelect from '@/app/components/GallerySelect/GallerySelect'
 import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
-import { characterOpts, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
+import { characterOpts, ERROR_MESSAGES, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
 import { Box, Button, Center, Image, Input, VStack, Text } from '@chakra-ui/react'
 import { getAiStory } from '@/app/services/ChatGPTService'
 import { useEffect, useRef, useState } from 'react'
@@ -26,24 +26,54 @@ const StoryPage = () => {
   const [hasError, setHasError] = useState<boolean>(false)
   const { age, character, name, scenario, lesson } = globalPrompt
   const inputLessonRef = useRef<HTMLInputElement>(null)
+  const [errorMessage, setErrorMessage] = useState<string>('')
+
+  const promptMissingValues = () => {
+    let missingValues: boolean = false
+
+    if (!age) {
+      setHasError(true)
+      setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
+      setErrorMessage(ERROR_MESSAGES.NO_AGE)
+      missingValues = true
+    }
+
+    const missingPrompt = checkPromptIsComplete(globalPrompt)
+    if (missingPrompt) {
+      setHasError(true)
+      setGlobalPrompt({ ...globalPrompt, step: missingPrompt })
+      missingValues = true
+
+      switch (missingPrompt) {
+        case PROMPT_STEPS.CHARACTER:
+          setErrorMessage(ERROR_MESSAGES.NO_CHARACTER)
+          break
+        case PROMPT_STEPS.NAME:
+          setErrorMessage(ERROR_MESSAGES.NO_NAME)
+          break
+        case PROMPT_STEPS.SCENARIO:
+          setErrorMessage(ERROR_MESSAGES.NO_SCENARIO)
+          break
+        case PROMPT_STEPS.LESSON:
+          setErrorMessage(ERROR_MESSAGES.NO_LESSON)
+          break
+      }
+    }
+    return missingValues
+  }
 
   useEffect(() => {
     if (globalPrompt.step === PROMPT_STEPS.GENERATION) {
-      if (!age) {
-        setHasError(true)
-        setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
-        return
-      }
-      const missingPrompt = checkPromptIsComplete(globalPrompt)
-      if (missingPrompt) {
-        setHasError(true)
-        setGlobalPrompt({ ...globalPrompt, step: missingPrompt })
-      }
+      promptMissingValues()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [globalPrompt])
 
   const writeStoryHandler = async () => {
+    if (promptMissingValues()) {
+      return
+    }
+
     setIsLoadingStory(true)
     const response = await getAiStory(age, character, name, scenario, lesson)
     setIsLoadingStory(false)
@@ -177,7 +207,7 @@ const StoryPage = () => {
 
       {hasError && !isLoadingStory && (
         <>
-          <Text>Something went wrong, please try again. Check if all fields have been completed</Text>
+          <Text fontSize='xl' color='red'>{errorMessage}</Text>
           <Button onClick={() => setHasError(false)} className='big'>Try again</Button>
         </>
       )}
