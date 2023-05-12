@@ -6,7 +6,7 @@ import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
 import { characterOpts, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
 import { Box, Button, Center, Image, Input, VStack, Text } from '@chakra-ui/react'
 import { getAiStory } from '@/app/services/ChatGPTService'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
 import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
@@ -25,6 +25,7 @@ const StoryPage = () => {
   const loadingMessages = useMessageTime(isLoadingStory)
   const [hasError, setHasError] = useState<boolean>(false)
   const { age, character, name, scenario, lesson } = globalPrompt
+  const inputLessonRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (globalPrompt.step === PROMPT_STEPS.GENERATION) {
@@ -91,7 +92,7 @@ const StoryPage = () => {
     setGlobalPrompt(newStep)
   }
 
-  const handleEnter = (e: any) => {
+  const handleLessonKeyDown = (e: any) => {
     if (e.key === 'Enter') {
       writeStoryHandler()
     }
@@ -140,14 +141,16 @@ const StoryPage = () => {
                 />
 
                 <Input
+                  ref={inputLessonRef}
                   className='mt-20'
                   placeholder='Write my Own Lesson'
                   onChange={(e) => {
                     customLessonHandler(e.target.value)
                   }}
-                  onKeyDown={handleEnter}
+                  onKeyDown={handleLessonKeyDown}
                 />
-                <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className='big primary only-icon' onClick={writeStoryHandler} />
+                {inputLessonRef.current && inputLessonRef.current.value?.length > 0 &&
+                  <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className='big primary only-icon' onClick={writeStoryHandler} />}
 
                 <RandomButton options={lessonOpts} saveOn='lesson' actionAfterSave={writeStoryHandler} className={styles.random} />
               </VStack>}
