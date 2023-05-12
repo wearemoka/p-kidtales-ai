@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { StoryPagination } from '@/app/components/StoryPagination/StoryPagination'
 import { useGlobalContext } from '@/app/context/store'
+import { ROUTES } from '@/app/utils/routes'
 import { Container, Grid, GridItem, Heading } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
@@ -22,7 +23,7 @@ function viewPage () {
       setTitle(cleanTitle)
     } else {
       // No story to display
-      router.replace('/')
+      router.replace(ROUTES.HOME)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
