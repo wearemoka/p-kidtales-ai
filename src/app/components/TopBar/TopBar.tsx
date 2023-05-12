@@ -70,10 +70,10 @@ const TopBar = () => {
 
   const openModalFlag = () => {
     setModalData({
-      title: 'Flag this story',
-      children: <div>Are you sure you want to flag this story as inappropriate?</div>,
-      primaryActionLabel: 'Yes',
-      secondaryActionLabel: 'No'
+      title: 'Do you want to flag this tale as inappropriate?',
+      children: <p>We want to ensure a safe and positive experience for all our readers. If you see any inappropriate content or language in this story, please flag it so we can review it.</p>,
+      primaryActionLabel: 'Flag Story',
+      secondaryActionLabel: 'Cancel'
     })
     onOpen()
   }
@@ -116,7 +116,7 @@ const TopBar = () => {
             {showFlagButton &&
               <Button
                 aria-label='Flag tale as inappropriate'
-                rightIcon={<Image src='/icons/Flag.svg' alt='Books outline white icon' />}
+                rightIcon={<Image src='/icons/Flag.svg' alt='Flag outline white icon' />}
                 onClick={openModalFlag}
               >
                 <label>Flag tale</label>
@@ -134,6 +134,7 @@ const TopBar = () => {
         secondaryActionLabel={modalData.secondaryActionLabel}
         primaryAction={flagTheStory}
         secondaryAction={onClose}
+        rightIconPrimaryAction={<Image src='/icons/Flag.svg' alt='Flag outline white icon' />}
       >{modalData.children}
       </ModalWrapper>
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Container, Grid, GridItem } from '@chakra-ui/react'
-import React, { ReactNode } from 'react'
+import React, { ReactElement, ReactNode } from 'react'
 
 interface Props {
     isOpen: boolean,
@@ -11,10 +11,11 @@ interface Props {
     primaryActionLabel?: string,
     primaryAction?: () => void,
     secondaryActionLabel?: string,
-    secondaryAction?: () => void
+    secondaryAction?: () => void,
+    rightIconPrimaryAction?: ReactElement;
 }
 
-function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLabel, primaryAction, secondaryActionLabel, secondaryAction }: Props) {
+function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLabel, primaryAction, secondaryActionLabel, secondaryAction, rightIconPrimaryAction }: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <ModalContent>
@@ -30,15 +31,16 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLab
               <ModalFooter>
                 {primaryActionLabel &&
                   <Button
-                    colorScheme='blue'
                     mr={3}
                     onClick={primaryAction}
+                    className='small primary'
+                    rightIcon={rightIconPrimaryAction}
                   >
                     {primaryActionLabel}
                   </Button>}
                 {secondaryActionLabel &&
                   <Button
-                    colorScheme='cyan'
+                    className='small secondary'
                     onClick={secondaryAction}
                   >
                     {secondaryActionLabel}
