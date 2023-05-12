@@ -24,7 +24,6 @@ function UserPrompt ({ promptOptions, steps }: Props) {
   }
 
   const blurArray = ['noBlur', 'blur1', 'blur2', 'blur3']
-  console.log(blurArray[step])
 
   useEffect(() => {
     if (age) {

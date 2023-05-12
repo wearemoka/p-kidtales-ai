@@ -15,7 +15,8 @@ export async function getAiIllustration (about: string) {
     const res = await fetch(`${URI_API}/images/generations`, {
       method: 'POST',
       body: prompt,
-      headers: headerOpenAiRequest
+      headers: headerOpenAiRequest,
+      cache: 'no-store'
     })
 
     const data = res.json()

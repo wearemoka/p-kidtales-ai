@@ -12,21 +12,17 @@ import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
 import styles from './story.module.scss'
 import RandomButton from '../components/RandomButton/RandomButton'
+import { ROUTES } from '@/app/utils/routes'
+import { paginateStory, createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
+import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 
-const ROUTE_VIEW_STORY = '/story/view'
+const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
 const StoryPage = () => {
   const router = useRouter()
-  const { globalPrompt, setGlobalPrompt, setGlobalStory } = useGlobalContext()
+  const { globalPrompt, setGlobalPrompt, globalStory, setGlobalStory } = useGlobalContext()
   const [isLoadingStory, setIsLoadingStory] = useState<boolean>(false)
   const loadingMessages = useMessageTime(isLoadingStory)
-
-  useEffect(() => {
-    if (globalPrompt.step === PROMPT_STEPS.GENERATION && writeStoryHandler) {
-      writeStoryHandler()
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const writeStoryHandler = async () => {
     setIsLoadingStory(true)
@@ -34,16 +30,37 @@ const StoryPage = () => {
     const response = await getAiStory(age, character, name, scenario, lesson)
     setIsLoadingStory(false)
 
-    const story: IStoryStore = {
-      story: response.res,
-      storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
-      currentPage: 0
+    const storyTitle = getStoryTitle(response.res)
+    const slug = createSlugWithTimeStamp(storyTitle)
+
+    if (storyTitle && slug) {
+      const myStory = {
+        title: storyTitle,
+        slug,
+        prompt: [age, character, name, scenario, lesson],
+        story: response.res
+      }
+
+      const id = await addDocumentInFireStore(fireBaseStoryCollection, myStory)
+
+      const story: IStoryStore = {
+        story: { ...myStory, id },
+        storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
+        currentPage: 0
+      }
+
+      setGlobalStory(story)
     }
 
-    setGlobalStory(story)
-
-    router.push(ROUTE_VIEW_STORY)
+    router.push(ROUTES.STORY_VIEW)
   }
+
+  useEffect(() => {
+    if (globalPrompt.step === PROMPT_STEPS.GENERATION && writeStoryHandler) {
+      writeStoryHandler()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const customLessonHandler = (lesson: string) => {
     const newStep: any = { ...globalPrompt, lesson }
@@ -54,7 +71,7 @@ const StoryPage = () => {
     <VStack className={styles.storyPage}>
       {/* Display the User prompt */}
 
-      {!isLoadingStory && (
+      {!isLoadingStory && globalStory.storyPaged.length === 0 && (
         <>
           <UserPrompt promptOptions={globalPrompt} steps={PROMPT_STEPS} />
           <Center>

@@ -44,7 +44,8 @@ function NameSelect ({ title, saveOn }: Props) {
       <Heading as='h3' className='caption bold' mb={3}>{title}</Heading>
 
       <Input type='text' placeholder='e.g. Ziggy' ref={inputNameRef} onChange={nameChangeHandle} />
-      <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className={`big primary only-icon ${validName ? styles.enabled : styles.disabled}`} onClick={saveNameHandler} />
+      {validName &&
+        <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className={`big primary only-icon ${validName ? styles.enabled : styles.disabled}`} onClick={saveNameHandler} />}
     </VStack>
   )
 }

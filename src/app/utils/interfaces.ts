@@ -13,7 +13,7 @@ export interface IUserPromptSelection {
 }
 
 export interface IStoryStore {
-    story: string,
+    story: any,
     storyPaged: string[],
     currentPage: number
 }

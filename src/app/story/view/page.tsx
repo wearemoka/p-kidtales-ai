@@ -1,15 +1,19 @@
 'use client'
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useGlobalContext } from '@/app/context/store'
-import { Heading, Container, GridItem, Grid, Image, Button, Text } from '@chakra-ui/react'
+import { Heading, Container, GridItem, Grid, Image, Button, Text, useDisclosure } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 import styles from './tale.module.scss'
 import Steps from '@/app/components/Steps/Steps'
+import ModalOverlayWrapper from '@/app/components/ModalWrapper/ModalOverlayWrapper'
+import { useRouter } from 'next/navigation'
 
 function viewPage () {
   const { globalStory, setGlobalStory } = useGlobalContext()
   const [title, setTitle] = useState<string>('')
   const pages = globalStory.storyPaged.length
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const router = useRouter()
 
   useEffect(() => {
     const tmpStory = { ...globalStory }
@@ -33,6 +37,8 @@ function viewPage () {
   const handleNextPage = () => {
     if (globalStory.currentPage < pages - 1) {
       setCurrentStoryPage(globalStory.currentPage + 1)
+    } else { // no more pages
+      onOpen()
     }
   }
 
@@ -40,6 +46,14 @@ function viewPage () {
     if (globalStory.currentPage > 1) {
       setCurrentStoryPage(globalStory.currentPage - 1)
     }
+  }
+
+  const openLibrary = () => {
+    router.replace('/library')
+  }
+
+  const generateNewStory = () => {
+    router.replace('/')
   }
 
   return (
@@ -64,6 +78,17 @@ function viewPage () {
           </GridItem>
         </Grid>
       </Container>
+
+      {/* Modal to display */}
+      <ModalOverlayWrapper
+        isOpen={isOpen}
+        onClose={onClose}
+        primaryActionLabel='Create another story'
+        primaryAction={generateNewStory}
+        secondaryActionLabel='View library'
+        secondaryAction={openLibrary}
+        closeLabelButton='Back to Story'
+      />
     </div>
   )
 }
