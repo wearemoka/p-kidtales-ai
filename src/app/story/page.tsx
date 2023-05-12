@@ -54,9 +54,6 @@ const StoryPage = () => {
         case PROMPT_STEPS.SCENARIO:
           setErrorMessage(ERROR_MESSAGES.NO_SCENARIO)
           break
-        case PROMPT_STEPS.LESSON:
-          setErrorMessage(ERROR_MESSAGES.NO_LESSON)
-          break
       }
     }
     return missingValues
@@ -70,10 +67,6 @@ const StoryPage = () => {
   }, [globalPrompt])
 
   const writeStoryHandler = async () => {
-    if (promptMissingValues()) {
-      return
-    }
-
     setIsLoadingStory(true)
     const response = await getAiStory(age, character, name, scenario, lesson)
     setIsLoadingStory(false)
@@ -150,7 +143,7 @@ const StoryPage = () => {
                 <RandomButton options={namesOpts} saveOn='name' className={styles.random} />
               </VStack>}
 
-            {/* Display Scensario options */}
+            {/* Display Scenario options */}
             {globalPrompt.step === PROMPT_STEPS.SCENARIO &&
               <VStack>
                 <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2, 2, 4]} />

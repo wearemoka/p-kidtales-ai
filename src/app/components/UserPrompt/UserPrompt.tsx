@@ -19,8 +19,16 @@ function UserPrompt ({ promptOptions, steps }: Props) {
 
   // Go to a specific step to change the selection
   const jumpToStepHandler = (step:any) => {
-    const gp = { ...globalPrompt, step }
-    setGlobalPrompt(gp)
+    const keys = Object.keys(globalPrompt) // valid keys
+    const k = keys[step] as keyof typeof globalPrompt // current step
+
+    if (
+      step <= globalPrompt.step ||
+      (step > globalPrompt.step && globalPrompt[k])
+    ) {
+      const gp = { ...globalPrompt, step }
+      setGlobalPrompt(gp)
+    }
   }
 
   const blurArray = ['noBlur', 'blur1', 'blur2', 'blur3']
