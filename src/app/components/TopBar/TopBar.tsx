@@ -15,7 +15,9 @@ const TopBar = () => {
   const router = useRouter()
   const pathname = usePathname()
   const [showBackButton, setShowBackButton] = useState(false)
-  const [showFlagButton, setShowFlagButton] = useState(false)
+  const [areOnStoryView, setAreOnStoryView] = useState(false)
+  const [areOnLibrary, setAreOnLibrary] = useState(false)
+
   const { BGMusic, setBGMusic } = useGlobalContext()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { globalStory } = useGlobalContext()
@@ -31,7 +33,8 @@ const TopBar = () => {
 
   useEffect(() => {
     setShowBackButton(pathname !== ROUTES.HOME)
-    setShowFlagButton(pathname.startsWith(ROUTES.STORY_VIEW))
+    setAreOnStoryView(pathname.startsWith(ROUTES.STORY_VIEW))
+    setAreOnLibrary(pathname.startsWith(ROUTES.LIBRARY))
   }, [pathname])
 
   /**
@@ -89,16 +92,17 @@ const TopBar = () => {
           </div>
 
           <Stack direction='row' spacing={{ base: 1, md: 4 }} className={styles.actions}>
-            <Button
-              aria-label='Go to Library'
-              rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
-              className='md_secondary'
-              onClick={() => {
-                router.push(ROUTES.LIBRARY)
-              }}
-            >
-              <label>Library</label>
-            </Button>
+            {!areOnStoryView && !areOnLibrary &&
+              <Button
+                aria-label='Go to Library'
+                rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
+                className='md_secondary'
+                onClick={() => {
+                  router.push(ROUTES.LIBRARY)
+                }}
+              >
+                <label>Library</label>
+              </Button>}
 
             <Button
               aria-label='Music on/off'
@@ -107,13 +111,14 @@ const TopBar = () => {
               onClick={musicOnOffButtonClick}
             />
 
-            <Button
-              aria-label='About us'
-              rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
-              onClick={openModalAbout}
-            />
+            {!areOnStoryView &&
+              <Button
+                aria-label='About us'
+                rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
+                onClick={openModalAbout}
+              />}
 
-            {showFlagButton &&
+            {areOnStoryView && !areOnLibrary &&
               <Button
                 aria-label='Flag tale as inappropriate'
                 rightIcon={<Image src='/icons/Flag.svg' alt='Books outline white icon' />}
