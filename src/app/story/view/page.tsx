@@ -34,15 +34,14 @@ function viewPage () {
 
   const settings = {
     dots: true,
-    infinite: false,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     swipeToSlide: true,
-    afterChange: function (index) {
-      console.log(
-        `Slider Changed to: ${index + 1}, background: #222; color: #bada55`
-      )
+    beforeChange: function (oldIndex: number, newIndex: number) {
+      if (oldIndex > newIndex) {
+        onOpen()
+      }
     }
   }
 
