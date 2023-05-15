@@ -21,7 +21,6 @@ const DeviceReader = () => {
 
   useEffect(() => {
     const currentStoryPage = globalStory.currentPage
-    console.log('Device Reader, page change, n: ', currentStoryPage)
     if (storyPaginated[currentStoryPage]) {
       playClickButton()
     }

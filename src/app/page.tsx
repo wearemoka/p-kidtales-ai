@@ -1,10 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Container, Image, Heading, Text, Stack, Button, Grid, GridItem, Box } from '@chakra-ui/react'
 import styles from './page.module.scss'
 import { useRouter } from 'next/navigation'
-import { useGlobalContext } from '@/app/context/store'
+import { useGlobalContext, emptyPrompt } from '@/app/context/store'
 import { PROMPT_STEPS } from '@/app/utils/constants'
 import { getRandomUserPrompt } from './utils/helper'
 import AgeSelector from './components/AgeSelector/AgeSelector'
@@ -13,10 +13,14 @@ import { ROUTES } from '@/app/utils/routes'
 const HomePage = () => {
   const router = useRouter()
   const [age, setAge] = useState<string>('')
-  const { globalPrompt, setGlobalPrompt } = useGlobalContext()
+  const { setGlobalPrompt } = useGlobalContext()
+
+  useEffect(() => {
+    setGlobalPrompt(emptyPrompt)
+  }, [])
 
   const startCreateStoryButtonHandler = () => {
-    const newStep: any = { ...globalPrompt, age, step: PROMPT_STEPS.CHARACTER }
+    const newStep: any = { ...emptyPrompt, age, step: PROMPT_STEPS.CHARACTER }
     setGlobalPrompt(newStep)
     router.push(ROUTES.STORY_GENERATE)
   }
