@@ -1,5 +1,5 @@
 import { ages } from '@/app/services/constants/StoryParams'
-import { Box, Radio, RadioGroup, Stack, Text } from '@chakra-ui/react'
+import { Radio, RadioGroup, Stack } from '@chakra-ui/react'
 
 interface Props {
     age: string,

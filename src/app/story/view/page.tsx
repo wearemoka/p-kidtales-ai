@@ -2,12 +2,15 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { StoryPagination } from '@/app/components/StoryPagination/StoryPagination'
 import { useGlobalContext } from '@/app/context/store'
-import { Heading, Container, GridItem, Grid } from '@chakra-ui/react'
+import { ROUTES } from '@/app/utils/routes'
+import { Container, Grid, GridItem, Heading } from '@chakra-ui/react'
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
 function viewPage () {
   const { globalStory, setGlobalStory } = useGlobalContext()
   const [title, setTitle] = useState<string>('')
+  const router = useRouter()
 
   useEffect(() => {
     const tmpStory = { ...globalStory }
@@ -18,6 +21,9 @@ function viewPage () {
     if (story && story.length > 0) {
       const cleanTitle = story[0].replace('Title: ', '')
       setTitle(cleanTitle)
+    } else {
+      // No story to display
+      router.replace(ROUTES.HOME)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

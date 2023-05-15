@@ -27,6 +27,7 @@ function NameSelect ({ title, saveOn }: Props) {
   useEffect(() => {
     if (inputNameRef && inputNameRef.current && globalPrompt) {
       inputNameRef.current.value = globalPrompt.name
+      nameChangeHandle()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -39,13 +40,30 @@ function NameSelect ({ title, saveOn }: Props) {
     }
   }
 
+  const handleKeyPress = (event: any) => {
+    if (event.key === 'Enter') {
+      saveNameHandler()
+    }
+  }
+
   return (
     <VStack>
       <Heading as='h3' className='caption bold' mb={3}>{title}</Heading>
 
-      <Input type='text' placeholder='e.g. Ziggy' ref={inputNameRef} onChange={nameChangeHandle} />
+      <Input
+        type='text'
+        placeholder='e.g. Ziggy'
+        ref={inputNameRef}
+        onChange={nameChangeHandle}
+        onKeyDown={handleKeyPress}
+      />
+
       {validName &&
-        <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className={`big primary only-icon ${validName ? styles.enabled : styles.disabled}`} onClick={saveNameHandler} />}
+        <Button
+          rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
+          className={`big primary only-icon ${validName ? styles.enabled : styles.disabled}`}
+          onClick={saveNameHandler}
+        />}
     </VStack>
   )
 }

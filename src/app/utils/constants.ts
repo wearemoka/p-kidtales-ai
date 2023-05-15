@@ -45,3 +45,11 @@ export const PROMPT_STEPS = {
   LESSON: 4,
   GENERATION: 5
 }
+
+export const ERROR_MESSAGES = {
+  NO_AGE: 'Please select a age',
+  NO_CHARACTER: 'Please select a character',
+  NO_NAME: 'Please select a name',
+  NO_SCENARIO: 'Please select a scenario',
+  NO_LESSON: 'Please select a lesson'
+}
