@@ -104,12 +104,12 @@ const TopBar = () => {
                 <label>Library</label>
               </Button>}
 
-            <Button
+            {/* <Button
               aria-label='Music on/off'
               rightIcon={<Image src='/icons/Music.svg' alt='Books outline white icon' />}
               display={{ base: 'block', md: 'none' }}
               onClick={musicOnOffButtonClick}
-            />
+            /> */}
 
             {!areOnStoryView &&
               <Button
