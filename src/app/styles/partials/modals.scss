@@ -12,6 +12,7 @@
         .chakra-modal__footer{
             justify-content: start;
             padding-top: 30px;
+            flex-wrap: wrap;
         }
         .chakra-modal__body{
             padding-top: 0;
@@ -29,6 +30,27 @@
                 display: flex;
                 align-items: center;
             }
+        }
+    }
+    .modal-bottom.chakra-modal__content{
+        background: rgba(12, 4, 22, 0.7);
+        backdrop-filter: blur(2.5px);
+        max-width: none;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+        width: 100vw;
+        .chakra-container{
+            align-items: end;
+        }
+        .back-bottom-button{
+            display: block;
+            width: 100%;
+            margin-top: 10px;
+            text-align: center;
+        }
+        .chakra-modal__footer{
+            justify-content: center;
         }
     }
 }

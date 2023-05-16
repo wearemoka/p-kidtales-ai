@@ -1,6 +1,6 @@
 'use client'
 
-import { Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Container, Grid, GridItem } from '@chakra-ui/react'
+import { Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Container, Image, Grid, GridItem } from '@chakra-ui/react'
 import React, { ReactElement, ReactNode } from 'react'
 
 interface Props {
@@ -13,12 +13,14 @@ interface Props {
     secondaryActionLabel?: string,
     secondaryAction?: () => void,
     rightIconPrimaryAction?: ReactElement;
+    alignmentBottom?: boolean;
+    rightIconSecondaryAction?: ReactElement;
 }
 
-function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLabel, primaryAction, secondaryActionLabel, secondaryAction, rightIconPrimaryAction }: Props) {
+function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLabel, primaryAction, secondaryActionLabel, secondaryAction, rightIconPrimaryAction, alignmentBottom, rightIconSecondaryAction }: Props) {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <ModalContent>
+      <ModalContent className={alignmentBottom ? 'modal-bottom' : ''}>
         <ModalCloseButton />
         <Container>
           <Grid templateColumns='repeat(12, 1fr)' gap={4}>
@@ -40,11 +42,22 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLab
                   </Button>}
                 {secondaryActionLabel &&
                   <Button
-                    className='small secondary'
+                    className={`${alignmentBottom ? 'md_secondary_border' : 'small secondary'}`}
                     onClick={secondaryAction}
+                    rightIcon={rightIconSecondaryAction}
                   >
-                    {secondaryActionLabel}
+                    <label>{secondaryActionLabel}</label>
                   </Button>}
+                {alignmentBottom &&
+                  <div className='back-bottom-button'>
+                    <Button
+                      variant='ghost'
+                      onClick={onClose}
+                      leftIcon={<Image src='icons/Arrow-Left.svg' alt='Arrow left outline white icon' />}
+                    >
+                      <label>Back to Story</label>
+                    </Button>
+                  </div>}
               </ModalFooter>
             </GridItem>
             <GridItem colSpan={{ lg: 2, md: 0, base: 0 }} />

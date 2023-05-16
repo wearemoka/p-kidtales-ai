@@ -55,6 +55,27 @@
             padding: 8px 28px 8px 24px !important;
         }
     }
+    &.md_secondary_border{
+        background: linear-gradient(182.48deg, rgba(255, 255, 255, 0.05) 2.09%, rgba(255, 255, 255, 0.1) 66.35%, rgba(255, 255, 255, 0.2) 97.55%) !important;
+        border: 1px solid var(--white70);
+        padding: 10px;
+        width: 35px;
+        height: 35px;
+        label{
+            display: none;
+        }
+        span{
+            margin: 0;
+        }
+        @media screen and (min-width: 767px) {
+            padding: 8px 28px 8px 24px !important;
+            width: auto;
+            height: auto;
+            label{
+                display: inline-block;
+            }
+        }
+    }
     label{
         cursor: pointer;
     }

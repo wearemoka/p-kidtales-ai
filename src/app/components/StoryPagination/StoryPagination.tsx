@@ -1,7 +1,7 @@
 import { useGlobalContext } from '@/app/context/store'
 import { Button, HStack, Text, Image, useDisclosure } from '@chakra-ui/react'
 import Steps from '../Steps/Steps'
-import ModalOverlayWrapper from '../ModalWrapper/ModalOverlayWrapper'
+import ModalWrapper from '../ModalWrapper/ModalWrapper'
 import { useRouter } from 'next/navigation'
 
 export function StoryPagination () {
@@ -51,14 +51,17 @@ export function StoryPagination () {
       </HStack>
 
       {/* Modal to display */}
-      <ModalOverlayWrapper
+      <ModalWrapper
         isOpen={isOpen}
         onClose={onClose}
         primaryActionLabel='Create another story'
         primaryAction={generateNewStory}
         secondaryActionLabel='View library'
         secondaryAction={openLibrary}
-        closeLabelButton='Back to Story'
+        modalTitle=''
+        alignmentBottom
+        rightIconPrimaryAction={<Image src='/icons/Stars.svg' alt='Stars outline white icon' />}
+        rightIconSecondaryAction={<Image src='/icons/Library.svg' alt='Library outline white icon' />}
       />
     </>
   )
