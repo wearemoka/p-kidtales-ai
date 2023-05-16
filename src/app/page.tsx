@@ -33,7 +33,7 @@ const HomePage = () => {
 
   return (
     <div className={styles.initialPage}>
-      <Image src='images/Initial.png' alt='' className={styles.bgImage} />
+      <Image src='/images/Initial.png' alt='' className={styles.bgImage} />
       <Container>
 
         <div className={styles.contentWrapper}>
