@@ -5,11 +5,26 @@
         align-items: center;
         padding: 40px 0px 20px;
         .brand {
-            img{
-                height: 20px;
+            width: 100%;
+            margin-left: 10px;
+            &.home{
                 @media screen and (min-width: 767px) {
+                    width: 100%;
+                    img{
+                        margin-left: auto;
+                        margin-right: calc(50% - 120px);
+                    }
+                }
+            }
+            @media screen and (min-width: 767px) {
+                width: auto;
+                margin-left: 0px;
+                img{
                     height: 20px;
                 }
+            }
+            img{
+                height: 20px;
             }
             .backButton{
                 background-color: var(--white);

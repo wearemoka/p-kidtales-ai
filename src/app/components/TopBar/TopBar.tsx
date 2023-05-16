@@ -15,7 +15,11 @@ const TopBar = () => {
   const router = useRouter()
   const pathname = usePathname()
   const [showBackButton, setShowBackButton] = useState(false)
-  const [showFlagButton, setShowFlagButton] = useState(false)
+  const [areOnStoryView, setAreOnStoryView] = useState(false)
+  const [areOnLibrary, setAreOnLibrary] = useState(false)
+  const [areOnHome, setAreOnHome] = useState(false)
+  const [areOnStoryGenerate, setAreOnStoryGenerate] = useState(false)
+
   const { BGMusic, setBGMusic } = useGlobalContext()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { globalStory } = useGlobalContext()
@@ -31,7 +35,10 @@ const TopBar = () => {
 
   useEffect(() => {
     setShowBackButton(pathname !== ROUTES.HOME)
-    setShowFlagButton(pathname.startsWith(ROUTES.STORY_VIEW))
+    setAreOnStoryView(pathname.startsWith(ROUTES.STORY_VIEW))
+    setAreOnLibrary(pathname.startsWith(ROUTES.LIBRARY))
+    setAreOnHome(pathname === ROUTES.HOME)
+    setAreOnStoryGenerate(pathname === ROUTES.STORY_GENERATE)
   }, [pathname])
 
   /**
@@ -82,45 +89,46 @@ const TopBar = () => {
     <div className={styles.topbar}>
       <Container>
         <div className={styles.topbarWrapper}>
-          <div className={styles.brand}>
-            {showBackButton
-              ? <BackButton />
-              : <Image src='/images/KidTalesLogo.svg' alt='KidTales logo in white color' />}
+          {showBackButton &&
+            <BackButton />}
+          <div className={`${styles.brand} ${areOnHome || areOnStoryGenerate ? styles.home : ''}`}>
+            <Image src='/images/KidTalesLogo.svg' alt='KidTales logo in white color' />
           </div>
 
           <Stack direction='row' spacing={{ base: 1, md: 4 }} className={styles.actions}>
-            <Button
-              aria-label='Go to Library'
-              rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
-              className='md_secondary'
-              onClick={() => {
-                router.push(ROUTES.LIBRARY)
-              }}
-            >
-              <label>Library</label>
-            </Button>
+            {!areOnStoryView && !areOnLibrary &&
+              <Button
+                aria-label='Go to Library'
+                rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
+                className='md_secondary'
+                onClick={() => {
+                  router.push(ROUTES.LIBRARY)
+                }}
+              >
+                <label>Library</label>
+              </Button>}
 
-            <Button
+            {/* <Button
               aria-label='Music on/off'
               rightIcon={<Image src='/icons/Music.svg' alt='Books outline white icon' />}
               display={{ base: 'block', md: 'none' }}
               onClick={musicOnOffButtonClick}
-            />
+            /> */}
 
-            <Button
-              aria-label='About us'
-              rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
-              onClick={openModalAbout}
-            />
-
-            {showFlagButton &&
+            {!areOnStoryView &&
               <Button
+                aria-label='About us'
+                rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
+                onClick={openModalAbout}
+              />}
+
+            {areOnStoryView && !areOnLibrary &&
+              <Button
+                className='big secondary only-icon'
                 aria-label='Flag tale as inappropriate'
                 rightIcon={<Image src='/icons/Flag.svg' alt='Flag outline white icon' />}
                 onClick={openModalFlag}
-              >
-                <label>Flag tale</label>
-              </Button>}
+              />}
           </Stack>
         </div>
       </Container>
