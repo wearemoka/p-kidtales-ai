@@ -17,6 +17,8 @@ const TopBar = () => {
   const [showBackButton, setShowBackButton] = useState(false)
   const [areOnStoryView, setAreOnStoryView] = useState(false)
   const [areOnLibrary, setAreOnLibrary] = useState(false)
+  const [areOnHome, setAreOnHome] = useState(false)
+  const [areOnStoryGenerate, setAreOnStoryGenerate] = useState(false)
 
   const { BGMusic, setBGMusic } = useGlobalContext()
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -35,6 +37,8 @@ const TopBar = () => {
     setShowBackButton(pathname !== ROUTES.HOME)
     setAreOnStoryView(pathname.startsWith(ROUTES.STORY_VIEW))
     setAreOnLibrary(pathname.startsWith(ROUTES.LIBRARY))
+    setAreOnHome(pathname === ROUTES.HOME)
+    setAreOnStoryGenerate(pathname === ROUTES.STORY_GENERATE)
   }, [pathname])
 
   /**
@@ -85,10 +89,10 @@ const TopBar = () => {
     <div className={styles.topbar}>
       <Container>
         <div className={styles.topbarWrapper}>
-          <div className={styles.brand}>
-            {showBackButton
-              ? <BackButton />
-              : <Image src='/images/KidTalesLogo.svg' alt='KidTales logo in white color' />}
+          {showBackButton &&
+            <BackButton />}
+          <div className={`${styles.brand} ${areOnHome || areOnStoryGenerate ? styles.home : ''}`}>
+            <Image src='/images/KidTalesLogo.svg' alt='KidTales logo in white color' />
           </div>
 
           <Stack direction='row' spacing={{ base: 1, md: 4 }} className={styles.actions}>
@@ -120,12 +124,11 @@ const TopBar = () => {
 
             {areOnStoryView && !areOnLibrary &&
               <Button
+                className='big secondary only-icon'
                 aria-label='Flag tale as inappropriate'
                 rightIcon={<Image src='/icons/Flag.svg' alt='Books outline white icon' />}
                 onClick={openModalFlag}
-              >
-                <label>Flag tale</label>
-              </Button>}
+              />}
           </Stack>
         </div>
       </Container>
