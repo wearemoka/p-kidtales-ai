@@ -29,6 +29,7 @@ function NameSelect ({ title, saveOn }: Props) {
       inputNameRef.current.value = globalPrompt.name
       nameChangeHandle()
     }
+    inputNameRef.current?.focus()
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
