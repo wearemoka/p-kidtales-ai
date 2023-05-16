@@ -24,10 +24,10 @@ function BackButton () {
 
   return (
     <Button
-      className={styles.backButton}
+      className='big secondary only-icon'
       variant='solid'
       aria-label='Go back'
-      rightIcon={<Image src='/icons/ArrowLeft.svg' alt='Back arrow outline icon' />}
+      rightIcon={<Image src='/icons/Arrow-Left.svg' alt='Back arrow outline icon' />}
       onClick={backButtonHandler}
     />
   )
