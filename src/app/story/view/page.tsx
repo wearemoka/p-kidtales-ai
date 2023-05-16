@@ -1,8 +1,8 @@
 'use client'
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useGlobalContext } from '@/app/context/store'
-import { Heading, Container, Image, Text, useDisclosure } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { Heading, Container, Image, Text, useDisclosure, Grid, GridItem, Button } from '@chakra-ui/react'
+import { useEffect, useRef, useState } from 'react'
 import styles from './tale.module.scss'
 import ModalOverlayWrapper from '@/app/components/ModalWrapper/ModalOverlayWrapper'
 import { useRouter } from 'next/navigation'
@@ -14,6 +14,8 @@ function viewPage () {
   const [title, setTitle] = useState<string>('')
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
+
+  const sliderRef = useRef(null)
 
   useEffect(() => {
     const tmpStory = globalStory.storyPaged || null
@@ -32,33 +34,68 @@ function viewPage () {
     router.replace(ROUTES.HOME)
   }
 
+  function SampleNextArrow () {
+    return (
+      <Button
+        rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
+        className='big only-icon secondary button-next slick-next'
+        onClick={() => {
+          sliderRef.current?.slickNext()
+        }}
+      />
+    )
+  }
+
+  function SamplePrevArrow () {
+    return (
+      <Button
+        rightIcon={<Image src='/icons/Arrow-Left.svg' alt='Arrow left outline white icon' />}
+        className='big only-icon secondary button-prev slick-prev'
+        onClick={() => {
+          sliderRef.current?.slickPrev()
+        }}
+      />
+    )
+  }
+
   const settings = {
     dots: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
     swipeToSlide: true,
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
     beforeChange: function (oldIndex: number, newIndex: number) {
       if (oldIndex > newIndex) {
         onOpen()
       }
     }
+    /* afterChange: function (currentSlide) {
+      if (currentSlide == 0) {
+        sliderRef.current?.slickGoTo(0)
+      }
+    } */
   }
 
   return (
     <div className={styles.tale}>
       <Image src='images/characters/whale.png' alt='' />
       <Container>
-        <Heading as='h1' className='heading-small' mb={3} mt={10}>{title}</Heading>
+        <Grid templateColumns='repeat(12, 1fr)' gap={4}>
+          <GridItem colStart={{ lg: 3, md: 0, base: 0 }} colSpan={{ lg: 8, md: 12, base: 12 }}>
+            <Heading as='h1' className='heading-small' mb={3} mt={10}>{title}</Heading>
 
-        <Slider {...settings}>
-          {globalStory.storyPaged.slice(1).map((page, index) =>
-            <div key={index}>
-              <Text className='lead'>
-                {page}
-              </Text>
-            </div>)}
-        </Slider>
+            <Slider {...settings} ref={sliderRef}>
+              {globalStory.storyPaged.slice(1).map((page, index) =>
+                <div key={index}>
+                  <Text className='lead'>
+                    {page}
+                  </Text>
+                </div>)}
+            </Slider>
+          </GridItem>
+        </Grid>
 
       </Container>
 
