@@ -12,8 +12,16 @@ export interface IUserPromptSelection {
     lesson: string,
 }
 
+interface storyFirebaseInterface {
+    id: string,
+    prompt: any;
+    slug: string;
+    story: string;
+    title: string;
+}
+
 export interface IStoryStore {
-    story: any,
+    story: storyFirebaseInterface,
     storyPaged: string[],
     currentPage: number
 }

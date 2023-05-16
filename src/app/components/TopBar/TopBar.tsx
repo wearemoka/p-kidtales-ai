@@ -63,7 +63,7 @@ const TopBar = () => {
 
   const flagTheStory = async () => {
     const storyToFlag = { ...globalStory.story, appropriate: false }
-    await updateDocumentInFireStore(fireBaseStoryCollection, storyToFlag, storyToFlag.id)
+    await updateDocumentInFireStore(fireBaseStoryCollection, storyToFlag, globalStory.story.id)
     onClose()
     router.push('/')
   }
