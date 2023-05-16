@@ -59,12 +59,12 @@ body{
   opacity: 1 !important;
 }
 .slick-slider{
-  min-height: 45vh !important; 
+  min-height: 45vh; 
   @media screen and (min-width: 600px) {
-    min-height: 30vh !important; 
+    min-height: 30vh; 
   }
   @media screen and (min-width: 991px) {
-    min-height: 65vh !important; 
+    min-height: 65vh; 
   }
 }
 .slick-next, .slick-prev{
