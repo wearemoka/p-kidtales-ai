@@ -22,6 +22,9 @@ function viewPage () {
     if (tmpStory && tmpStory.length > 0) {
       const cleanTitle = tmpStory[0].replace('Title: ', '')
       setTitle(cleanTitle)
+    } else {
+      // No story to display
+      router.replace(ROUTES.HOME)
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

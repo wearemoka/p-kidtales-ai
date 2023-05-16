@@ -53,6 +53,18 @@ export const getRandomUserPrompt = (age: string): IUserPromptSelection => {
   return randomStory
 }
 
+// Return the next step to be completed
+export const checkPromptIsComplete = (prompt: IUserPromptSelection) => {
+  const { character, name, scenario, lesson } = prompt
+
+  if (!character) return PROMPT_STEPS.CHARACTER
+  if (!name) return PROMPT_STEPS.NAME
+  if (!scenario) return PROMPT_STEPS.SCENARIO
+  if (!lesson) return PROMPT_STEPS.LESSON
+
+  return null
+}
+
 /**
  * Split the story and clean empty lines
  */

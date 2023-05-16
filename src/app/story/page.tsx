@@ -3,17 +3,17 @@ import GallerySelect from '@/app/components/GallerySelect/GallerySelect'
 import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
-import { characterOpts, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
+import { characterOpts, ERROR_MESSAGES, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
 import { Box, Button, Center, Image, Input, VStack, Text } from '@chakra-ui/react'
 import { getAiStory } from '@/app/services/ChatGPTService'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
 import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
 import styles from './story.module.scss'
 import RandomButton from '../components/RandomButton/RandomButton'
+import { checkPromptIsComplete, createSlugWithTimeStamp, getStoryTitle } from '../utils/helper'
 import { ROUTES } from '@/app/utils/routes'
-import { paginateStory, createSlugWithTimeStamp, getStoryTitle } from '@/app/utils/helper'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 
 const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
@@ -23,12 +23,60 @@ const StoryPage = () => {
   const { globalPrompt, setGlobalPrompt, globalStory, setGlobalStory } = useGlobalContext()
   const [isLoadingStory, setIsLoadingStory] = useState<boolean>(false)
   const loadingMessages = useMessageTime(isLoadingStory)
+  const [hasError, setHasError] = useState<boolean>(false)
+  const { age, character, name, scenario, lesson } = globalPrompt
+  const inputLessonRef = useRef<HTMLInputElement>(null)
+  const [errorMessage, setErrorMessage] = useState<string>('')
+
+  const promptMissingValues = () => {
+    let missingValues: boolean = false
+
+    if (!age) {
+      setHasError(true)
+      setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
+      setErrorMessage(ERROR_MESSAGES.NO_AGE)
+      missingValues = true
+    }
+
+    const missingPrompt = checkPromptIsComplete(globalPrompt)
+    if (missingPrompt) {
+      setHasError(true)
+      setGlobalPrompt({ ...globalPrompt, step: missingPrompt })
+      missingValues = true
+
+      switch (missingPrompt) {
+        case PROMPT_STEPS.CHARACTER:
+          setErrorMessage(ERROR_MESSAGES.NO_CHARACTER)
+          break
+        case PROMPT_STEPS.NAME:
+          setErrorMessage(ERROR_MESSAGES.NO_NAME)
+          break
+        case PROMPT_STEPS.SCENARIO:
+          setErrorMessage(ERROR_MESSAGES.NO_SCENARIO)
+          break
+      }
+    }
+    return missingValues
+  }
+
+  useEffect(() => {
+    if (globalPrompt.step === PROMPT_STEPS.GENERATION) {
+      promptMissingValues()
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [globalPrompt])
 
   const writeStoryHandler = async () => {
     setIsLoadingStory(true)
-    const { age, character, name, scenario, lesson } = globalPrompt
     const response = await getAiStory(age, character, name, scenario, lesson)
     setIsLoadingStory(false)
+
+    if (response.status === 'error' || !response?.res.startsWith('Title:')) {
+      setHasError(true)
+      setIsLoadingStory(false)
+      setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
+      return
+    }
 
     const storyTitle = getStoryTitle(response.res)
     const slug = createSlugWithTimeStamp(storyTitle)
@@ -67,6 +115,12 @@ const StoryPage = () => {
     setGlobalPrompt(newStep)
   }
 
+  const handleLessonKeyDown = (e: any) => {
+    if (e.key === 'Enter') {
+      writeStoryHandler()
+    }
+  }
+
   return (
     <VStack className={styles.storyPage}>
       {/* Display the User prompt */}
@@ -89,7 +143,7 @@ const StoryPage = () => {
                 <RandomButton options={namesOpts} saveOn='name' className={styles.random} />
               </VStack>}
 
-            {/* Display Scensario options */}
+            {/* Display Scenario options */}
             {globalPrompt.step === PROMPT_STEPS.SCENARIO &&
               <VStack>
                 <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2, 2, 4]} />
@@ -110,13 +164,16 @@ const StoryPage = () => {
                 />
 
                 <Input
+                  ref={inputLessonRef}
                   className='mt-20'
                   placeholder='Write my Own Lesson'
                   onChange={(e) => {
                     customLessonHandler(e.target.value)
                   }}
+                  onKeyDown={handleLessonKeyDown}
                 />
-                <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className='big primary only-icon' onClick={writeStoryHandler} />
+                {inputLessonRef.current && inputLessonRef.current.value?.length > 0 &&
+                  <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className='big primary only-icon' onClick={writeStoryHandler} />}
 
                 <RandomButton options={lessonOpts} saveOn='lesson' actionAfterSave={writeStoryHandler} className={styles.random} />
               </VStack>}
@@ -140,7 +197,15 @@ const StoryPage = () => {
           </VStack>
         </div>
       )}
+
+      {hasError && !isLoadingStory && (
+        <>
+          <Text fontSize='xl' color='red'>{errorMessage}</Text>
+          <Button onClick={() => setHasError(false)} className='big'>Try again</Button>
+        </>
+      )}
     </VStack>
+
   )
 }
 export default StoryPage

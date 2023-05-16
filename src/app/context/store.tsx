@@ -3,7 +3,7 @@
 import React, { createContext, useContext, Dispatch, SetStateAction, useState } from 'react'
 import { IStoryStore, IUserPromptSelection } from '@/app/utils/interfaces'
 
-const emptyPrompt: IUserPromptSelection = {
+export const emptyPrompt: IUserPromptSelection = {
   step: 1,
   age: '',
   character: '',
