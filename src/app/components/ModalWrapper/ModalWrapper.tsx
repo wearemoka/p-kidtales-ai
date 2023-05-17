@@ -52,8 +52,9 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLab
                   <div className='back-bottom-button'>
                     <Button
                       variant='ghost'
+                      className='small'
                       onClick={onClose}
-                      leftIcon={<Image src='icons/Arrow-Left.svg' alt='Arrow left outline white icon' />}
+                      leftIcon={<Image src='/icons/Arrow-Left.svg' alt='Back arrow outline icon' />}
                     >
                       <label>Back to Story</label>
                     </Button>
