@@ -15,7 +15,7 @@ function viewPage () {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
 
-  const sliderRef = useRef(null)
+  const sliderRef = useRef<Slider>(null)
 
   useEffect(() => {
     const tmpStory = globalStory.storyPaged || null
@@ -70,15 +70,10 @@ function viewPage () {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     beforeChange: function (oldIndex: number, newIndex: number) {
-      if (oldIndex > newIndex) {
+      if (newIndex === 0 && oldIndex > newIndex && oldIndex !== 1) {
         onOpen()
       }
     }
-    /* afterChange: function (currentSlide) {
-      if (currentSlide == 0) {
-        sliderRef.current?.slickGoTo(0)
-      }
-    } */
   }
 
   return (
