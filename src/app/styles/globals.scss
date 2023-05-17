@@ -48,3 +48,42 @@ body{
 .blur3{
   filter: blur(6px);
 }
+
+
+/* Slider */
+.slick-dots li button:before{
+  color: var(--white70) !important;
+  opacity: 1 !important;
+}
+.slick-dots li.slick-active button:before{
+  color: var(--white) !important;
+  opacity: 1 !important;
+}
+.slick-slider{
+  min-height: 45vh; 
+  @media screen and (min-width: 600px) {
+    min-height: 30vh; 
+  }
+  @media screen and (min-width: 991px) {
+    min-height: 65vh; 
+  }
+}
+.slick-next, .slick-prev{
+  display: none !important;
+  @media screen and (min-width: 991px) {
+    top: 16% !important;
+    display: block !important;
+  }
+}
+.slick-next{
+  right: -60px !important;
+}
+.slick-prev{
+  left: -60px !important;
+}
+
+.button-prev::before,
+.button-next::before{
+  font-size: 0 !important;
+  display: none !important;
+}
