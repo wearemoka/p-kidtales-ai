@@ -4,22 +4,37 @@ import styles from './TopBar.module.scss'
 import { useRouter } from 'next/navigation'
 import { useGlobalContext } from '@/app/context/store'
 import { PROMPT_STEPS } from '@/app/utils/constants'
+import { ROUTES } from '@/app/utils/routes'
 
-function BackButton () {
+interface Props {
+  historyPath: {prevPage: string, currentPage:string};
+}
+
+function BackButton ({ historyPath }: Props) {
   const router = useRouter()
   const { globalStory, setGlobalStory, globalPrompt, setGlobalPrompt } = useGlobalContext()
 
   const backButtonHandler = () => {
     const tmpStory = { ...globalStory }
     tmpStory.storyPaged = []
-    tmpStory.story = ''
+    tmpStory.story = {
+      id: '',
+      title: '',
+      prompt: [],
+      slug: '',
+      story: ''
+    }
     setGlobalStory(tmpStory)
 
     const tmpPrompt = { ...globalPrompt }
     tmpPrompt.step = PROMPT_STEPS.LESSON
     setGlobalPrompt(tmpPrompt)
 
-    router.back()
+    if (historyPath.prevPage === ROUTES.LIBRARY) {
+      router.replace(ROUTES.LIBRARY)
+    } else {
+      router.replace(ROUTES.HOME)
+    }
   }
 
   return (
