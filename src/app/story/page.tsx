@@ -69,7 +69,7 @@ const StoryPage = () => {
 
   const writeStoryHandler = async () => {
     setIsLoadingStory(true)
-    setFlaggedName(false)
+    setFlagged(false)
     const response = await getAiStory(age, character, name, scenario, lesson)
     setIsLoadingStory(false)
 
