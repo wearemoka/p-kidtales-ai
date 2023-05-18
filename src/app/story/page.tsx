@@ -3,7 +3,7 @@ import GallerySelect from '@/app/components/GallerySelect/GallerySelect'
 import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
-import { characterOpts, ERROR_MESSAGES, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
+import { characterOpts, ERROR_MESSAGES, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
 import { Box, Button, Center, Image, Input, VStack, Text } from '@chakra-ui/react'
 import { getAiStory } from '@/app/services/ChatGPTService'
 import { useEffect, useRef, useState } from 'react'
@@ -131,24 +131,28 @@ const StoryPage = () => {
           <Center>
             {/* Display Character options */}
             {globalPrompt.step === PROMPT_STEPS.CHARACTER &&
-              <VStack>
-                <GallerySelect title='Select a character' options={characterOpts} saveOn='character' columns={[2, 2, 2, 4]} />
-                <RandomButton options={characterOpts} saveOn='character' className={styles.random} />
-              </VStack>}
+              <GallerySelect
+                title='Select a character'
+                options={characterOpts}
+                saveOn='character'
+                columns={[2, 2, 2, 4]}
+              />}
 
             {/* Display Name input */}
             {globalPrompt.step === PROMPT_STEPS.NAME &&
-              <VStack>
-                <NameSelect title='Name your character' saveOn='name' />
-                <RandomButton options={namesOpts} saveOn='name' className={styles.random} />
-              </VStack>}
+              <NameSelect
+                title='Name your character'
+                saveOn='name'
+              />}
 
             {/* Display Scenario options */}
             {globalPrompt.step === PROMPT_STEPS.SCENARIO &&
-              <VStack>
-                <GallerySelect title='Select a scenario' options={scenarioOpts} saveOn='scenario' columns={[2, 2, 2, 4]} />
-                <RandomButton options={scenarioOpts} saveOn='scenario' className={styles.random} />
-              </VStack>}
+              <GallerySelect
+                title='Select a scenario'
+                options={scenarioOpts}
+                saveOn='scenario'
+                columns={[2, 2, 2, 4]}
+              />}
 
             {/* Display Lesson options */}
             {globalPrompt.step === PROMPT_STEPS.LESSON &&
@@ -173,10 +177,16 @@ const StoryPage = () => {
                   onKeyDown={handleLessonKeyDown}
                 />
                 {inputLessonRef.current && inputLessonRef.current.value?.length > 0 &&
-                  <Button rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />} className='big primary only-icon' onClick={writeStoryHandler} />}
+                  <Button
+                    rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
+                    className='big primary only-icon'
+                    onClick={writeStoryHandler}
+                  />}
 
-                <RandomButton options={lessonOpts} saveOn='lesson' actionAfterSave={writeStoryHandler} className={styles.random} />
               </VStack>}
+
+            {/* Random Dice */}
+            <RandomButton actionAfterSave={writeStoryHandler} className={styles.random} />
           </Center>
 
         </>
