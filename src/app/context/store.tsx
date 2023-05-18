@@ -16,7 +16,13 @@ interface Props {
 }
 
 const emptyStoryStore: IStoryStore = {
-  story: '',
+  story: {
+    id: '',
+    title: '',
+    prompt: [],
+    slug: '',
+    story: ''
+  },
   storyPaged: [],
   currentPage: 0
 }
@@ -44,7 +50,7 @@ const GlobalContext = createContext<ContextProps>({
 
 export const GlobalContextProvider = ({ children }: Props) => {
   const [BGMusic, setBGMusic] = useState(false)
-  const [globalStory, setGlobalStory] = useState(emptyStoryStore)
+  const [globalStory, setGlobalStory] = useState<IStoryStore>(emptyStoryStore)
   const [globalPrompt, setGlobalPrompt] = useState(emptyPrompt)
 
   return (

@@ -24,6 +24,9 @@ const TopBar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { globalStory } = useGlobalContext()
 
+  // The history of navigation
+  const [historyPath, setHistoryPath] = useState({ prevPage: '', currentPage: '' })
+
   const initialModalData = {
     title: '',
     children: <></>,
@@ -34,6 +37,8 @@ const TopBar = () => {
   const [modalData, setModalData] = useState(initialModalData)
 
   useEffect(() => {
+    setHistoryPath({ prevPage: historyPath.currentPage, currentPage: pathname })
+
     setShowBackButton(pathname !== ROUTES.HOME)
     setAreOnStoryView(pathname.startsWith(ROUTES.STORY_VIEW))
     setAreOnLibrary(pathname.startsWith(ROUTES.LIBRARY))
@@ -70,7 +75,7 @@ const TopBar = () => {
 
   const flagTheStory = async () => {
     const storyToFlag = { ...globalStory.story, appropriate: false }
-    await updateDocumentInFireStore(fireBaseStoryCollection, storyToFlag, storyToFlag.id)
+    await updateDocumentInFireStore(fireBaseStoryCollection, storyToFlag, globalStory.story.id)
     onClose()
     router.push('/')
   }
@@ -90,7 +95,7 @@ const TopBar = () => {
       <Container>
         <div className={styles.topbarWrapper}>
           {showBackButton &&
-            <BackButton />}
+            <BackButton historyPath={historyPath} />}
           <div className={`${styles.brand} ${areOnHome || areOnStoryGenerate ? styles.home : ''}`}>
             <Image src='/images/KidTalesLogo.svg' alt='KidTales logo in white color' />
           </div>
