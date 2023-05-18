@@ -1,0 +1,18 @@
+.libraryItem{
+    max-height: 210px;
+    cursor: pointer;
+    border: 1px solid var(--white);
+    border-radius: 8px;
+    position: relative;
+    overflow: hidden;
+    p{
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        padding-right: 20px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 92%;
+    }
+}

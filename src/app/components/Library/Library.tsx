@@ -4,9 +4,10 @@ import { useGlobalContext } from '@/app/context/store'
 import { useFetchStory } from '@/app/hooks/useFetchStory'
 import { paginateStory } from '@/app/utils/helper'
 import { ROUTES } from '@/app/utils/routes'
-import { Box, Button, SimpleGrid, VStack } from '@chakra-ui/react'
+import { Box, Button, Heading, SimpleGrid, Stack, Image, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
+import styles from './Library.module.scss'
 
 const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
@@ -52,35 +53,38 @@ function Stories ({ age }:Props) {
   return (
     <>
       {itemsToDisplay &&
-        <VStack>
-          <h4> For {age} years old kids </h4>
+        <Stack direction='column' justify='start' spacing='20px' mt={3} mb={10}>
+          <Heading as='h2' className='lead text-secondary'> For {age} years old kids </Heading>
 
-          <SimpleGrid columns={2} spacing={10}>
+          <SimpleGrid columns={3} spacing={5}>
             {toDisplay && toDisplay.map((item: any, index: number) => {
               return (
                 <Box
                   key={index}
                   onClick={() => { openStoryHandler(item) }}
-                  cursor='pointer'
-                  borderWidth='1px'
                   borderRadius='lg'
+                  className={styles.libraryItem}
                 >
-                  {item.title}
+                  <Image src='images/Loading.png' alt='' />
+                  <Text className='body'>{item.title}</Text>
                 </Box>
               )
             })}
           </SimpleGrid>
 
           {(itemsToDisplay <= 8) &&
-            <Button
-              onClick={() => {
-                setItemsToDisplay(data.length)
-              }}
-              variant='link'
-            >
-              View All
-            </Button>}
-        </VStack>}
+            <div>
+              <Button
+                onClick={() => {
+                  setItemsToDisplay(data.length)
+                }}
+                variant='link'
+                className='button-link'
+              >
+                View All
+              </Button>
+            </div>}
+        </Stack>}
     </>
   )
 }
