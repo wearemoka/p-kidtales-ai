@@ -95,3 +95,19 @@ export async function getAiStoryWithStreamBE (ageRange: string, character: strin
     callback(streamedResponse)
   }
 }
+
+/**
+ * This function requests a IA to moderate a string
+ * @param value string to moderate
+ */
+export async function moderateStringWithAI (value: string) {
+  const response = await fetch('/api/moderate', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ value })
+  })
+  const jsonResponse = await response.json()
+  return jsonResponse
+}

@@ -5,7 +5,7 @@ import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
 import { characterOpts, ERROR_MESSAGES, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
 import { Box, Button, Center, Image, Input, VStack, Text } from '@chakra-ui/react'
-import { getAiStory } from '@/app/services/ChatGPTService'
+import { getAiStory, moderateStringWithAI } from '@/app/services/ChatGPTService'
 import { useEffect, useRef, useState } from 'react'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
 import { IStoryStore } from '@/app/utils/interfaces'
@@ -27,6 +27,7 @@ const StoryPage = () => {
   const { age, character, name, scenario, lesson } = globalPrompt
   const inputLessonRef = useRef<HTMLInputElement>(null)
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [flaggedName, setFlaggedName] = useState<boolean>(false)
 
   const promptMissingValues = () => {
     let missingValues: boolean = false
@@ -68,6 +69,7 @@ const StoryPage = () => {
 
   const writeStoryHandler = async () => {
     setIsLoadingStory(true)
+    setFlaggedName(false)
     const response = await getAiStory(age, character, name, scenario, lesson)
     setIsLoadingStory(false)
 
@@ -104,6 +106,7 @@ const StoryPage = () => {
   }
 
   useEffect(() => {
+    setFlaggedName(false)
     if (globalPrompt.step === PROMPT_STEPS.GENERATION && writeStoryHandler) {
       writeStoryHandler()
     }
@@ -115,9 +118,16 @@ const StoryPage = () => {
     setGlobalPrompt(newStep)
   }
 
-  const handleLessonKeyDown = (e: any) => {
+  const handleLessonKeyDown = async (e: any) => {
     if (e.key === 'Enter') {
-      writeStoryHandler()
+      const lesson = inputLessonRef.current!.value
+      const resp = await moderateStringWithAI(lesson)
+      if (resp.results[0].flagged) {
+        setFlaggedName(true)
+      } else {
+        setFlaggedName(false)
+        writeStoryHandler()
+      }
     }
   }
 
@@ -204,6 +214,11 @@ const StoryPage = () => {
           <Button onClick={() => setHasError(false)} className='big'>Try again</Button>
         </>
       )}
+
+      {flaggedName &&
+        <Box>
+          This lesson cannot be used. Change the lesson to a different one.
+        </Box>}
     </VStack>
 
   )

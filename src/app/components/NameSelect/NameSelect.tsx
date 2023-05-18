@@ -1,5 +1,6 @@
 import { useGlobalContext } from '@/app/context/store'
-import { Button, Heading, Input, VStack, Image } from '@chakra-ui/react'
+import { moderateStringWithAI } from '@/app/services/ChatGPTService'
+import { Button, Heading, Input, VStack, Image, Box } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
 import styles from './nameselect.module.scss'
 
@@ -12,19 +13,29 @@ function NameSelect ({ title, saveOn }: Props) {
   const { globalPrompt, setGlobalPrompt } = useGlobalContext()
   const inputNameRef = useRef<HTMLInputElement>(null)
   const [validName, setValidName] = useState<boolean>(false)
+  const [flaggedName, setFlaggedName] = useState<boolean>(false)
 
-  const saveNameHandler = () => {
+  const saveNameHandler = async () => {
+    setFlaggedName(false)
     if (validName) {
       const enteredName = inputNameRef.current!.value
-      const newStep: any = { ...globalPrompt }
-      const index = saveOn as keyof typeof globalPrompt
-      newStep[index] = enteredName
-      newStep.step = globalPrompt.step + 1
-      setGlobalPrompt(newStep)
+
+      const resp = await moderateStringWithAI(enteredName)
+      if (resp.results[0].flagged) {
+        setFlaggedName(true)
+      } else {
+        setFlaggedName(false)
+        const newStep: any = { ...globalPrompt }
+        const index = saveOn as keyof typeof globalPrompt
+        newStep[index] = enteredName
+        newStep.step = globalPrompt.step + 1
+        setGlobalPrompt(newStep)
+      }
     }
   }
 
   useEffect(() => {
+    setFlaggedName(false)
     if (inputNameRef && inputNameRef.current && globalPrompt) {
       inputNameRef.current.value = globalPrompt.name
       nameChangeHandle()
@@ -65,6 +76,11 @@ function NameSelect ({ title, saveOn }: Props) {
           className={`big primary only-icon ${validName ? styles.enabled : styles.disabled}`}
           onClick={saveNameHandler}
         />}
+
+      {flaggedName &&
+        <Box>
+          This name cannot be used. Use another name for the character
+        </Box>}
     </VStack>
   )
 }
