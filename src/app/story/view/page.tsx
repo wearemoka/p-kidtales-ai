@@ -4,7 +4,7 @@ import { useGlobalContext } from '@/app/context/store'
 import { Heading, Container, Image, Text, useDisclosure, Grid, GridItem, Button } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
 import styles from './tale.module.scss'
-import ModalOverlayWrapper from '@/app/components/ModalWrapper/ModalOverlayWrapper'
+import ModalWrapper from '@/app/components/ModalWrapper/ModalWrapper'
 import { useRouter } from 'next/navigation'
 import { ROUTES } from '@/app/utils/routes'
 import Slider from 'react-slick'
@@ -105,14 +105,17 @@ function viewPage () {
       </Container>
 
       {/* Modal to display */}
-      <ModalOverlayWrapper
+      <ModalWrapper
         isOpen={isOpen}
         onClose={onClose}
         primaryActionLabel='Create another story'
         primaryAction={generateNewStory}
         secondaryActionLabel='View library'
         secondaryAction={openLibrary}
-        closeLabelButton='Back to Story'
+        modalTitle=''
+        alignmentBottom
+        rightIconPrimaryAction={<Image src='/icons/Stars.svg' alt='Stars outline white icon' />}
+        rightIconSecondaryAction={<Image src='/icons/Library.svg' alt='Library outline white icon' />}
       />
     </div>
   )
