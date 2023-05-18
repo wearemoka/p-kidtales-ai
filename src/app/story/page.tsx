@@ -27,7 +27,7 @@ const StoryPage = () => {
   const { age, character, name, scenario, lesson } = globalPrompt
   const inputLessonRef = useRef<HTMLInputElement>(null)
   const [errorMessage, setErrorMessage] = useState<string>('')
-  const [flaggedName, setFlaggedName] = useState<boolean>(false)
+  const [flagged, setFlagged] = useState<boolean>(false)
 
   const promptMissingValues = () => {
     let missingValues: boolean = false
@@ -69,7 +69,7 @@ const StoryPage = () => {
 
   const writeStoryHandler = async () => {
     setIsLoadingStory(true)
-    setFlaggedName(false)
+    setFlagged(false)
     const response = await getAiStory(age, character, name, scenario, lesson)
     setIsLoadingStory(false)
 
@@ -106,7 +106,7 @@ const StoryPage = () => {
   }
 
   useEffect(() => {
-    setFlaggedName(false)
+    setFlagged(false)
     if (globalPrompt.step === PROMPT_STEPS.GENERATION && writeStoryHandler) {
       writeStoryHandler()
     }
@@ -123,9 +123,9 @@ const StoryPage = () => {
       const lesson = inputLessonRef.current!.value
       const resp = await moderateStringWithAI(lesson)
       if (resp.results[0].flagged) {
-        setFlaggedName(true)
+        setFlagged(true)
       } else {
-        setFlaggedName(false)
+        setFlagged(false)
         writeStoryHandler()
       }
     }
@@ -215,7 +215,7 @@ const StoryPage = () => {
         </>
       )}
 
-      {flaggedName &&
+      {flagged &&
         <Box>
           This lesson cannot be used. Change the lesson to a different one.
         </Box>}
