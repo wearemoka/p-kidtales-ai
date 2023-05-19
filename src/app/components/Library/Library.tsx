@@ -8,6 +8,7 @@ import { Box, Button, Heading, SimpleGrid, Stack, Image, Text } from '@chakra-ui
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import styles from './Library.module.scss'
+import Slider from 'react-slick'
 
 const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 
@@ -50,6 +51,35 @@ function Stories ({ age }:Props) {
     router.push(ROUTES.STORY_VIEW)
   }
 
+  const settings = {
+    dots: false,
+    speed: 500,
+    slidesToShow: 2.5,
+    slidesToScroll: 1,
+    swipeToSlide: true,
+    arrows: false,
+    initialSlide: 1,
+    infinite: false,
+    responsive: [
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1.5,
+          slidesToScroll: 1,
+          initialSlide: 1
+        }
+      },
+      {
+        breakpoint: 990,
+        settings: {
+          slidesToShow: 2.5,
+          slidesToScroll: 1,
+          initialSlide: 1
+        }
+      }
+    ]
+  }
+
   return (
     <>
       {itemsToDisplay &&
@@ -85,6 +115,22 @@ function Stories ({ age }:Props) {
               </Button>
             </div>}
         </Stack>}
+      {/* {itemsToDisplay &&
+        <Box mt={3}>
+          <Heading as='h2' className='lead text-secondary'> For {age} years old kids </Heading>
+          <Slider {...settings} className='library'>
+            {toDisplay && toDisplay.map((item: any, index: number) =>
+              <Box
+                key={index}
+                onClick={() => { openStoryHandler(item) }}
+                borderRadius='lg'
+                className={styles.libraryItem}
+              >
+                <Image src='images/Loading.png' alt='' />
+                <Text className='body'>{item.title}</Text>
+              </Box>)}
+          </Slider>
+        </Box>} */}
     </>
   )
 }
