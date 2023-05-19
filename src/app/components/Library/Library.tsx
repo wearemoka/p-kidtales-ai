@@ -11,6 +11,7 @@ import styles from './Library.module.scss'
 import Slider from 'react-slick'
 
 const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
+const MIN_ITEMS_TO_DISPLAY = 12
 
 interface Props {
     age:string
@@ -20,7 +21,8 @@ function Stories ({ age }:Props) {
   const router = useRouter()
   const { globalStory, setGlobalStory } = useGlobalContext()
   const { data } = useFetchStory(fireBaseStoryCollection) // get stories from the repository
-  const [itemsToDisplay, setItemsToDisplay] = useState<number>(8)
+  const [itemsToDisplay, setItemsToDisplay] = useState<number>(MIN_ITEMS_TO_DISPLAY)
+  let totalItemsToDisplay = 0
 
   let mappedDataByAge:any = []
   let toDisplay = []
@@ -33,6 +35,8 @@ function Stories ({ age }:Props) {
         return false
       }
     })
+    totalItemsToDisplay = mappedDataByAge.length
+
     toDisplay = mappedDataByAge.slice(0, itemsToDisplay)
   }
 
@@ -102,7 +106,7 @@ function Stories ({ age }:Props) {
             })}
           </SimpleGrid>
 
-          {(itemsToDisplay <= 8) &&
+          {(itemsToDisplay <= MIN_ITEMS_TO_DISPLAY && totalItemsToDisplay > MIN_ITEMS_TO_DISPLAY) &&
             <div>
               <Button
                 onClick={() => {
