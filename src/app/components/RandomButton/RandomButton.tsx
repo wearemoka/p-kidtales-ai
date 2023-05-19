@@ -3,6 +3,7 @@ import { getRandomValue } from '@/app/utils/helper'
 import { Button, Image } from '@chakra-ui/react'
 import styles from './RandomButton.module.scss'
 import { characterOpts, lessonOpts, namesOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
+
 interface Props {
     className?: string,
     actionAfterSave?: () => void

@@ -3,7 +3,7 @@ import GallerySelect from '@/app/components/GallerySelect/GallerySelect'
 import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
-import { characterOpts, ERROR_MESSAGES, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
+import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
 import { Box, Button, Center, Image, Input, VStack, Text } from '@chakra-ui/react'
 import { getAiStory, moderateStringWithAI } from '@/app/services/ChatGPTService'
 import { useEffect, useRef, useState } from 'react'
@@ -12,7 +12,7 @@ import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
 import styles from './story.module.scss'
 import RandomButton from '../components/RandomButton/RandomButton'
-import { checkPromptIsComplete, createSlugWithTimeStamp, getStoryTitle } from '../utils/helper'
+import { createSlugWithTimeStamp, getStoryTitle } from '../utils/helper'
 import { ROUTES } from '@/app/utils/routes'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 
@@ -23,49 +23,16 @@ const StoryPage = () => {
   const { globalPrompt, setGlobalPrompt, globalStory, setGlobalStory } = useGlobalContext()
   const [isLoadingStory, setIsLoadingStory] = useState<boolean>(false)
   const loadingMessages = useMessageTime(isLoadingStory)
-  const [hasError, setHasError] = useState<boolean>(false)
   const { age, character, name, scenario, lesson } = globalPrompt
   const inputLessonRef = useRef<HTMLInputElement>(null)
-  const [errorMessage, setErrorMessage] = useState<string>('')
   const [flagged, setFlagged] = useState<boolean>(false)
-
-  const promptMissingValues = () => {
-    let missingValues: boolean = false
-
-    if (!age) {
-      setHasError(true)
-      setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
-      setErrorMessage(ERROR_MESSAGES.NO_AGE)
-      missingValues = true
-    }
-
-    const missingPrompt = checkPromptIsComplete(globalPrompt)
-    if (missingPrompt) {
-      setHasError(true)
-      setGlobalPrompt({ ...globalPrompt, step: missingPrompt })
-      missingValues = true
-
-      switch (missingPrompt) {
-        case PROMPT_STEPS.CHARACTER:
-          setErrorMessage(ERROR_MESSAGES.NO_CHARACTER)
-          break
-        case PROMPT_STEPS.NAME:
-          setErrorMessage(ERROR_MESSAGES.NO_NAME)
-          break
-        case PROMPT_STEPS.SCENARIO:
-          setErrorMessage(ERROR_MESSAGES.NO_SCENARIO)
-          break
-      }
-    }
-    return missingValues
-  }
 
   useEffect(() => {
     if (globalPrompt.step === PROMPT_STEPS.GENERATION) {
-      promptMissingValues()
+      writeStoryHandler()
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [globalPrompt])
+  }, [globalPrompt.step])
 
   const writeStoryHandler = async () => {
     setIsLoadingStory(true)
@@ -74,7 +41,6 @@ const StoryPage = () => {
     setIsLoadingStory(false)
 
     if (response.status === 'error' || !response?.res.startsWith('Title:')) {
-      setHasError(true)
       setIsLoadingStory(false)
       setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
       return
@@ -165,7 +131,7 @@ const StoryPage = () => {
               />}
 
             {/* Display Lesson options */}
-            {globalPrompt.step === PROMPT_STEPS.LESSON &&
+            {globalPrompt.step === PROMPT_STEPS.LESSON && !globalPrompt.lesson &&
               <VStack>
 
                 <GallerySelect
@@ -186,6 +152,12 @@ const StoryPage = () => {
                   }}
                   onKeyDown={handleLessonKeyDown}
                 />
+
+                {flagged &&
+                  <Box>
+                    This lesson cannot be used. Change the lesson to a different one.
+                  </Box>}
+
                 {inputLessonRef.current && inputLessonRef.current.value?.length > 0 &&
                   <Button
                     rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
@@ -218,17 +190,6 @@ const StoryPage = () => {
         </div>
       )}
 
-      {hasError && !isLoadingStory && (
-        <>
-          <Text fontSize='xl' color='red'>{errorMessage}</Text>
-          <Button onClick={() => setHasError(false)} className='big'>Try again</Button>
-        </>
-      )}
-
-      {flagged &&
-        <Box>
-          This lesson cannot be used. Change the lesson to a different one.
-        </Box>}
     </VStack>
 
   )
