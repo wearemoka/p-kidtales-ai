@@ -59,13 +59,19 @@ body{
   color: var(--white) !important;
   opacity: 1 !important;
 }
-.slick-slider{
+.slick-slider.story{
   min-height: 45vh; 
   @media screen and (min-width: 600px) {
     min-height: 30vh; 
   }
   @media screen and (min-width: 991px) {
     min-height: 65vh; 
+  }
+}
+.slick-slider.library{
+  width: 94vw;
+  @media screen and (min-width: 600px) {
+      width: 100vw;
   }
 }
 .slick-next, .slick-prev{
