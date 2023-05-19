@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import AgeSelector from '../AgeSelector/AgeSelector'
 import styles from './userprompt.module.scss'
 import { Box, Stack, Text } from '@chakra-ui/react'
+import { PROMPT_STEPS } from '@/app/utils/constants'
 
 interface Props {
     promptOptions: IUserPromptSelection,
@@ -37,6 +38,11 @@ function UserPrompt ({ promptOptions, steps }: Props) {
   useEffect(() => {
     if (age) {
       const gp = { ...globalPrompt, age }
+
+      if (gp.age && gp.character && gp.name && gp.scenario && gp.lesson) {
+        gp.step = PROMPT_STEPS.GENERATION
+      }
+
       setGlobalPrompt(gp)
       setEditAge(false)
     } else {
@@ -52,7 +58,13 @@ function UserPrompt ({ promptOptions, steps }: Props) {
           Create a story for <span onClick={() => { setEditAge(true) }}>{globalPrompt.age || '...'}</span>
         </Text>
 
-        {editAge && <AgeSelector age={age} setAge={setAge} />}
+        {editAge &&
+          <>
+            <AgeSelector age={age} setAge={setAge} />
+            <Text className='body_big' textAlign='center' mt={2}>
+              Age is required to generate an appropriate story
+            </Text>
+          </>}
       </Box>
 
       <Box className='big-lead' mb={8}>
