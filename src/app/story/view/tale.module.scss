@@ -1,0 +1,52 @@
+.tale {
+    height: 100vh;
+    position: relative;
+    @media screen and (min-width: 991px) {
+        height: calc(100vh - 108px);
+    }
+    &>img{
+        position: relative;
+        width: 100%;
+        margin-top: -30vh;
+        z-index: -1;
+        mask-image: linear-gradient(180deg, rgba(0, 0, 0, 1), transparent 100%);
+        @media screen and (min-width: 991px) {
+            position: absolute;
+            left: -14vw;
+            top: 0;
+            height: calc(100vh + 50px);
+            width: auto;
+            z-index: -1;
+            -webkit-mask-image: linear-gradient(90deg, rgba(0, 0, 0, 1), transparent 100%);
+            mask-image: linear-gradient(90deg, rgba(0, 0, 0, 1), transparent 100%);
+        }
+    }
+    .taleWrapper{
+        min-height: auto;
+        margin-top: -100px;
+        @media screen and (min-width: 991px) {
+            min-height: 60vh;
+        }
+    }
+    .buttonWrapper{
+        display: none;
+        @media screen and (min-width: 768px) {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            button{
+                display: block;
+            }
+        }
+        button{
+            display: none;
+        }
+        
+    }
+    .sliderArrows{
+        &::before{
+            display: none;
+        }
+    }
+}

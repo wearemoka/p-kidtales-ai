@@ -1,0 +1,95 @@
+@import './variables.css';
+@import './partials/fonts.scss';
+@import './partials/text-styles.scss';
+@import './partials/buttons.scss';
+@import './partials/form.scss';
+@import './partials/modals.scss';
+
+:root{
+  font-family: 'Plus Jakarta Sans' !important;
+  --chakra-fonts-heading: 'Plus Jakarta Sans';
+  --chakra-fonts-body: 'Plus Jakarta Sans';
+  color-scheme: only dark;
+}
+
+body{
+  background: radial-gradient(50% 50% at 50% 50%, rgba(151, 69, 251, 0.2) 0%, rgba(151, 69, 251, 0) 100%), #0C0416;
+  background-repeat: no-repeat;
+  color: var(--white);
+}
+
+.chakra-container{
+  max-width: 100%;
+  @media screen and (min-width: 767px) {
+    max-width: 90vw;
+  }
+  @media screen and (min-width: 991px) {
+    max-width: 80vw;
+  }
+}
+
+/* --- text --- */
+.text-center{
+  text-align: center;
+}
+.text-secondary{
+  color: var(--white70);
+}
+
+.noBlur{
+  filter: none;
+}
+.blur1{
+  filter: blur(2px);
+}
+.blur2{
+  filter: blur(4px);
+}
+.blur3{
+  filter: blur(6px);
+}
+
+
+/* Slider */
+.slick-dots li button:before{
+  color: var(--white70) !important;
+  opacity: 1 !important;
+}
+.slick-dots li.slick-active button:before{
+  color: var(--white) !important;
+  opacity: 1 !important;
+}
+.slick-slider.story{
+  min-height: 45vh; 
+  @media screen and (min-width: 600px) {
+    min-height: 30vh; 
+  }
+  @media screen and (min-width: 991px) {
+    min-height: 65vh; 
+  }
+}
+.slick-slider.library{
+  width: 94vw;
+  @media screen and (min-width: 600px) {
+      width: 100vw;
+  }
+}
+.slick-next, .slick-prev{
+  display: none !important;
+  @media screen and (min-width: 991px) {
+    top: 16% !important;
+    display: block !important;
+  }
+}
+.slick-next{
+  right: -60px !important;
+}
+.slick-prev{
+  left: -60px !important;
+}
+
+.button-prev::before,
+.button-next::before{
+  font-size: 0 !important;
+  display: none !important;
+}

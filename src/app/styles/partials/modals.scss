@@ -1,0 +1,62 @@
+.chakra-modal__content-container{
+    align-items: end;
+    @media screen and (min-width: 601px) {
+        align-items: center;
+    }
+    .chakra-modal__content{
+        min-width: 100%;
+        height: auto;
+        margin: 0;
+        border-radius: 16px 16px 0px 0px;
+        border: 1px solid var(--white70);
+        background: radial-gradient(50% 50% at 50% 50%, rgba(151, 69, 251, 0.2) 0%, rgba(151, 69, 251, 0) 100%), #0C0416;
+        .chakra-modal__footer{
+            justify-content: start;
+            padding-top: 30px;
+            flex-wrap: wrap;
+        }
+        .chakra-modal__body{
+            padding-top: 0;
+        }
+        @media screen and (min-width: 601px) {
+            background: rgba(12, 4, 22, 0.7);
+            backdrop-filter: blur(2.5px);
+            max-width: none;
+            height: 100vh;
+            margin: 0;
+            border-radius: 0;
+            width: 100vw;
+            border: 0;
+            .chakra-container{
+                height: 100%;
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+    .modal-bottom.chakra-modal__content{
+        background: rgba(12, 4, 22, 0.7);
+        backdrop-filter: blur(2.5px);
+        max-width: none;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+        width: 100vw;
+        border: 0;
+        .chakra-container{
+            display: flex;
+            align-items: end;
+            justify-content: center;
+            height: 100%;
+        }
+        .back-bottom-button{
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            text-align: center;
+        }
+        .chakra-modal__footer{
+            justify-content: center;
+        }
+    }
+}

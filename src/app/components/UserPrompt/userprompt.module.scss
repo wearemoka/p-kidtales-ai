@@ -1,0 +1,19 @@
+.active {
+    opacity: 1 !important;
+    filter: none !important;
+}
+
+.seted {
+    color: var(--white);
+}
+
+.unseted {
+    color: var(--white);
+    opacity: 0.5;
+}
+.prompt{
+    span{
+        text-decoration: underline;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,36 @@
+.initialPage{
+    position: relative;
+    &>img{
+        position: absolute;
+        z-index: -1;
+        top: -12vh;
+        left: 0;
+        @media screen and (min-width: 601px) {
+            top: -8vh;
+            left: -10vw;
+        }
+    }
+    .contentWrapper{
+        padding-top: 35vh;
+        @media screen and (min-width: 601px) {
+            padding-top: 100px;
+        }
+    }
+    .buttonBottom{
+        //position: absolute;
+        //width: 100%;
+        //padding: 0 15px;
+        //left: 0;
+        //bottom: -25vh;
+        margin-top: 40px;
+        @media screen and (min-width: 601px) {
+            position: static;
+            width: auto;
+            padding: 0;
+            margin-top: 40px;
+        }
+        position: static;
+        width: auto;
+        padding: 0;
+    }
+}

@@ -1,0 +1,69 @@
+.heading{
+    font-weight: 600;
+    font-size: 26px;
+    line-height: 130%;
+    @media screen and (min-width: 601px) {
+        font-size: 42px;
+    }
+}
+
+.heading-small{
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 130%;
+    @media screen and (min-width: 601px) {
+        font-size: 28px;
+    }
+}
+
+.big-lead{
+    font-size: 20px;
+    line-height: 140%;
+    font-weight: 300;
+    @media screen and (min-width: 601px) {
+        font-size: 28px;
+    }
+}
+
+.lead{
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 140%;
+    @media screen and (min-width: 601px) {
+        font-size: 21px;
+    }
+}
+
+.body-big{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 140%;
+    &.bold{
+        font-weight: 600;
+    }
+    @media screen and (min-width: 767px) {
+        font-size: 18px;
+    }
+}
+
+
+.body{
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 140%;
+    &.bold{
+        font-weight: 600;
+    }
+    @media screen and (min-width: 601px) {
+        font-size: 16px;
+    }
+}
+
+.caption{
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 140%;
+    &.bold{
+        font-weight: 600;
+    }
+}
