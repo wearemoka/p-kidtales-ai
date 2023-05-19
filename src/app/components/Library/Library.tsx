@@ -117,7 +117,7 @@ function Stories ({ age }:Props) {
         </Stack>}
       {/* {itemsToDisplay &&
         <Box mt={3}>
-          <Heading as='h2' className='lead text-secondary'> For {age} years old kids </Heading>
+          <Heading as='h2' className='lead text-secondary' mb={2}> For {age} years old kids </Heading>
           <Slider {...settings} className='library'>
             {toDisplay && toDisplay.map((item: any, index: number) =>
               <Box
