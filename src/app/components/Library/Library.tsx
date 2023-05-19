@@ -90,6 +90,8 @@ function Stories ({ age }:Props) {
         <Skeleton isLoaded={!loading}>
           <Stack direction='column' justify='start' spacing='20px' mt={3} mb={10}>
             <Heading as='h2' className='lead text-secondary'> For {age} years old kids </Heading>
+            {/* Error - no stories */}
+            {!loading && totalItemsToDisplay === 0 && <Text>No stories found for {age} years old kids</Text>}
 
             <SimpleGrid columns={3} spacing={5}>
               {toDisplay && toDisplay.map((item: any, index: number) => {
