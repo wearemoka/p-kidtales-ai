@@ -4,7 +4,7 @@ import { useGlobalContext } from '@/app/context/store'
 import { useFetchStory } from '@/app/hooks/useFetchStory'
 import { paginateStory } from '@/app/utils/helper'
 import { ROUTES } from '@/app/utils/routes'
-import { Box, Button, Heading, SimpleGrid, Stack, Image, Text } from '@chakra-ui/react'
+import { Box, Button, Heading, SimpleGrid, Stack, Image, Text, Skeleton } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import styles from './Library.module.scss'
@@ -20,7 +20,7 @@ interface Props {
 function Stories ({ age }:Props) {
   const router = useRouter()
   const { globalStory, setGlobalStory } = useGlobalContext()
-  const { data } = useFetchStory(fireBaseStoryCollection) // get stories from the repository
+  const { data, loading } = useFetchStory(fireBaseStoryCollection) // get stories from the repository
   const [itemsToDisplay, setItemsToDisplay] = useState<number>(MIN_ITEMS_TO_DISPLAY)
   let totalItemsToDisplay = 0
 
@@ -87,38 +87,40 @@ function Stories ({ age }:Props) {
   return (
     <>
       {itemsToDisplay &&
-        <Stack direction='column' justify='start' spacing='20px' mt={3} mb={10}>
-          <Heading as='h2' className='lead text-secondary'> For {age} years old kids </Heading>
+        <Skeleton isLoaded={!loading}>
+          <Stack direction='column' justify='start' spacing='20px' mt={3} mb={10}>
+            <Heading as='h2' className='lead text-secondary'> For {age} years old kids </Heading>
 
-          <SimpleGrid columns={3} spacing={5}>
-            {toDisplay && toDisplay.map((item: any, index: number) => {
-              return (
-                <Box
-                  key={index}
-                  onClick={() => { openStoryHandler(item) }}
-                  borderRadius='lg'
-                  className={styles.libraryItem}
+            <SimpleGrid columns={3} spacing={5}>
+              {toDisplay && toDisplay.map((item: any, index: number) => {
+                return (
+                  <Box
+                    key={index}
+                    onClick={() => { openStoryHandler(item) }}
+                    borderRadius='lg'
+                    className={styles.libraryItem}
+                  >
+                    <Image src='images/Loading.png' alt='' />
+                    <Text className='body'>{item.title}</Text>
+                  </Box>
+                )
+              })}
+            </SimpleGrid>
+
+            {(itemsToDisplay <= MIN_ITEMS_TO_DISPLAY && totalItemsToDisplay > MIN_ITEMS_TO_DISPLAY) &&
+              <div>
+                <Button
+                  onClick={() => {
+                    setItemsToDisplay(data.length)
+                  }}
+                  variant='link'
+                  className='button-link'
                 >
-                  <Image src='images/Loading.png' alt='' />
-                  <Text className='body'>{item.title}</Text>
-                </Box>
-              )
-            })}
-          </SimpleGrid>
-
-          {(itemsToDisplay <= MIN_ITEMS_TO_DISPLAY && totalItemsToDisplay > MIN_ITEMS_TO_DISPLAY) &&
-            <div>
-              <Button
-                onClick={() => {
-                  setItemsToDisplay(data.length)
-                }}
-                variant='link'
-                className='button-link'
-              >
-                View All
-              </Button>
-            </div>}
-        </Stack>}
+                  View All
+                </Button>
+              </div>}
+          </Stack>
+        </Skeleton>}
       {/* {itemsToDisplay &&
         <Box mt={3}>
           <Heading as='h2' className='lead text-secondary' mb={2}> For {age} years old kids </Heading>
