@@ -20,7 +20,7 @@ const TopBar = () => {
   const [areOnHome, setAreOnHome] = useState(false)
   const [areOnStoryGenerate, setAreOnStoryGenerate] = useState(false)
 
-  const { BGMusic, setBGMusic } = useGlobalContext()
+  // const { BGMusic, setBGMusic } = useGlobalContext()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { globalStory } = useGlobalContext()
 
@@ -44,14 +44,15 @@ const TopBar = () => {
     setAreOnLibrary(pathname.startsWith(ROUTES.LIBRARY))
     setAreOnHome(pathname === ROUTES.HOME)
     setAreOnStoryGenerate(pathname === ROUTES.STORY_GENERATE)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
   /**
    * Changes the global status of background music
    */
-  const musicOnOffButtonClick = () => {
-    setBGMusic(!BGMusic)
-  }
+  // const musicOnOffButtonClick = () => {
+  //   setBGMusic(!BGMusic)
+  // }
 
   const openModalAbout = () => {
     setModalData({

@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, Image } from '@chakra-ui/react'
-import styles from './TopBar.module.scss'
 import { useRouter } from 'next/navigation'
 import { useGlobalContext } from '@/app/context/store'
 import { PROMPT_STEPS } from '@/app/utils/constants'
