@@ -14,8 +14,9 @@ function viewPage () {
   const [title, setTitle] = useState<string>('')
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
-
   const sliderRef = useRef<Slider>(null)
+
+  const characterImg = globalStory?.story?.prompt[1]?.toLowerCase()
 
   useEffect(() => {
     const tmpStory = globalStory.storyPaged || null
@@ -61,6 +62,7 @@ function viewPage () {
     )
   }
 
+  // Settings fot Slider Story
   const settings = {
     dots: true,
     speed: 500,
@@ -69,16 +71,21 @@ function viewPage () {
     swipeToSlide: true,
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
-    beforeChange: function (oldIndex: number, newIndex: number) {
-      if (newIndex === 0 && oldIndex > newIndex && oldIndex !== 1) {
-        onOpen()
+    infinite: false,
+    fade: true,
+    afterChange: function (currentIndex: number) {
+      const slidesToShow = globalStory.storyPaged.length - 2
+      if (currentIndex === slidesToShow) {
+        setTimeout(() => {
+          onOpen()
+        }, 5000)
       }
     }
   }
 
   return (
     <div className={styles.tale}>
-      <Image src='images/characters/whale.png' alt='' />
+      <Image src={`/images/characters/${characterImg}.png`} alt='Main character of the story' />
       <Container>
         <Grid templateColumns='repeat(12, 1fr)' gap={4}>
           <GridItem colStart={{ lg: 3, md: 0, base: 0 }} colSpan={{ lg: 8, md: 12, base: 12 }}>

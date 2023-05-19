@@ -31,7 +31,7 @@ function Stories ({ age }:Props) {
 
   if (data) {
     mappedDataByAge = data?.filter((item: any) => {
-      if (Array.isArray(item.prompt)) {
+      if (item.appropriate !== false && Array.isArray(item.prompt)) {
         return item.prompt.includes(age)
       } else {
         return false
@@ -49,7 +49,7 @@ function Stories ({ age }:Props) {
   const openStoryHandler = (story: any) => {
     const storyToLoad = { ...globalStory }
 
-    storyToLoad.story = story.story
+    storyToLoad.story = story
     storyToLoad.currentPage = 1
     storyToLoad.storyPaged = paginateStory(story.story)
 
