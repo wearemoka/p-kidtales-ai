@@ -91,7 +91,7 @@ function viewPage () {
           <GridItem colStart={{ lg: 3, md: 0, base: 0 }} colSpan={{ lg: 8, md: 12, base: 12 }}>
             <Heading as='h1' className='heading-small' mb={3} mt={10}>{title}</Heading>
 
-            <Slider {...settings} ref={sliderRef}>
+            <Slider {...settings} ref={sliderRef} className='story'>
               {globalStory.storyPaged.slice(1).map((page, index) =>
                 <div key={index}>
                   <Text className='lead'>

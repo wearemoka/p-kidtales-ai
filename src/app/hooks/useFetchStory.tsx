@@ -4,12 +4,12 @@ import { getDocArrayDataType, getDocumentFromFireStore } from '@/app/services/Fi
 
 export function useFetchStory (storyPath: string) {
   const [data, setData] = useState<getDocArrayDataType[]>([])
-  const [status, setStatus] = useState<string>('pending')
+  const [loading, setLoading] = useState<boolean>(false)
 
   const fetchStoriesList = useCallback(async () => {
-    setStatus('process')
+    setLoading(true)
     const response = await getDocumentFromFireStore(storyPath)
-    setStatus('success')
+    setLoading(false)
     setData(response)
   }, [storyPath])
 
@@ -20,6 +20,6 @@ export function useFetchStory (storyPath: string) {
   return {
     data,
     setData,
-    status
+    loading
   }
 }
