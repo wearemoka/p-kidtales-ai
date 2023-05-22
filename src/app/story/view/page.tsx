@@ -72,7 +72,6 @@ function viewPage () {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     infinite: false,
-    fade: true,
     afterChange: function (currentIndex: number) {
       const slidesToShow = globalStory.storyPaged.length - 2
       if (currentIndex === slidesToShow) {
