@@ -15,6 +15,7 @@ function viewPage () {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
   const sliderRef = useRef<Slider>(null)
+  let timeoutID: any = null
 
   const characterImg = globalStory?.story?.prompt[1]?.toLowerCase()
 
@@ -75,9 +76,13 @@ function viewPage () {
     afterChange: function (currentIndex: number) {
       const slidesToShow = globalStory.storyPaged.length - 2
       if (currentIndex === slidesToShow) {
-        setTimeout(() => {
+        timeoutID = setTimeout(() => {
           onOpen()
-        }, 5000)
+        }, 8000)
+      } else {
+        if (timeoutID) {
+          clearTimeout(timeoutID)
+        }
       }
     }
   }
