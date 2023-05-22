@@ -39,7 +39,11 @@ function Stories ({ age }:Props) {
     })
     totalItemsToDisplay = mappedDataByAge.length
 
-    toDisplay = mappedDataByAge.slice(0, itemsToDisplay)
+    if (isLargerThan990) {
+      toDisplay = mappedDataByAge.slice(0, itemsToDisplay)
+    } else {
+      toDisplay = mappedDataByAge.slice(0)
+    }
   }
 
   /**
