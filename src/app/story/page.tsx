@@ -26,6 +26,7 @@ const StoryPage = () => {
   const { age, character, name, scenario, lesson } = globalPrompt
   const inputLessonRef = useRef<HTMLInputElement>(null)
   const [flagged, setFlagged] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
 
   useEffect(() => {
     if (globalPrompt.step === PROMPT_STEPS.GENERATION) {
@@ -35,40 +36,39 @@ const StoryPage = () => {
   }, [globalPrompt.step])
 
   const writeStoryHandler = async () => {
+    setError(false)
     setIsLoadingStory(true)
     setFlagged(false)
     const response = await getAiStory(age, character, name, scenario, lesson)
     setIsLoadingStory(false)
 
     if (response.status === 'error' || !response?.res.startsWith('Title:')) {
-      setIsLoadingStory(false)
-      setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
-      return
-    }
+      setError(true)
+    } else {
+      const storyTitle = getStoryTitle(response.res)
+      const slug = createSlugWithTimeStamp(storyTitle)
 
-    const storyTitle = getStoryTitle(response.res)
-    const slug = createSlugWithTimeStamp(storyTitle)
+      if (storyTitle && slug) {
+        const myStory = {
+          title: storyTitle,
+          slug,
+          prompt: [age, character, name, scenario, lesson],
+          story: response.res
+        }
 
-    if (storyTitle && slug) {
-      const myStory = {
-        title: storyTitle,
-        slug,
-        prompt: [age, character, name, scenario, lesson],
-        story: response.res
+        const id = await addDocumentInFireStore(fireBaseStoryCollection, myStory)
+
+        const story: IStoryStore = {
+          story: { ...myStory, id },
+          storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
+          currentPage: 0
+        }
+
+        setGlobalStory(story)
       }
 
-      const id = await addDocumentInFireStore(fireBaseStoryCollection, myStory)
-
-      const story: IStoryStore = {
-        story: { ...myStory, id },
-        storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
-        currentPage: 0
-      }
-
-      setGlobalStory(story)
+      router.push(ROUTES.STORY_VIEW)
     }
-
-    router.push(ROUTES.STORY_VIEW)
   }
 
   useEffect(() => {
@@ -100,7 +100,6 @@ const StoryPage = () => {
   return (
     <VStack className={styles.storyPage}>
       {/* Display the User prompt */}
-
       {!isLoadingStory && globalStory.storyPaged.length === 0 && (
         <>
           <UserPrompt promptOptions={globalPrompt} steps={PROMPT_STEPS} />
@@ -173,6 +172,22 @@ const StoryPage = () => {
 
         </>
       )}
+
+      {/* Error on response */}
+      {!isLoadingStory && error &&
+        <VStack>
+          <Text>
+            There has been an error with the AI, we could not generate your story.
+          </Text>
+          <Button
+            rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
+            className='big primary'
+            onClick={writeStoryHandler}
+            variant='outline'
+          >
+            Try again
+          </Button>
+        </VStack>}
 
       {isLoadingStory && (
         <div className={styles.loading}>
