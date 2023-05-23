@@ -12,7 +12,7 @@ import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
 import styles from './story.module.scss'
 import RandomButton from '../components/RandomButton/RandomButton'
-import { createSlugWithTimeStamp, getStoryTitle } from '../utils/helper'
+import { createSlugWithTimeStamp, getStoryTitle, paginateStory } from '../utils/helper'
 import { ROUTES } from '@/app/utils/routes'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 
@@ -63,7 +63,7 @@ const StoryPage = () => {
 
         const story: IStoryStore = {
           story: { ...myStory, id: storyIdStored },
-          storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
+          storyPaged: paginateStory(response.res),
           currentPage: 0
         }
 
