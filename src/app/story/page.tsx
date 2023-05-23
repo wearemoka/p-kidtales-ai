@@ -27,6 +27,7 @@ const StoryPage = () => {
   const inputLessonRef = useRef<HTMLInputElement>(null)
   const [flagged, setFlagged] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
+  let storyIdStored: string = ''
 
   useEffect(() => {
     if (globalPrompt.step === PROMPT_STEPS.GENERATION) {
@@ -56,10 +57,12 @@ const StoryPage = () => {
           story: response.res
         }
 
-        const id = await addDocumentInFireStore(fireBaseStoryCollection, myStory)
+        if (!storyIdStored) {
+          storyIdStored = await addDocumentInFireStore(fireBaseStoryCollection, myStory)
+        }
 
         const story: IStoryStore = {
-          story: { ...myStory, id },
+          story: { ...myStory, id: storyIdStored },
           storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
           currentPage: 0
         }
