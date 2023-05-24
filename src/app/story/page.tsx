@@ -28,13 +28,19 @@ const StoryPage = () => {
   const [flagged, setFlagged] = useState<boolean>(false)
   const [error, setError] = useState<boolean>(false)
   let storyIdStored: string = ''
+  const [customLesson, setCustomLesson] = useState<boolean>(false)
 
   useEffect(() => {
     if (globalPrompt.step === PROMPT_STEPS.GENERATION) {
       writeStoryHandler()
     }
+
+    if (!isLoadingStory && customLesson && globalPrompt.age && globalPrompt.character && globalPrompt.name && globalPrompt.scenario && globalPrompt.lesson) {
+      writeStoryHandler()
+    }
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [globalPrompt.step])
+  }, [globalPrompt.step, customLesson])
 
   const writeStoryHandler = async () => {
     setError(false)
@@ -74,27 +80,20 @@ const StoryPage = () => {
     }
   }
 
-  useEffect(() => {
-    setFlagged(false)
-    if (globalPrompt.step === PROMPT_STEPS.GENERATION && writeStoryHandler) {
-      writeStoryHandler()
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   const customLessonHandler = (lesson: string) => {
     const newStep: any = { ...globalPrompt, lesson }
     setGlobalPrompt(newStep)
   }
 
   const handleLessonKeyDown = async (e: any) => {
+    const lesson = inputLessonRef.current!.value
     if (e.key === 'Enter') {
-      const lesson = inputLessonRef.current!.value
       const resp = await moderateStringWithAI(lesson)
       if (resp.results[0].flagged) {
         setFlagged(true)
       } else {
         setFlagged(false)
+        setCustomLesson(true)
         writeStoryHandler()
       }
     }
@@ -133,7 +132,7 @@ const StoryPage = () => {
               />}
 
             {/* Display Lesson options */}
-            {globalPrompt.step === PROMPT_STEPS.LESSON && !globalPrompt.lesson &&
+            {globalPrompt.step === PROMPT_STEPS.LESSON && !customLesson &&
               <VStack>
 
                 <GallerySelect
@@ -141,7 +140,10 @@ const StoryPage = () => {
                   options={lessonOpts}
                   saveOn='lesson'
                   columns={[2]}
-                  afterClickHandler={writeStoryHandler}
+                  afterClickHandler={() => {
+                    setCustomLesson(true)
+                    writeStoryHandler()
+                  }}
                   type='noImg'
                 />
 
@@ -160,11 +162,14 @@ const StoryPage = () => {
                     This lesson cannot be used. Change the lesson to a different one.
                   </Box>}
 
-                {inputLessonRef.current && inputLessonRef.current.value?.length > 0 &&
+                {globalPrompt.lesson.length > 0 &&
                   <Button
                     rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
                     className='big primary only-icon'
-                    onClick={writeStoryHandler}
+                    onClick={() => {
+                      setCustomLesson(true)
+                      writeStoryHandler()
+                    }}
                   />}
 
               </VStack>}
