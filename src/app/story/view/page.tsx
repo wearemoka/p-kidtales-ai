@@ -15,6 +15,7 @@ function viewPage () {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
   const sliderRef = useRef<Slider>(null)
+  let timeoutID: any = null
 
   const characterImg = globalStory?.story?.prompt[1]?.toLowerCase()
 
@@ -72,13 +73,16 @@ function viewPage () {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     infinite: false,
-    fade: true,
     afterChange: function (currentIndex: number) {
       const slidesToShow = globalStory.storyPaged.length - 2
       if (currentIndex === slidesToShow) {
-        setTimeout(() => {
+        timeoutID = setTimeout(() => {
           onOpen()
-        }, 5000)
+        }, 8000)
+      } else {
+        if (timeoutID) {
+          clearTimeout(timeoutID)
+        }
       }
     }
   }
@@ -88,7 +92,7 @@ function viewPage () {
       <Image src={`/images/characters/${characterImg}.png`} alt='Main character of the story' />
       <Container>
         <Grid templateColumns='repeat(12, 1fr)' gap={4}>
-          <GridItem colStart={{ lg: 3, md: 0, base: 0 }} colSpan={{ lg: 8, md: 12, base: 12 }}>
+          <GridItem colStart={{ lg: 3, md: 0, base: 0 }} colSpan={{ lg: 8, md: 12, base: 12 }} mt={{ lg: 4, md: 4, base: 30 }}>
             <Heading as='h1' className='heading-small' mb={3} mt={10}>{title}</Heading>
 
             <Slider {...settings} ref={sliderRef} className='story'>

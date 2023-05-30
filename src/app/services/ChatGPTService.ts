@@ -41,6 +41,7 @@ export async function getAiStory (ageRange: string, character: string, character
     headers: {
       'Content-Type': 'application/json'
     },
+    cache: 'no-store',
     body: JSON.stringify({ ageRange, character, characterName, place, lesson })
   })
 
@@ -106,6 +107,7 @@ export async function moderateStringWithAI (value: string) {
     headers: {
       'Content-Type': 'application/json'
     },
+    cache: 'no-store',
     body: JSON.stringify({ value })
   })
   const jsonResponse = await response.json()

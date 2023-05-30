@@ -4,11 +4,12 @@ import { useGlobalContext } from '@/app/context/store'
 import { useFetchStory } from '@/app/hooks/useFetchStory'
 import { paginateStory } from '@/app/utils/helper'
 import { ROUTES } from '@/app/utils/routes'
-import { Box, Button, Heading, SimpleGrid, Stack, Image, Text, Skeleton, useMediaQuery } from '@chakra-ui/react'
+import { Box, Button, Heading, SimpleGrid, Stack, Image, Text, useMediaQuery } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import styles from './Library.module.scss'
 import Slider from 'react-slick'
+import LoadingSkeleton from './LoadingSkeleton'
 
 const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 const MIN_ITEMS_TO_DISPLAY = 6
@@ -39,7 +40,11 @@ function Stories ({ age }:Props) {
     })
     totalItemsToDisplay = mappedDataByAge.length
 
-    toDisplay = mappedDataByAge.slice(0, itemsToDisplay)
+    if (isLargerThan990) {
+      toDisplay = mappedDataByAge.slice(0, itemsToDisplay)
+    } else {
+      toDisplay = mappedDataByAge.slice(0)
+    }
   }
 
   /**
@@ -88,63 +93,62 @@ function Stories ({ age }:Props) {
 
   return (
     <>
-      {itemsToDisplay &&
-        <Skeleton isLoaded={!loading}>
-          {isLargerThan990 &&
-            <Stack direction='column' justify='start' spacing='20px' mt={3} mb={10}>
-              <Heading as='h2' className='lead text-secondary'> For {age} years old kids </Heading>
-              {/* Error - no stories */}
-              {!loading && totalItemsToDisplay === 0 && <Text>No stories found for {age} years old kids</Text>}
+      {loading && <LoadingSkeleton isGrid={isLargerThan990} />}
 
-              <SimpleGrid columns={3} spacing={5}>
-                {toDisplay && toDisplay.map((item: any, index: number) => {
-                  return (
-                    <Box
-                      key={index}
-                      onClick={() => { openStoryHandler(item) }}
-                      borderRadius='lg'
-                      className={styles.libraryItem}
-                    >
-                      <Image src='images/Loading.png' alt='' />
-                      <Text className='body'>{item.title}</Text>
-                    </Box>
-                  )
-                })}
-              </SimpleGrid>
+      {itemsToDisplay && isLargerThan990 &&
+        <Stack direction='column' justify='start' spacing='20px' mt={3} mb={10}>
+          <Heading as='h2' className='lead text-secondary'> For {age} years old kids </Heading>
+          {/* Error - no stories */}
+          {!loading && totalItemsToDisplay === 0 && <Text>No stories found for {age} years old kids</Text>}
 
-              {(itemsToDisplay <= MIN_ITEMS_TO_DISPLAY && totalItemsToDisplay > MIN_ITEMS_TO_DISPLAY) &&
-                <div>
-                  <Button
-                    onClick={() => {
-                      setItemsToDisplay(data.length)
-                    }}
-                    variant='link'
-                    className='button-link'
-                  >
-                    View All
-                  </Button>
-                </div>}
-            </Stack>}
+          <SimpleGrid columns={3} spacing={5}>
+            {toDisplay && toDisplay.map((item: any, index: number) => {
+              return (
+                <Box
+                  key={index}
+                  onClick={() => { openStoryHandler(item) }}
+                  borderRadius='lg'
+                  className={styles.libraryItem}
+                >
+                  <Image src='images/Loading.png' alt='' />
+                  <Text className='body'>{item.title}</Text>
+                </Box>
+              )
+            })}
+          </SimpleGrid>
 
-          {!isLargerThan990 &&
-            <Box mt={3}>
-              <Heading as='h2' className='lead text-secondary' mb={2}> For {age} years old kids </Heading>
-              <Slider {...settings} className='library'>
-                {toDisplay && toDisplay.map((item: any, index: number) =>
-                  <Box
-                    key={index}
-                    onClick={() => { openStoryHandler(item) }}
-                    borderRadius='lg'
-                    className={styles.libraryItem}
-                  >
-                    <Image src='images/Loading.png' alt='' />
-                    <Text className='body'>{item.title}</Text>
-                  </Box>)}
-              </Slider>
-              {/* Error - no stories */}
-              {!loading && totalItemsToDisplay === 0 && <Text>No stories found for {age} years old kids</Text>}
-            </Box>}
-        </Skeleton>}
+          {(itemsToDisplay <= MIN_ITEMS_TO_DISPLAY && totalItemsToDisplay > MIN_ITEMS_TO_DISPLAY) &&
+            <div>
+              <Button
+                onClick={() => {
+                  setItemsToDisplay(data.length)
+                }}
+                variant='link'
+                className='button-link'
+              >
+                View All
+              </Button>
+            </div>}
+        </Stack>}
+
+      {itemsToDisplay && !isLargerThan990 &&
+        <Box mt={3}>
+          <Heading as='h2' className='lead text-secondary' mb={2}> For {age} years old kids </Heading>
+          <Slider {...settings} className='library'>
+            {toDisplay && toDisplay.map((item: any, index: number) =>
+              <Box
+                key={index}
+                onClick={() => { openStoryHandler(item) }}
+                borderRadius='lg'
+                className={styles.libraryItem}
+              >
+                <Image src='images/Loading.png' alt='' />
+                <Text className='body'>{item.title}</Text>
+              </Box>)}
+          </Slider>
+          {/* Error - no stories */}
+          {!loading && totalItemsToDisplay === 0 && <Text>No stories found for {age} years old kids</Text>}
+        </Box>}
     </>
   )
 }
