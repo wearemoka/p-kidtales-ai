@@ -110,7 +110,7 @@ const StoryPage = () => {
   }
 
   return (
-    <VStack className={styles.storyPage}>
+    <VStack className={`${styles.storyPage} ${isLoadingStory ? styles.storyPageLoading : ''}`}>
       {/* Display the User prompt */}
       {!isLoadingStory && globalStory.storyPaged.length === 0 && (
         <>
@@ -210,7 +210,7 @@ const StoryPage = () => {
       {isLoadingStory && (
         <div className={styles.loading}>
           <VStack justify='center'>
-            <Text textAlign='center' className='body-big' my={8}>Create a story for {globalPrompt.age}</Text>
+            <Text textAlign='center' className='body-big' mb={8}>Create a story for {globalPrompt.age}</Text>
             <Box className='big-lead'>
               <Text textAlign='center'>Once upon a time a {globalPrompt.character}</Text>
               <Text textAlign='center'>called {globalPrompt.name}</Text>

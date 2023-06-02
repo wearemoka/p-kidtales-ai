@@ -19,7 +19,7 @@ interface Props {
 
 function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLabel, primaryAction, secondaryActionLabel, secondaryAction, rightIconPrimaryAction, alignmentBottom, rightIconSecondaryAction }: Props) {
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <Modal isOpen={isOpen} onClose={onClose} motionPreset='slideInBottom'>
       <ModalContent className={alignmentBottom ? 'modal-bottom' : ''}>
         <ModalCloseButton />
         <Container>

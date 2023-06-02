@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Container, Image, Heading, Text, Stack, Button, Grid, GridItem, Box } from '@chakra-ui/react'
+import { Container, Image, Heading, Text, Stack, Button, Grid, GridItem, Box, useMediaQuery } from '@chakra-ui/react'
 import styles from './page.module.scss'
 import { useRouter } from 'next/navigation'
 import { useGlobalContext, emptyPrompt } from '@/app/context/store'
@@ -31,6 +31,14 @@ const HomePage = () => {
     router.push(ROUTES.STORY_GENERATE)
   }
 
+  const [isMobile] = useMediaQuery('(max-width: 600px)')
+
+  const ageMessage = (
+    <Box px={[0, 24, 24, 36]}>
+      <Text className='caption text-center text-secondary'>Choosing the age for a story is important because it affects the length, language, and other aspects of the story.</Text>
+    </Box>
+  )
+
   return (
     <div className={styles.initialPage}>
       <Image src='/images/Initial.png' alt='' className={styles.bgImage} />
@@ -38,15 +46,15 @@ const HomePage = () => {
 
         <div className={styles.contentWrapper}>
           <Grid templateColumns='repeat(12, 1fr)' gap={4}>
-            <GridItem colSpan={{ lg: 2, md: 0, base: 0 }} />
-            <GridItem colSpan={{ lg: 8, md: 12, base: 12 }}>
+            <GridItem colSpan={{ lg: 2, md: 1, sm: 1, base: 0 }} />
+            <GridItem colSpan={{ lg: 8, md: 10, sm: 10, base: 12 }}>
               <Heading as='h1' className='heading text-center' mb={10}>Unleash your imagination with AI-powered story creation</Heading>
               <Text className='body-big text-center' mb={3}>Create a story for </Text>
 
               <AgeSelector age={age} setAge={setAge} />
-              <Box px={[0, 24, 24, 36]}>
-                <Text className='caption text-center text-secondary'>Choosing the age for a story is important because it affects the length, language, and other aspects of the story.</Text>
-              </Box>
+              {(!isMobile || (!age && isMobile))
+                ? ageMessage
+                : ''}
 
               {age &&
                 <div className={styles.buttonBottom}>
@@ -71,7 +79,7 @@ const HomePage = () => {
                   </Stack>
                 </div>}
             </GridItem>
-            <GridItem colSpan={{ lg: 2, md: 0, base: 0 }} />
+            <GridItem colSpan={{ lg: 2, md: 1, sm: 1, base: 0 }} />
           </Grid>
         </div>
 
