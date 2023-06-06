@@ -4,20 +4,6 @@
         align-items: center;
     }
     .chakra-modal__content{
-        min-width: 100%;
-        height: auto;
-        margin: 0;
-        border-radius: 16px 16px 0px 0px;
-        border: 1px solid var(--white70);
-        background: radial-gradient(50% 50% at 50% 50%, rgba(151, 69, 251, 0.2) 0%, rgba(151, 69, 251, 0) 100%), #0C0416;
-        .chakra-modal__footer{
-            justify-content: start;
-            padding-top: 30px;
-            flex-wrap: wrap;
-        }
-        .chakra-modal__body{
-            padding-top: 0;
-        }
         @media screen and (min-width: 601px) {
             background: rgba(12, 4, 22, 0.7);
             backdrop-filter: blur(2.5px);
@@ -49,8 +35,24 @@
             margin: 10px 0;
             text-align: center;
         }
-        .chakra-modal__footer{
+        .modal-footer{
             justify-content: center;
+        }
+    }
+}
+
+
+.chakra-slide{
+    position: relative;
+    &>div{
+        background: radial-gradient(50% 50% at 50% 50%, rgba(151, 69, 251, 0.2) 0%, rgba(151, 69, 251, 0) 100%), #0C0416;
+        box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.05);
+        border-radius: 16px 16px 0px 0px;
+        border: 1px solid var(--white70);
+        img{
+            position: absolute;
+            right: 20px;
+            top: 40px;
         }
     }
 }
@@ -58,9 +60,11 @@
 .backdrop{
     width: 100dvw;
     height: 100dvh;
-    background-color: transparent;
     position: absolute;
-    top: 0;
+    border: 0 !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    bottom: 0;
     left: 0;
     z-index: 9;
 }

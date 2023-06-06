@@ -1,6 +1,6 @@
 'use client'
 
-import { Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Container, Image, Grid, Text, GridItem, Slide, Box, useMediaQuery } from '@chakra-ui/react'
+import { Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Container, Image, Grid, Text, GridItem, Slide, Box, useMediaQuery, Heading } from '@chakra-ui/react'
 import React, { ReactElement, ReactNode } from 'react'
 
 interface Props {
@@ -24,11 +24,11 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLab
       <Grid templateColumns='repeat(12, 1fr)' gap={4}>
         <GridItem colSpan={{ lg: 2, md: 0, base: 0 }} />
         <GridItem colSpan={{ lg: 8, md: 12, base: 12 }}>
-          <div className='heading-small'>{modalTitle}</div>
-          <div className='body'>
+          <Heading as='h2' className='heading-small' mb={2}>{modalTitle}</Heading>
+          <div className='modal-body body'>
             {children}
           </div>
-          <div>
+          <div className='modal-footer'>
             {primaryActionLabel &&
               <Button
                 mr={3}
@@ -73,17 +73,16 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLab
           >
             {/* <div className='backdrop' onClick={onClose} /> */}
             <Box
-              p='40px'
+              py='50px'
+              px='30px'
               color='white'
               mt='4'
-              bg='teal.500'
-              rounded='md'
-              shadow='md'
             >
-              <Text onClick={onClose}>close</Text>
+              <Image src='icons/Close.svg' onClick={onClose} alt='close white icon' />
               {modalContent}
             </Box>
           </Slide>
+          {isOpen && <Box className='backdrop' onClick={onClose} />}
         </>
         : <Modal
             isOpen={isOpen} onClose={onClose} motionPreset='slideInBottom' size='full'

@@ -71,7 +71,11 @@ const TopBar = () => {
       primaryActionLabel: '',
       secondaryActionLabel: ''
     })
-    onOpen()
+    if (isOpen) {
+      onClose()
+    } else {
+      onOpen()
+    }
   }
 
   const flagTheStory = async () => {
