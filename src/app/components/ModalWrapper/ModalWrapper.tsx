@@ -1,6 +1,6 @@
 'use client'
 
-import { Modal, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, Button, Container, Image, Grid, Text, GridItem, Slide, Box, useMediaQuery, Heading } from '@chakra-ui/react'
+import { Modal, ModalContent, ModalCloseButton, Button, Container, Image, Grid, GridItem, Slide, Box, useMediaQuery, Heading } from '@chakra-ui/react'
 import React, { ReactElement, ReactNode } from 'react'
 
 interface Props {
@@ -83,7 +83,7 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLab
             </Box>
           </Slide>
           {isOpen && <Box className='backdrop' onClick={onClose} />}
-        </>
+          </>
         : <Modal
             isOpen={isOpen} onClose={onClose} motionPreset='slideInBottom' size='full'
           >
@@ -91,7 +91,7 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLab
             <ModalCloseButton />
             {modalContent}
           </ModalContent>
-          </Modal>}
+        </Modal>}
     </>
   )
 }
