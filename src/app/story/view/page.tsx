@@ -12,6 +12,8 @@ import Slider from 'react-slick'
 function viewPage () {
   const { globalStory } = useGlobalContext()
   const [title, setTitle] = useState<string>('')
+  const [firstSlide, setfirstSlide] = useState<boolean>(true)
+  const [lastSlide, setlastSlide] = useState<boolean>(false)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
   const sliderRef = useRef<Slider>(null)
@@ -43,7 +45,7 @@ function viewPage () {
     return (
       <Button
         rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
-        className='big only-icon secondary button-next slick-next'
+        className={`big only-icon secondary button-next slick-next ${lastSlide ? styles.slideDisable : ''}`}
         onClick={() => {
           sliderRef.current?.slickNext()
         }}
@@ -55,7 +57,7 @@ function viewPage () {
     return (
       <Button
         rightIcon={<Image src='/icons/Arrow-Left.svg' alt='Arrow left outline white icon' />}
-        className='big only-icon secondary button-prev slick-prev'
+        className={`big only-icon secondary button-prev slick-prev ${firstSlide ? styles.slideDisable : ''}`}
         onClick={() => {
           sliderRef.current?.slickPrev()
         }}
@@ -73,16 +75,24 @@ function viewPage () {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     infinite: false,
+    arrows: true,
     afterChange: function (currentIndex: number) {
       const slidesToShow = globalStory.storyPaged.length - 2
       if (currentIndex === slidesToShow) {
+        setlastSlide(true)
         timeoutID = setTimeout(() => {
           onOpen()
         }, 8000)
       } else {
+        setlastSlide(false)
         if (timeoutID) {
           clearTimeout(timeoutID)
         }
+      }
+      if (currentIndex === 0) {
+        setfirstSlide(true)
+      } else {
+        setfirstSlide(false)
       }
     }
   }

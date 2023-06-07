@@ -86,6 +86,7 @@ body{
 }
 .slick-next, .slick-prev{
   display: none !important;
+  transition: opacity .3s ease-in-out;
   @media screen and (min-width: 991px) {
     top: 16% !important;
     display: block !important;
