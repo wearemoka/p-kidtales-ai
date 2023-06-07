@@ -60,12 +60,22 @@ body{
   opacity: 1 !important;
 }
 .slick-slider.story{
-  min-height: 45vh; 
+  min-height: 45dvh; 
+  margin-bottom: 50px;
+  .slick-list{
+    min-height: 45dvh;
+  }
   @media screen and (min-width: 600px) {
-    min-height: 30vh; 
+    min-height: 50dvh;
+    .slick-list{
+      min-height: 50dvh;
+    }
   }
   @media screen and (min-width: 991px) {
-    min-height: 65vh; 
+    min-height: 65dvh; 
+    .slick-list{
+      min-height: 65dvh;
+    }
   }
 }
 .slick-slider.library{
@@ -87,6 +97,10 @@ body{
 .slick-prev{
   left: -60px !important;
 }
+.slick-dots{
+  bottom: 0;
+}
+
 
 .button-prev::before,
 .button-next::before{

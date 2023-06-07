@@ -92,9 +92,12 @@ function viewPage () {
       <Image src={`/images/characters/${characterImg}.png`} alt='Main character of the story' />
       <Container>
         <Grid templateColumns='repeat(12, 1fr)' gap={4}>
-          <GridItem colStart={{ lg: 3, md: 0, base: 0 }} colSpan={{ lg: 8, md: 12, base: 12 }} mt={{ lg: 4, md: 4, base: 30 }}>
+          <GridItem colStart={{ lg: 3, md: 2, base: 0 }} colSpan={{ lg: 8, md: 10, base: 12 }} mt={{ lg: 4, md: 4, base: 30 }}>
             <Heading as='h1' className='heading-small' mb={3} mt={10}>{title}</Heading>
-
+          </GridItem>
+        </Grid>
+        <Grid templateColumns='repeat(12, 1fr)' gap={4}>
+          <GridItem colStart={{ lg: 3, md: 2, base: 0 }} colSpan={{ lg: 8, md: 10, base: 12 }} mt={{ lg: 4, md: 4, base: 0 }}>
             <Slider {...settings} ref={sliderRef} className='story'>
               {globalStory.storyPaged.slice(1).map((page, index) =>
                 <div key={index}>
@@ -105,7 +108,6 @@ function viewPage () {
             </Slider>
           </GridItem>
         </Grid>
-
       </Container>
 
       {/* Modal to display */}
