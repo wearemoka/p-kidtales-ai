@@ -12,6 +12,8 @@ import Slider from 'react-slick'
 function viewPage () {
   const { globalStory } = useGlobalContext()
   const [title, setTitle] = useState<string>('')
+  const [firstSlide, setfirstSlide] = useState<boolean>(true)
+  const [lastSlide, setlastSlide] = useState<boolean>(false)
   const { isOpen, onOpen, onClose } = useDisclosure()
   const router = useRouter()
   const sliderRef = useRef<Slider>(null)
@@ -43,7 +45,7 @@ function viewPage () {
     return (
       <Button
         rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
-        className='big only-icon secondary button-next slick-next'
+        className={`big only-icon secondary button-next slick-next ${lastSlide ? styles.slideDisable : ''}`}
         onClick={() => {
           sliderRef.current?.slickNext()
         }}
@@ -55,7 +57,7 @@ function viewPage () {
     return (
       <Button
         rightIcon={<Image src='/icons/Arrow-Left.svg' alt='Arrow left outline white icon' />}
-        className='big only-icon secondary button-prev slick-prev'
+        className={`big only-icon secondary button-prev slick-prev ${firstSlide ? styles.slideDisable : ''}`}
         onClick={() => {
           sliderRef.current?.slickPrev()
         }}
@@ -73,16 +75,24 @@ function viewPage () {
     nextArrow: <SampleNextArrow />,
     prevArrow: <SamplePrevArrow />,
     infinite: false,
+    arrows: true,
     afterChange: function (currentIndex: number) {
       const slidesToShow = globalStory.storyPaged.length - 2
       if (currentIndex === slidesToShow) {
+        setlastSlide(true)
         timeoutID = setTimeout(() => {
           onOpen()
         }, 8000)
       } else {
+        setlastSlide(false)
         if (timeoutID) {
           clearTimeout(timeoutID)
         }
+      }
+      if (currentIndex === 0) {
+        setfirstSlide(true)
+      } else {
+        setfirstSlide(false)
       }
     }
   }
@@ -92,9 +102,12 @@ function viewPage () {
       <Image src={`/images/characters/${characterImg}.png`} alt='Main character of the story' />
       <Container>
         <Grid templateColumns='repeat(12, 1fr)' gap={4}>
-          <GridItem colStart={{ lg: 3, md: 0, base: 0 }} colSpan={{ lg: 8, md: 12, base: 12 }} mt={{ lg: 4, md: 4, base: 30 }}>
+          <GridItem colStart={{ lg: 3, md: 2, base: 0 }} colSpan={{ lg: 8, md: 10, base: 12 }} mt={{ lg: 4, md: 4, base: 30 }}>
             <Heading as='h1' className='heading-small' mb={3} mt={10}>{title}</Heading>
-
+          </GridItem>
+        </Grid>
+        <Grid templateColumns='repeat(12, 1fr)' gap={4}>
+          <GridItem colStart={{ lg: 3, md: 2, base: 0 }} colSpan={{ lg: 8, md: 10, base: 12 }} mt={{ lg: 4, md: 4, base: 0 }}>
             <Slider {...settings} ref={sliderRef} className='story'>
               {globalStory.storyPaged.slice(1).map((page, index) =>
                 <div key={index}>
@@ -105,7 +118,6 @@ function viewPage () {
             </Slider>
           </GridItem>
         </Grid>
-
       </Container>
 
       {/* Modal to display */}
