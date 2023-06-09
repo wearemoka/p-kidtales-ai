@@ -67,31 +67,35 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLab
   return (
     <>
       {(isMobile && !alignmentBottom)
-        ? <>
-          <Slide
-            direction='bottom' in={isOpen} style={{ zIndex: 10 }}
-          >
-            {/* <div className='backdrop' onClick={onClose} /> */}
-            <Box
-              py='50px'
-              px='30px'
-              color='white'
-              mt='4'
+        ? (
+          <>
+            <Slide
+              direction='bottom' in={isOpen} style={{ zIndex: 10 }}
             >
-              <Image src='icons/Close.svg' onClick={onClose} alt='close white icon' />
-              {modalContent}
-            </Box>
-          </Slide>
-          {isOpen && <Box className='backdrop' onClick={onClose} />}
+              {/* <div className='backdrop' onClick={onClose} /> */}
+              <Box
+                py='50px'
+                px='30px'
+                color='white'
+                mt='4'
+              >
+                <Image src='icons/Close.svg' onClick={onClose} alt='close white icon' />
+                {modalContent}
+              </Box>
+            </Slide>
+            {isOpen && <Box className='backdrop' onClick={onClose} />}
           </>
-        : <Modal
+          )
+        : (
+          <Modal
             isOpen={isOpen} onClose={onClose} motionPreset='slideInBottom' size='full'
           >
-          <ModalContent className={alignmentBottom ? 'modal-bottom' : ''}>
-            <ModalCloseButton />
-            {modalContent}
-          </ModalContent>
-        </Modal>}
+            <ModalContent className={alignmentBottom ? 'modal-bottom' : ''}>
+              <ModalCloseButton />
+              {modalContent}
+            </ModalContent>
+          </Modal>
+          )}
     </>
   )
 }
