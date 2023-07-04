@@ -65,27 +65,23 @@ function Stories ({ age }:Props) {
   const settings = {
     dots: false,
     speed: 500,
-    slidesToShow: 2.5,
-    slidesToScroll: 1,
     swipeToSlide: true,
     arrows: false,
-    initialSlide: 1,
-    infinite: false,
+    infinite: true,
+    slidesToScroll: 1,
     responsive: [
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 1.5,
-          slidesToScroll: 1,
-          initialSlide: 1
+          slidesToScroll: 1
         }
       },
       {
         breakpoint: 990,
         settings: {
           slidesToShow: 2.5,
-          slidesToScroll: 1,
-          initialSlide: 1
+          slidesToScroll: 1
         }
       }
     ]

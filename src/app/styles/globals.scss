@@ -59,22 +59,28 @@ body{
   color: var(--white) !important;
   opacity: 1 !important;
 }
-.slick-slider.story{
-  min-height: 45dvh; 
+.slick-slider.story{ 
+  min-height: 45dvh !important; //some devices don't read dvh so we need a backup
+  min-height: 45vh; 
   margin-bottom: 50px;
   .slick-list{
-    min-height: 45dvh;
+    min-height: 45dvh !important;
+    min-height: 45vh;
   }
   @media screen and (min-width: 600px) {
-    min-height: 50dvh;
+    min-height: 50dvh !important;
+    min-height: 50vh;
     .slick-list{
-      min-height: 50dvh;
+      min-height: 50dvh !important;
+      min-height: 50vh;
     }
   }
   @media screen and (min-width: 991px) {
-    min-height: 65dvh; 
+    min-height: 65dvh !important; 
+    min-height: 65vh;
     .slick-list{
-      min-height: 65dvh;
+      min-height: 65dvh !important;
+      min-height: 65vh;
     }
   }
 }
