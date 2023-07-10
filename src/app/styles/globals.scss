@@ -102,7 +102,21 @@ body{
   bottom: 0;
 }
 
-
+.button-prev, 
+.button-next{
+  width: 50px !important;
+  height: 50px !important;
+  padding: 0 !important;
+  opacity: .8;
+  span{
+    width: 50px;
+  }
+  &:hover{
+    background: none !important;
+    border: none !important;
+    opacity: 1;
+  }
+}
 .button-prev::before,
 .button-next::before{
   font-size: 0 !important;

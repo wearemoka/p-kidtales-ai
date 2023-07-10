@@ -44,8 +44,8 @@ function viewPage () {
   function SampleNextArrow () {
     return (
       <Button
-        rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
-        className={`big only-icon secondary button-next slick-next ${lastSlide ? styles.slideDisable : ''}`}
+        rightIcon={<Image src='/icons/Chevron-Right.svg' alt='Chevron right outline white icon' />}
+        className={`big only-icon button-next slick-next ${lastSlide ? styles.slideDisable : ''}`}
         onClick={() => {
           sliderRef.current?.slickNext()
         }}
@@ -56,8 +56,8 @@ function viewPage () {
   function SamplePrevArrow () {
     return (
       <Button
-        rightIcon={<Image src='/icons/Arrow-Left.svg' alt='Arrow left outline white icon' />}
-        className={`big only-icon secondary button-prev slick-prev ${firstSlide ? styles.slideDisable : ''}`}
+        rightIcon={<Image src='/icons/Chevron-Left.svg' alt='Chevron left outline white icon' />}
+        className={`big only-icon button-prev slick-prev ${firstSlide ? styles.slideDisable : ''}`}
         onClick={() => {
           sliderRef.current?.slickPrev()
         }}
