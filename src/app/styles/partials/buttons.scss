@@ -30,6 +30,9 @@
             width: 16px;
             height: 16px;
         }
+        &:hover{
+            background: none;
+        }
         &.only-icon{
             padding: 10px;
             width: 35px;
@@ -46,16 +49,31 @@
     &.primary{
         background: linear-gradient(180deg, #8826FF 0%, #A154FF 100%);
         border: 1px solid #BE89FF;
+        &:hover{
+            background: linear-gradient(180deg, #9640FF 0%, #B679FF 100%);
+        }
     }
     &.secondary{
         background: linear-gradient(182.48deg, rgba(255, 255, 255, 0.05) 2.09%, rgba(255, 255, 255, 0.1) 66.35%, rgba(255, 255, 255, 0.2) 97.55%);
         border: 1px solid var(--white70);
+        &:hover{
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.40) 100%);
+        }
+        &.only-icon{
+            &:hover{
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.40) 100%);
+            }
+        }
     }
     &.md_secondary{
         @media screen and (min-width: 767px) {
             background: linear-gradient(182.48deg, rgba(255, 255, 255, 0.05) 2.09%, rgba(255, 255, 255, 0.1) 66.35%, rgba(255, 255, 255, 0.2) 97.55%) !important;
             border: 1px solid var(--white70);
             padding: 8px 28px 8px 24px !important;
+            transition: all .3 ease-in-out;
+            &:hover{
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.40) 100%) !important;
+            }
         }
     }
     &.md_secondary_border{
@@ -71,6 +89,9 @@
         span{
             margin: 0;
         }
+        &:hover{
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.40) 100%) !important;
+        }
         @media screen and (min-width: 767px) {
             padding: 8px 28px 8px 24px !important;
             width: auto;
@@ -80,7 +101,8 @@
             }
         }
     }
-    label{
+    label,
+    span{
         cursor: pointer;
     }
     &.button-link{
