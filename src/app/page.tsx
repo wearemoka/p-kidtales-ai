@@ -48,7 +48,7 @@ const HomePage = () => {
           <Grid templateColumns='repeat(12, 1fr)' gap={4}>
             <GridItem colSpan={{ lg: 2, md: 1, sm: 1, base: 0 }} />
             <GridItem colSpan={{ lg: 8, md: 10, sm: 10, base: 12 }}>
-              <Heading as='h1' className='heading text-center' mb={10}>Unleash your imagination with AI-powered story creation</Heading>
+              <Heading as='h1' className='heading text-center' mb={10}>Enchanting AI-Powered Storytelling Adventures for Children</Heading>
               <Text className='body-big text-center' mb={3}>Create a story for </Text>
 
               <AgeSelector age={age} setAge={setAge} />
