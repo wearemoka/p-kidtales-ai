@@ -19,6 +19,8 @@ function viewPage () {
   const sliderRef = useRef<Slider>(null)
   let timeoutID: any = null
 
+  const AgeLarge = globalStory.story.prompt[0] === '7-10'
+
   const characterImg = globalStory?.story?.prompt[1]?.toLowerCase()
 
   useEffect(() => {
@@ -111,7 +113,7 @@ function viewPage () {
             <Slider {...settings} ref={sliderRef} className='story'>
               {globalStory.storyPaged.slice(1).map((page, index) =>
                 <div key={index}>
-                  <Text className='lead'>
+                  <Text className={AgeLarge ? 'lead' : 'big-lead'}>
                     {page}
                   </Text>
                 </div>)}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import styles from './TopBar.module.scss'
 import { usePathname, useRouter } from 'next/navigation'
-import { Button, Stack, Image, Container, useDisclosure } from '@chakra-ui/react'
+import { Button, Stack, Image, Container, useDisclosure, useToast } from '@chakra-ui/react'
 import BackButton from './BackButton'
 import { useGlobalContext } from '@/app/context/store'
 import { ROUTES } from '@/app/utils/routes'
@@ -82,6 +82,14 @@ const TopBar = () => {
     const storyToFlag = { ...globalStory.story, appropriate: false }
     await updateDocumentInFireStore(fireBaseStoryCollection, storyToFlag, globalStory.story.id)
     onClose()
+    toast({
+      position: 'top-right',
+      title: 'You successfully flagged the tale as inappropriate',
+      description: 'Thanks for become Kidtales a safest place, feel free to create a new tale.',
+      status: 'info',
+      duration: 9000,
+      isClosable: true
+    })
     router.push('/')
   }
 
@@ -94,6 +102,8 @@ const TopBar = () => {
     })
     onOpen()
   }
+
+  const toast = useToast()
 
   return (
     <div className={styles.topbar}>

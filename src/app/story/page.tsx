@@ -4,7 +4,7 @@ import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
 import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
-import { Box, Button, Center, Image, Input, VStack, Text } from '@chakra-ui/react'
+import { Box, Button, Center, Image, Input, VStack, Text, useToast, Alert, AlertTitle, AlertDescription, AlertDialogCloseButton, Heading } from '@chakra-ui/react'
 import { getAiStory, moderateStringWithAI } from '@/app/services/ChatGPTService'
 import { useEffect, useRef, useState } from 'react'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
@@ -109,6 +109,8 @@ const StoryPage = () => {
     }
   }
 
+  const toast = useToast()
+
   return (
     <VStack className={`${styles.storyPage} ${isLoadingStory ? styles.storyPageLoading : ''}`}>
       {/* Display the User prompt */}
@@ -193,19 +195,13 @@ const StoryPage = () => {
 
       {/* Error on response */}
       {!isLoadingStory && error &&
-        <VStack>
-          <Text>
-            There has been an error with the AI, we could not generate your story.
-          </Text>
-          <Button
-            rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
-            className='big primary'
-            onClick={writeStoryHandler}
-            variant='outline'
-          >
-            Try again
-          </Button>
-        </VStack>}
+        toast({
+          position: 'top-right',
+          title: 'The ChatGPT server is experiencing some issues.',
+          description: 'We can not continue due to an external problem. Try again',
+          status: 'info',
+          duration: 9000
+        })}
 
       {isLoadingStory && (
         <div className={styles.loading}>
