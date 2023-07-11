@@ -1,29 +1,36 @@
 .initialPage{
     position: relative;
-    max-height: calc(100dvh - 82px);
+    max-height: calc(100dvh - 82px) !important; //some devices don't read dvh so we need a backup
+    max-height: calc(100vh - 152px); // +70px because browsers bars -just mobile-
     @media screen and (min-width: 768px) {
-        max-height: calc(100dvh - 108px);
+        max-height: calc(100dvh - 108px) !important; //some devices don't read dvh so we need a backup
+        max-height: calc(100vh - 108px);
     }
     &>img{
         position: absolute;
         z-index: -1;
-        top: -20vh;
+        top: -15vh;
         left: 0;
         @media screen and (min-width: 768px) {
-            top: -12vh;
+            top: -14vh;
             left: -10vw;
         }
     }
     .contentWrapper{
-        min-height: calc(100dvh - 82px);
+        min-height: calc(100dvh - 82px) !important; //some devices don't read dvh so we need a backup
+        min-height: calc(100vh - 152px); // +70px because browsers bars -just mobile-
         display: flex;
         justify-content: center;
         align-items: flex-end;
+        padding-bottom: 15px;
         @media screen and (min-width: 601px) {
             align-items: center;
+            padding-bottom: 0;
         }
         @media screen and (min-width: 768px) {
-            min-height: calc(100dvh - 108px);
+            min-height: calc(100dvh - 108px) !important; //some devices don't read dvh so we need a backup
+            min-height: calc(100vh - 108px);
+            padding-bottom: 0;
         }
     }
     .buttonBottom{
