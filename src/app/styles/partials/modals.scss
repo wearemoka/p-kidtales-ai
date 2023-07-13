@@ -17,11 +17,15 @@
                 height: 42px;
             }
             .chakra-container{
-                height: 100dvh;
+                height: 100dvh !important; //some devices don't read dvh so we need a backup
+                height: calc(100vh - 20px); // -20px because browsers bars -just mobile-
                 display: flex;
                 align-items: center;
             }
         }
+    }
+    .modal-footer{
+        margin-top: 20px;
     }
     .modal-bottom.chakra-modal__content{
         background: rgba(12, 4, 22, 0.7);
@@ -33,7 +37,8 @@
             display: flex;
             align-items: end;
             justify-content: center;
-            height: 100dvh;
+            height: 100dvh !important; //some devices don't read dvh so we need a backup
+            height: calc(100vh - 20px); // -20px because browsers bars -just mobile-
         }
         .back-bottom-button{
             display: block;
@@ -43,6 +48,7 @@
         }
         .modal-footer{
             justify-content: center;
+            margin-top: 0;
         }
     }
 }
@@ -61,11 +67,19 @@
             top: 40px;
         }
     }
+    .modal-footer{
+        margin-top: 20px;
+        button span img{
+            position: static;
+        }
+    }
 }
 
 .backdrop{
-    width: 100dvw;
-    height: 100dvh;
+    width: 100dvw !important; //some devices don't read dvw so we need a backup
+    width: 100vw;
+    height: 100dvh !important; //some devices don't read dvh so we need a backup
+    height: 100vh;
     position: absolute;
     border: 0 !important;
     box-shadow: none !important;

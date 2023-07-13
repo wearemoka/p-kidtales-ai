@@ -15,7 +15,7 @@ function GallerySelect ({ title, options, saveOn, columns, afterClickHandler, ty
   const noImg = type === 'noImg' ? 5 : 8
 
   return (
-    <VStack>
+    <VStack mb={10}>
       <Heading as='h3' className='caption bold' mb={3}>{title}</Heading>
 
       <SimpleGrid columns={columns} spacing={[4, noImg]}>
