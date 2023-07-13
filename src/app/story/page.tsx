@@ -194,14 +194,28 @@ const StoryPage = () => {
       )}
 
       {/* Error on response */}
-      {!isLoadingStory && error &&
+      {/* {!isLoadingStory && error &&
         toast({
           position: 'top-right',
           title: 'The ChatGPT server is experiencing some issues.',
           description: 'We can not continue due to an external problem. Try again',
           status: 'info',
           duration: 9000
-        })}
+        })} */}
+      {!isLoadingStory && error &&
+        <VStack>
+          <Text className='lead'>
+            There has been an error with the AI, we could not generate your story.
+          </Text>
+          <Button
+            rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
+            className='big primary'
+            onClick={writeStoryHandler}
+            variant='outline'
+          >
+            Try again
+          </Button>
+        </VStack>}
 
       {isLoadingStory && (
         <div className={styles.loading}>
