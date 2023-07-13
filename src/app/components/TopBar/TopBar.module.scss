@@ -18,7 +18,7 @@
         }
         .gridStart{
             display: flex;
-            justify-content: left;
+            justify-content: flex-start;
             .brand {
                 display: flex;
                 margin-left: 10px;
@@ -33,7 +33,7 @@
         }
         .gridEnd{
             display: flex;
-            justify-content: right;
+            justify-content: flex-end;
         }
         .actions button {
             background: transparent;
