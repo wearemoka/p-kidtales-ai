@@ -2,10 +2,14 @@
     border-radius: 100px;
     height: auto;
     &.big{
-        padding: 19px 32px;
+        padding: 14px 32px;
         font-size: 16px;
         line-height: 20px;
         font-weight: 600;
+        @media screen and (min-width: 767px) {
+            font-size: 18px;
+            padding: 19px 46px;
+        }
         &.only-icon{
             padding: 10px;
             width: 40px;
@@ -17,15 +21,16 @@
                 display: none !important;
             }
         }
-        @media screen and (min-width: 767px) {
-            font-size: 18px;
-        }
     }
     &.small{
-        padding: 8px 28px;
+        padding: 7px 28px;
         font-size: 14px;
-        line-height: 16px;
+        line-height: 20px;
         font-weight: 600;
+        @media screen and (min-width: 767px) {
+            font-size: 16px;
+            padding: 9px 34px;
+        }
         img{
             width: 16px;
             height: 16px;
@@ -40,10 +45,6 @@
             span{
                 margin-left: 0;
             }
-        }
-        @media screen and (min-width: 767px) {
-            font-size: 16px;
-            padding: 11px 28px;
         }
     }
     &.primary{
@@ -98,6 +99,14 @@
             height: auto;
             label{
                 display: inline-block;
+            }
+        }
+        &.big{
+            min-width: 50px;
+            height: 50px;
+            @media screen and (min-width: 767px) {
+                min-width: 60px;
+                height: 60px;
             }
         }
     }
