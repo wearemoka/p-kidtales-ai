@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import styles from './TopBar.module.scss'
 import { usePathname, useRouter } from 'next/navigation'
-import { Button, Stack, Image, Container, useDisclosure, useToast } from '@chakra-ui/react'
+import { Button, Stack, Image, Container, useDisclosure, useToast, Box, SimpleGrid } from '@chakra-ui/react'
 import BackButton from './BackButton'
 import { useGlobalContext } from '@/app/context/store'
 import { ROUTES } from '@/app/utils/routes'
@@ -108,49 +108,57 @@ const TopBar = () => {
   return (
     <div className={styles.topbar}>
       <Container>
-        <div className={styles.topbarWrapper}>
-          {showBackButton &&
-            <BackButton historyPath={historyPath} />}
-          <div className={`${styles.brand} ${areOnHome || areOnStoryGenerate ? styles.home : ''}`}>
-            <Image src='/images/KidTalesLogo.svg' alt='KidTales logo in white color' />
-          </div>
+        <SimpleGrid columns={[2, 3]} spacing='20px' className={styles.topbarWrapper}>
+          <Box className={styles.gridStart}>
+            {showBackButton &&
+              <BackButton historyPath={historyPath} />}
+            <div className={styles.brand}>
+              <Image src='/images/KidTalesLogo.svg' alt='KidTales logo in white color' />
+            </div>
+          </Box>
+          <Box className={styles.gridCenter}>
+            <div className={styles.brand}>
+              <Image src='/images/KidTalesLogo.svg' alt='KidTales logo in white color' />
+            </div>
+          </Box>
+          <Box className={styles.gridEnd}>
+            <Stack direction='row' spacing={{ base: 1, md: 4 }} className={styles.actions}>
+              {!areOnStoryView && !areOnLibrary &&
+                <Button
+                  aria-label='Go to Library'
+                  rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
+                  className='md_secondary'
+                  onClick={() => {
+                    router.push(ROUTES.LIBRARY)
+                  }}
+                >
+                  <label>Library</label>
+                </Button>}
 
-          <Stack direction='row' spacing={{ base: 1, md: 4 }} className={styles.actions}>
-            {!areOnStoryView && !areOnLibrary &&
-              <Button
-                aria-label='Go to Library'
-                rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
-                className='md_secondary'
-                onClick={() => {
-                  router.push(ROUTES.LIBRARY)
-                }}
-              >
-                <label>Library</label>
-              </Button>}
-
-            {/* <Button
+              {/* <Button
               aria-label='Music on/off'
               rightIcon={<Image src='/icons/Music.svg' alt='Books outline white icon' />}
               display={{ base: 'block', md: 'none' }}
               onClick={musicOnOffButtonClick}
             /> */}
 
-            {!areOnStoryView &&
-              <Button
-                aria-label='About us'
-                rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
-                onClick={openModalAbout}
-              />}
+              {!areOnStoryView &&
+                <Button
+                  aria-label='About us'
+                  rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
+                  onClick={openModalAbout}
+                />}
 
-            {areOnStoryView && !areOnLibrary &&
-              <Button
-                className='big secondary only-icon'
-                aria-label='Flag tale as inappropriate'
-                rightIcon={<Image src='/icons/Flag.svg' alt='Flag outline white icon' />}
-                onClick={openModalFlag}
-              />}
-          </Stack>
-        </div>
+              {areOnStoryView && !areOnLibrary &&
+                <Button
+                  className='big secondary only-icon'
+                  aria-label='Flag tale as inappropriate'
+                  rightIcon={<Image src='/icons/Flag.svg' alt='Flag outline white icon' />}
+                  onClick={openModalFlag}
+                />}
+            </Stack>
+          </Box>
+        </SimpleGrid>
       </Container>
 
       {/* Modal to display */}

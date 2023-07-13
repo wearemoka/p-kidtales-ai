@@ -11,14 +11,20 @@
             padding: 19px 46px;
         }
         &.only-icon{
-            padding: 10px;
-            width: 40px;
-            height: 40px;
+            padding: 0;
+            height: 35px;
+            max-width: 35px;
+            min-width: 35px;
             span{
                 margin-left: 0;
             }
             &::before{
                 display: none !important;
+            }
+            @media screen and (min-width: 767px) {
+                max-width: 40px;
+                min-width: 40px;
+                height: 40px;
             }
         }
     }
