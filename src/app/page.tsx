@@ -56,28 +56,29 @@ const HomePage = () => {
                 ? ageMessage
                 : ''}
 
-              {age &&
-                <div className={styles.buttonBottom}>
-                  <Stack direction={{ xl: 'row', md: 'column', base: 'column' }} justify='center' spacing={{ md: '20px', base: '10px' }}>
-                    <Button
-                      aria-label='Create custom tale'
-                      rightIcon={<Image src='icons/Stars.svg' alt='' />}
-                      className='big primary'
-                      onClick={startCreateStoryButtonHandler}
-                    >
-                      <label>Start creating my story</label>
-                    </Button>
-
-                    <Button
-                      aria-label='Create random tale'
-                      rightIcon={<Image src='icons/Dice.svg' alt='' />}
-                      className='big secondary'
-                      onClick={randomizesStoryButtonHandler}
-                    >
-                      <label>Let KidsTales create it for me</label>
-                    </Button>
-                  </Stack>
-                </div>}
+              <Box className={styles.buttonsWrapper}>
+                {age &&
+                  <div className={styles.buttonBottom}>
+                    <Stack direction={{ xl: 'row', md: 'column', base: 'column' }} justify='center' spacing={{ md: '20px', base: '10px' }}>
+                      <Button
+                        aria-label='Create custom tale'
+                        rightIcon={<Image src='icons/Stars.svg' alt='' />}
+                        className='big primary'
+                        onClick={startCreateStoryButtonHandler}
+                      >
+                        <label>Start creating my story</label>
+                      </Button>
+                      <Button
+                        aria-label='Create random tale'
+                        rightIcon={<Image src='icons/Dice.svg' alt='' />}
+                        className='big secondary'
+                        onClick={randomizesStoryButtonHandler}
+                      >
+                        <label>Let KidsTales create it for me</label>
+                      </Button>
+                    </Stack>
+                  </div>}
+              </Box>
             </GridItem>
             <GridItem colSpan={{ lg: 2, md: 0, sm: 0, base: 0 }} />
           </Grid>
