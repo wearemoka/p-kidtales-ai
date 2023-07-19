@@ -1,13 +1,13 @@
-'use client'
-import { FirebaseAppProvider } from 'reactfire'
-import { config } from './firebase/Config/Config'
-import StoreProvider from './firebase/StoreProvider/StoreProvider'
-import { GlobalContextProvider } from './context/store'
-import { ThemeProvider } from './ThemeProvider'
+// 'use client'
+// import { FirebaseAppProvider } from 'reactfire'
+// import { config } from './firebase/Config/Config'
+// import StoreProvider from './firebase/StoreProvider/StoreProvider'
+// import { GlobalContextProvider } from './context/store'
+// import { ThemeProvider } from './ThemeProvider'
 import TopBar from './components/TopBar/TopBar'
+import ThemeProvider from './providers/ThemeProvider'
 import RegisterPWA from './RegisterPWA'
 import './styles/globals.scss'
-// import BGMusicPlayer from './components/BGMusic/BGMusicPlayer'
 
 /**
  * For future use
@@ -19,12 +19,12 @@ import './styles/globals.scss'
 //   description: 'KidTales AI Generator'
 // }
 
-export default function RootLayout ({
-  children
-}: {
+interface Props {
   // eslint-disable-next-line no-undef
   children: React.ReactNode
-}) {
+}
+
+export default function RootLayout ({ children }: Props) {
   return (
     <html lang='en'>
 
@@ -35,17 +35,13 @@ export default function RootLayout ({
         <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' />
       </head>
 
-      <body>
+      {/* <body>
         <RegisterPWA />
 
         <GlobalContextProvider>
           <ThemeProvider>
 
             <TopBar />
-            {/* <div className='positionTopRight'>
-              <BGMusicPlayer />
-            </div> */}
-
             <FirebaseAppProvider firebaseConfig={config}>
               <StoreProvider>
                 <div className='main'>
@@ -56,6 +52,15 @@ export default function RootLayout ({
 
           </ThemeProvider>
         </GlobalContextProvider>
+      </body> */}
+      <body>
+        <RegisterPWA />
+        <ThemeProvider>
+          <TopBar />
+          <div className='main'>
+            {children}
+          </div>
+        </ThemeProvider>
       </body>
     </html>
   )
