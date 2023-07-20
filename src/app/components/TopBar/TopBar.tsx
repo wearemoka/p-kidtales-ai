@@ -18,10 +18,7 @@ const TopBar = () => {
   const [showBackButton, setShowBackButton] = useState(false)
   const [areOnStoryView, setAreOnStoryView] = useState(false)
   const [areOnLibrary, setAreOnLibrary] = useState(false)
-  // const [areOnHome, setAreOnHome] = useState(false)
-  // const [areOnStoryGenerate, setAreOnStoryGenerate] = useState(false)
 
-  // const { BGMusic, setBGMusic } = useGlobalContext()
   const { isOpen, onOpen, onClose } = useDisclosure()
   const { globalStory } = useGlobalContext()
 
@@ -43,17 +40,8 @@ const TopBar = () => {
     setShowBackButton(pathname !== ROUTES.HOME)
     setAreOnStoryView(pathname.startsWith(ROUTES.STORY_VIEW))
     setAreOnLibrary(pathname.startsWith(ROUTES.LIBRARY))
-    // setAreOnHome(pathname === ROUTES.HOME)
-    // setAreOnStoryGenerate(pathname === ROUTES.STORY_GENERATE)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
-
-  /**
-   * Changes the global status of background music
-   */
-  // const musicOnOffButtonClick = () => {
-  //   setBGMusic(!BGMusic)
-  // }
 
   const openModalAbout = () => {
     setModalData({
@@ -135,13 +123,6 @@ const TopBar = () => {
                 >
                   <label>Library</label>
                 </Button>}
-
-              {/* <Button
-              aria-label='Music on/off'
-              rightIcon={<Image src='/icons/Music.svg' alt='Books outline white icon' />}
-              display={{ base: 'block', md: 'none' }}
-              onClick={musicOnOffButtonClick}
-            /> */}
 
               {!areOnStoryView &&
                 <Button

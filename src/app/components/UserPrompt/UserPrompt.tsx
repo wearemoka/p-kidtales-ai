@@ -60,7 +60,7 @@ function UserPrompt ({ promptOptions, steps }: Props) {
 
         {editAge &&
           <>
-            <AgeSelector age={age} setAge={setAge} />
+            <AgeSelector age={age} setAge={setAge} openOptions={setEditAge} />
             <Text className='body_big' textAlign='center' mt={2}>
               Age is required to generate an appropriate story
             </Text>
