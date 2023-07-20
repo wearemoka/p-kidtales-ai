@@ -10,16 +10,19 @@
         button{
             top: 10px;
             right: 10px;
+            color: var(--white);
         }
         .chakra-alert__title{
             font-size: 18px;
             font-weight: 600;
             line-height: 140%;
+            color: var(--white);
         }
         .chakra-alert__desc{
             font-size: 16px;
             font-weight: 400;
             line-height: 140%;
+            color: var(--white70);
         }
         &[data-status='info']{
             background: #0C0416; 
