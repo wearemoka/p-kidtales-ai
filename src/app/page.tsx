@@ -17,6 +17,7 @@ const HomePage = () => {
 
   useEffect(() => {
     setGlobalPrompt(emptyPrompt)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const startCreateStoryButtonHandler = () => {
