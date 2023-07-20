@@ -2,33 +2,47 @@
     border-radius: 100px;
     height: auto;
     &.big{
-        padding: 19px 32px;
+        padding: 14px 32px;
         font-size: 16px;
         line-height: 20px;
         font-weight: 600;
+        @media screen and (min-width: 767px) {
+            font-size: 18px;
+            padding: 19px 46px;
+        }
         &.only-icon{
-            padding: 10px;
-            width: 40px;
-            height: 40px;
+            padding: 0;
+            height: 35px;
+            max-width: 35px;
+            min-width: 35px;
             span{
                 margin-left: 0;
             }
             &::before{
                 display: none !important;
             }
-        }
-        @media screen and (min-width: 767px) {
-            font-size: 18px;
+            @media screen and (min-width: 767px) {
+                max-width: 40px;
+                min-width: 40px;
+                height: 40px;
+            }
         }
     }
     &.small{
-        padding: 8px 28px;
+        padding: 7px 28px;
         font-size: 14px;
-        line-height: 16px;
+        line-height: 20px;
         font-weight: 600;
+        @media screen and (min-width: 767px) {
+            font-size: 16px;
+            padding: 9px 34px;
+        }
         img{
             width: 16px;
             height: 16px;
+        }
+        &:hover{
+            background: none;
         }
         &.only-icon{
             padding: 10px;
@@ -38,24 +52,35 @@
                 margin-left: 0;
             }
         }
-        @media screen and (min-width: 767px) {
-            font-size: 16px;
-            padding: 11px 28px;
-        }
     }
     &.primary{
         background: linear-gradient(180deg, #8826FF 0%, #A154FF 100%);
         border: 1px solid #BE89FF;
+        &:hover{
+            background: linear-gradient(180deg, #9640FF 0%, #B679FF 100%);
+        }
     }
     &.secondary{
         background: linear-gradient(182.48deg, rgba(255, 255, 255, 0.05) 2.09%, rgba(255, 255, 255, 0.1) 66.35%, rgba(255, 255, 255, 0.2) 97.55%);
         border: 1px solid var(--white70);
+        &:hover{
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.40) 100%);
+        }
+        &.only-icon{
+            &:hover{
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.40) 100%);
+            }
+        }
     }
     &.md_secondary{
         @media screen and (min-width: 767px) {
             background: linear-gradient(182.48deg, rgba(255, 255, 255, 0.05) 2.09%, rgba(255, 255, 255, 0.1) 66.35%, rgba(255, 255, 255, 0.2) 97.55%) !important;
             border: 1px solid var(--white70);
             padding: 8px 28px 8px 24px !important;
+            transition: all .3 ease-in-out;
+            &:hover{
+                background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.40) 100%) !important;
+            }
         }
     }
     &.md_secondary_border{
@@ -68,8 +93,8 @@
         label{
             display: none;
         }
-        span{
-            margin: 0;
+        &:hover{
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.40) 100%) !important;
         }
         @media screen and (min-width: 767px) {
             padding: 8px 28px 8px 24px !important;
@@ -79,8 +104,17 @@
                 display: inline-block;
             }
         }
+        &.big{
+            min-width: 50px;
+            height: 50px;
+            @media screen and (min-width: 767px) {
+                min-width: 60px;
+                height: 60px;
+            }
+        }
     }
-    label{
+    label,
+    span{
         cursor: pointer;
     }
     &.button-link{

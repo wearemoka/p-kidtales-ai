@@ -69,7 +69,7 @@
 	opacity: 0.4;
 	cursor: default !important;
 	&:hover{
-		background: linear-gradient(182.48deg, rgba(255, 255, 255, 0.05) 2.09%, rgba(255, 255, 255, 0.1) 66.35%, rgba(255, 255, 255, 0.2) 97.55%) !important;
-		border: 1px solid var(--white70) !important;
+		background: none;
+		border: none;
 	}
 }

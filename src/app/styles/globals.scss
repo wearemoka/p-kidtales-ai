@@ -4,6 +4,7 @@
 @import './partials/buttons.scss';
 @import './partials/form.scss';
 @import './partials/modals.scss';
+@import './partials/alerts.scss';
 
 :root{
   font-family: 'Plus Jakarta Sans' !important;
@@ -94,7 +95,7 @@ body{
   display: none !important;
   transition: opacity .3s ease-in-out;
   @media screen and (min-width: 991px) {
-    top: 16% !important;
+    top: 14% !important;
     display: block !important;
   }
 }
@@ -108,9 +109,24 @@ body{
   bottom: 0;
 }
 
-
+.button-prev, 
+.button-next{
+  width: 50px !important;
+  height: 50px !important;
+  padding: 0 !important;
+  opacity: .8;
+  span{
+    width: 50px;
+  }
+  &:hover{
+    background: none !important;
+    border: none !important;
+    opacity: 1;
+  }
+}
 .button-prev::before,
 .button-next::before{
   font-size: 0 !important;
   display: none !important;
 }
+
