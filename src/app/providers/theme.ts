@@ -25,17 +25,17 @@ const styles = {
         color: 'white'
       },
       ':root': {
-        'font-family': 'Plus Jakarta Sans !important',
+        fontFamily: 'Plus Jakarta Sans !important',
         '--chakra-fonts-heading': 'Plus Jakarta Sans',
         '--chakra-fonts-body': 'Plus Jakarta Sans'
       },
       '.chakra-container': {
-        'max-width': '100%',
+        maxWidth: '100%',
         '@media screen and (min-width: 767px)': {
-          'max-width': '90vw'
+          maxWidth: '90vw'
         },
         '@media screen and (min-width: 991px)': {
-          'max-width': '80vw'
+          maxWidth: '80vw'
         }
       }
     })

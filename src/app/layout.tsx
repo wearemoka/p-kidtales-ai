@@ -1,8 +1,3 @@
-// 'use client'
-// import { FirebaseAppProvider } from 'reactfire'
-// import { config } from './firebase/Config/Config'
-// import StoreProvider from './firebase/StoreProvider/StoreProvider'
-// import { ThemeProvider } from './ThemeProvider'
 import TopBar from './components/TopBar/TopBar'
 import ThemeProvider from './providers/ThemeProvider'
 import { GlobalContextProvider } from './context/store'
@@ -14,10 +9,12 @@ import './styles/globals.scss'
  * @param param0
  *
  */
-// export const metadata = {
-//   title: 'KidTales.ai',
-//   description: 'KidTales AI Generator'
-// }
+export const metadata = {
+  title: 'KidTales.ai',
+  description: 'KidTales AI Generator',
+  viewport: 'width=device-width, initial-scale=1',
+  manifest: '/manifest.json'
+}
 
 interface Props {
   // eslint-disable-next-line no-undef
@@ -29,30 +26,12 @@ export default function RootLayout ({ children }: Props) {
     <html lang='en'>
 
       <head>
-        <meta name='viewport' content='width=device-width,initial-scale=1' />
-        <link rel='manifest' href='/manifest.json' />
+        {/* <meta name='viewport' content='width=device-width,initial-scale=1' />
+        <link rel='manifest' href='/manifest.json' /> */}
         <link rel='stylesheet' type='text/css' charSet='UTF-8' href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick.min.css' />
         <link rel='stylesheet' type='text/css' href='https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.6.0/slick-theme.min.css' />
       </head>
 
-      {/* <body>
-        <RegisterPWA />
-
-        <GlobalContextProvider>
-          <ThemeProvider>
-
-            <TopBar />
-            <FirebaseAppProvider firebaseConfig={config}>
-              <StoreProvider>
-                <div className='main'>
-                  {children}
-                </div>
-              </StoreProvider>
-            </FirebaseAppProvider>
-
-          </ThemeProvider>
-        </GlobalContextProvider>
-      </body> */}
       <body>
         <RegisterPWA />
         <GlobalContextProvider>
