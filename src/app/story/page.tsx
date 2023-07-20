@@ -4,7 +4,7 @@ import NameSelect from '@/app/components/NameSelect/NameSelect'
 import { useGlobalContext } from '@/app/context/store'
 import UserPrompt from '@/app/components/UserPrompt/UserPrompt'
 import { characterOpts, lessonOpts, PROMPT_STEPS, scenarioOpts } from '@/app/utils/constants'
-import { Box, Button, Center, Image, Input, VStack, Text, useToast, Alert, AlertTitle, AlertDescription, AlertDialogCloseButton, Heading } from '@chakra-ui/react'
+import { Box, Button, Center, Image, Input, VStack, Text } from '@chakra-ui/react'
 import { getAiStory, moderateStringWithAI } from '@/app/services/ChatGPTService'
 import { useEffect, useRef, useState } from 'react'
 import { useMessageTime } from '@/app/hooks/useMessageTime'
@@ -108,8 +108,6 @@ const StoryPage = () => {
       }
     }
   }
-
-  const toast = useToast()
 
   return (
     <VStack className={`${styles.storyPage} ${isLoadingStory ? styles.storyPageLoading : ''}`}>

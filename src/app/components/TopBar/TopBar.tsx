@@ -18,8 +18,8 @@ const TopBar = () => {
   const [showBackButton, setShowBackButton] = useState(false)
   const [areOnStoryView, setAreOnStoryView] = useState(false)
   const [areOnLibrary, setAreOnLibrary] = useState(false)
-  const [areOnHome, setAreOnHome] = useState(false)
-  const [areOnStoryGenerate, setAreOnStoryGenerate] = useState(false)
+  // const [areOnHome, setAreOnHome] = useState(false)
+  // const [areOnStoryGenerate, setAreOnStoryGenerate] = useState(false)
 
   // const { BGMusic, setBGMusic } = useGlobalContext()
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -43,8 +43,8 @@ const TopBar = () => {
     setShowBackButton(pathname !== ROUTES.HOME)
     setAreOnStoryView(pathname.startsWith(ROUTES.STORY_VIEW))
     setAreOnLibrary(pathname.startsWith(ROUTES.LIBRARY))
-    setAreOnHome(pathname === ROUTES.HOME)
-    setAreOnStoryGenerate(pathname === ROUTES.STORY_GENERATE)
+    // setAreOnHome(pathname === ROUTES.HOME)
+    // setAreOnStoryGenerate(pathname === ROUTES.STORY_GENERATE)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 

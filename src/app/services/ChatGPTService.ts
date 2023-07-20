@@ -50,54 +50,6 @@ export async function getAiStory (ageRange: string, character: string, character
 }
 
 /**
- * Requests a story to the AI using some parameter and
- * adds constraints to the story.
- * @param ageRange the age range, e.g. 5-7
- * @param character a character, e.g. dog
- * @param characterName the name of character
- * @param place where the story take place, e.g. farm
- * @param lesson a lesson for the story, e.g. friendship
- * @param callback a function to set the streamed response
- * @param streamed use a stream on response
- */
-export async function getAiStoryWithStreamBE (ageRange: string, character: string, characterName: string = '', place: string, lesson: string = '', callback: (result: string) => void, streamed:boolean = true) {
-  const response = await fetch('/api/story/stream', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      ageRange,
-      character,
-      characterName,
-      place,
-      lesson,
-      streamed
-    })
-  })
-
-  let streamedResponse = ''
-
-  const data = response.body
-
-  if (!data) {
-    return
-  }
-
-  const reader = data.getReader()
-  const decoder = new TextDecoder()
-  let done = false
-
-  while (!done) {
-    const { value, done: doneReading } = await reader.read()
-    done = doneReading
-    const chunkValue = decoder.decode(value)
-    streamedResponse += chunkValue
-    callback(streamedResponse)
-  }
-}
-
-/**
  * This function requests a IA to moderate a string
  * @param value string to moderate
  */

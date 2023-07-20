@@ -9,9 +9,6 @@ const withPWA = require('@ducanh2912/next-pwa').default({
 })
 
 const nextConfig = {
-  experimental: {
-    appDir: true
-  },
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')]
   }

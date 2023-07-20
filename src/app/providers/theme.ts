@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { extendTheme, type ThemeConfig } from '@chakra-ui/react'
+import { css, extendTheme, type ThemeConfig } from '@chakra-ui/react'
 import type { StyleFunctionProps } from '@chakra-ui/styled-system'
 
 // configurations of styles
@@ -21,8 +21,9 @@ const styles = {
       body: {
         fontFamily: 'Plus Jakarta Sans',
         bg: 'radial-gradient(50% 50% at 50% 50%, rgba(151, 69, 251, 0.2) 0%, rgba(151, 69, 251, 0) 100%), #0C0416;'
-      },
-      sx: '../styles/globals.scss'
+      }
+      // '@import': '../styles/globals.scss'
+      // sx: '../styles/globals.scss'
     })
   }
 }
