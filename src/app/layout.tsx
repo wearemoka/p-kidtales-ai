@@ -2,10 +2,10 @@
 // import { FirebaseAppProvider } from 'reactfire'
 // import { config } from './firebase/Config/Config'
 // import StoreProvider from './firebase/StoreProvider/StoreProvider'
-// import { GlobalContextProvider } from './context/store'
 // import { ThemeProvider } from './ThemeProvider'
 import TopBar from './components/TopBar/TopBar'
 import ThemeProvider from './providers/ThemeProvider'
+import { GlobalContextProvider } from './context/store'
 import RegisterPWA from './RegisterPWA'
 import './styles/globals.scss'
 
@@ -55,12 +55,14 @@ export default function RootLayout ({ children }: Props) {
       </body> */}
       <body>
         <RegisterPWA />
-        <ThemeProvider>
-          <TopBar />
-          <div className='main'>
-            {children}
-          </div>
-        </ThemeProvider>
+        <GlobalContextProvider>
+          <ThemeProvider>
+            <TopBar />
+            <div className='main'>
+              {children}
+            </div>
+          </ThemeProvider>
+        </GlobalContextProvider>
       </body>
     </html>
   )
