@@ -68,8 +68,13 @@ function NameSelect ({ title, saveOn }: Props) {
         ref={inputNameRef}
         onChange={nameChangeHandle}
         onKeyDown={handleKeyPress}
+        isInvalid={flaggedName}
       />
 
+      {flaggedName &&
+        <Box>
+          This name can be considered insulting; please try a different one.
+        </Box>}
       {validName &&
         <Button
           rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
@@ -77,10 +82,6 @@ function NameSelect ({ title, saveOn }: Props) {
           onClick={saveNameHandler}
         />}
 
-      {flaggedName &&
-        <Box>
-          This name cannot be used. Use another name for the character
-        </Box>}
     </VStack>
   )
 }

@@ -34,15 +34,15 @@
         }
     }
     .buttonBottom{
-        margin-top: 40px;
-        @media screen and (min-width: 768px) {
-            position: static;
-            width: auto;
-            padding: 0;
-            margin-top: 40px;
-        }
         position: static;
         width: auto;
         padding: 0;
+    }
+    .buttonsWrapper{
+        margin-top: 40px;
+        min-height: calc(110px - 54.59px);
+        @media screen and (min-width: 768px) {
+            min-height: 60px;
+        }
     }
 }

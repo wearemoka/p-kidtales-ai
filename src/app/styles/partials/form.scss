@@ -8,6 +8,9 @@
     border: 1px solid var(--white70);
     transition: all .3s ease-in-out;
     white-space: nowrap;
+    &:hover{
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.40) 100%);
+    }
     @media screen and (min-width: 601px) {
       padding: 12px 43px;
     }

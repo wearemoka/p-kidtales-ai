@@ -106,8 +106,8 @@ function Stories ({ age }:Props) {
                   borderRadius='lg'
                   className={styles.libraryItem}
                 >
-                  <Image src='images/Loading.png' alt='' />
-                  <Text className='body'>{item.title}</Text>
+                  <Image src='images/librarybg.png' alt='' />
+                  <Text className='lead'>{item.title}</Text>
                 </Box>
               )
             })}
@@ -138,7 +138,7 @@ function Stories ({ age }:Props) {
                 borderRadius='lg'
                 className={styles.libraryItem}
               >
-                <Image src='images/Loading.png' alt='' />
+                <Image src='images/librarybg.png' alt='' />
                 <Text className='body'>{item.title}</Text>
               </Box>)}
           </Slider>

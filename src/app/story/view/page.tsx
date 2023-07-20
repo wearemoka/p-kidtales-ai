@@ -19,6 +19,8 @@ function viewPage () {
   const sliderRef = useRef<Slider>(null)
   let timeoutID: any = null
 
+  const AgeLarge = globalStory.story.prompt[0] === '7-10'
+
   const characterImg = globalStory?.story?.prompt[1]?.toLowerCase()
 
   useEffect(() => {
@@ -44,8 +46,8 @@ function viewPage () {
   function SampleNextArrow () {
     return (
       <Button
-        rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
-        className={`big only-icon secondary button-next slick-next ${lastSlide ? styles.slideDisable : ''}`}
+        rightIcon={<Image src='/icons/Chevron-Right.svg' alt='Chevron right outline white icon' />}
+        className={`big only-icon button-next slick-next ${lastSlide ? styles.slideDisable : ''}`}
         onClick={() => {
           sliderRef.current?.slickNext()
         }}
@@ -56,8 +58,8 @@ function viewPage () {
   function SamplePrevArrow () {
     return (
       <Button
-        rightIcon={<Image src='/icons/Arrow-Left.svg' alt='Arrow left outline white icon' />}
-        className={`big only-icon secondary button-prev slick-prev ${firstSlide ? styles.slideDisable : ''}`}
+        rightIcon={<Image src='/icons/Chevron-Left.svg' alt='Chevron left outline white icon' />}
+        className={`big only-icon button-prev slick-prev ${firstSlide ? styles.slideDisable : ''}`}
         onClick={() => {
           sliderRef.current?.slickPrev()
         }}
@@ -111,7 +113,7 @@ function viewPage () {
             <Slider {...settings} ref={sliderRef} className='story'>
               {globalStory.storyPaged.slice(1).map((page, index) =>
                 <div key={index}>
-                  <Text className='lead'>
+                  <Text className={AgeLarge ? 'lead' : 'big-lead'}>
                     {page}
                   </Text>
                 </div>)}

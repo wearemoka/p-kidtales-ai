@@ -46,9 +46,9 @@ const HomePage = () => {
 
         <div className={styles.contentWrapper}>
           <Grid templateColumns='repeat(12, 1fr)' gap={4}>
-            <GridItem colSpan={{ lg: 2, md: 1, sm: 1, base: 0 }} />
-            <GridItem colSpan={{ lg: 8, md: 10, sm: 10, base: 12 }}>
-              <Heading as='h1' className='heading text-center' mb={10}>Unleash your imagination with AI-powered story creation</Heading>
+            <GridItem colSpan={{ lg: 2, md: 0, sm: 0, base: 0 }} />
+            <GridItem colSpan={{ lg: 8, md: 12, sm: 12, base: 12 }}>
+              <Heading as='h1' className='heading text-center' mb={10}>Enchanting AI-Powered Storytelling Adventures for Children</Heading>
               <Text className='body-big text-center' mb={3}>Create a story for </Text>
 
               <AgeSelector age={age} setAge={setAge} />
@@ -56,30 +56,31 @@ const HomePage = () => {
                 ? ageMessage
                 : ''}
 
-              {age &&
-                <div className={styles.buttonBottom}>
-                  <Stack direction={{ md: 'row', base: 'column' }} justify='center' spacing={{ md: '20px', base: '10px' }}>
-                    <Button
-                      aria-label='Create custom tale'
-                      rightIcon={<Image src='icons/Stars.svg' alt='' />}
-                      className='big primary'
-                      onClick={startCreateStoryButtonHandler}
-                    >
-                      <label>Start creating my story</label>
-                    </Button>
-
-                    <Button
-                      aria-label='Create random tale'
-                      rightIcon={<Image src='icons/Dice.svg' alt='' />}
-                      className='big secondary'
-                      onClick={randomizesStoryButtonHandler}
-                    >
-                      <label>Let KidsTales create it for me</label>
-                    </Button>
-                  </Stack>
-                </div>}
+              <Box className={styles.buttonsWrapper}>
+                {age &&
+                  <div className={styles.buttonBottom}>
+                    <Stack direction={{ xl: 'row', md: 'column', base: 'column' }} justify='center' spacing={{ md: '20px', base: '10px' }}>
+                      <Button
+                        aria-label='Create custom tale'
+                        rightIcon={<Image src='icons/Stars.svg' alt='' />}
+                        className='big primary'
+                        onClick={startCreateStoryButtonHandler}
+                      >
+                        <label>Start creating my story</label>
+                      </Button>
+                      <Button
+                        aria-label='Create random tale'
+                        rightIcon={<Image src='icons/Dice.svg' alt='' />}
+                        className='big secondary'
+                        onClick={randomizesStoryButtonHandler}
+                      >
+                        <label>Let KidsTales create it for me</label>
+                      </Button>
+                    </Stack>
+                  </div>}
+              </Box>
             </GridItem>
-            <GridItem colSpan={{ lg: 2, md: 1, sm: 1, base: 0 }} />
+            <GridItem colSpan={{ lg: 2, md: 0, sm: 0, base: 0 }} />
           </Grid>
         </div>
 

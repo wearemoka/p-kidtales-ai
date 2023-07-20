@@ -11,7 +11,7 @@ function AgeSelector ({ age, setAge }:Props) {
     <>
       <RadioGroup onChange={setAge} value={age} className='body-big' mb={3}>
         <Stack direction='row' justify='center' spacing={{ md: '20px', base: '10px' }}>
-          {ages.map((age) => <Radio key={`age-option-${age}`} value={age}>{age} yrs</Radio>)}
+          {ages.map((age) => <Radio key={`age-option-${age}`} value={age}>{age} years</Radio>)}
         </Stack>
       </RadioGroup>
     </>

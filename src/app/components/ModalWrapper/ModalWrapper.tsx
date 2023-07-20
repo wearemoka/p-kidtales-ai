@@ -33,14 +33,14 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLab
               <Button
                 mr={3}
                 onClick={primaryAction}
-                className='small primary'
+                className='big primary'
                 rightIcon={rightIconPrimaryAction}
               >
                 {primaryActionLabel}
               </Button>}
             {secondaryActionLabel &&
               <Button
-                className={`${alignmentBottom ? 'md_secondary_border' : 'small secondary'}`}
+                className={`${alignmentBottom ? 'md_secondary_border big' : 'big secondary'}`}
                 onClick={secondaryAction}
                 rightIcon={rightIconSecondaryAction}
               >

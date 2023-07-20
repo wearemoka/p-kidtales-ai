@@ -5,11 +5,17 @@
     }
     .chakra-modal__content{
         @media screen and (min-width: 601px) {
-            background: rgba(12, 4, 22, 0.7);
-            backdrop-filter: blur(2.5px);
+            background: rgba(12, 4, 22, 1);
             margin: 0;
             border-radius: 0;
             border: 0;
+            .chakra-modal__close-btn{
+                top: 50px;
+                right: 50px;
+                font-size: 16px;
+                width: 42px;
+                height: 42px;
+            }
             .chakra-container{
                 height: 100dvh !important; //some devices don't read dvh so we need a backup
                 height: calc(100vh - 20px); // -20px because browsers bars -just mobile-

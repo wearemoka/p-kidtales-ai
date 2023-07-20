@@ -1,0 +1,31 @@
+.chakra-toast__inner{
+    margin: 20px 50px;
+    .chakra-alert{
+        border-radius: 8px;
+        padding: 25px 32px 25px 25px;
+        border: 1px solid rgba(255, 255, 255, 0.20);
+        .chakra-alert__icon{
+            display: none;
+        }
+        button{
+            top: 10px;
+            right: 10px;
+            color: var(--white);
+        }
+        .chakra-alert__title{
+            font-size: 18px;
+            font-weight: 600;
+            line-height: 140%;
+            color: var(--white);
+        }
+        .chakra-alert__desc{
+            font-size: 16px;
+            font-weight: 400;
+            line-height: 140%;
+            color: var(--white70);
+        }
+        &[data-status='info']{
+            background: #0C0416; 
+        }
+    }
+}
