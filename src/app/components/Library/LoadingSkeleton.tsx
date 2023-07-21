@@ -10,19 +10,18 @@ function LoadingSkeleton ({ isGrid }: Props) {
     <>
       {isGrid &&
         <SimpleGrid columns={3} spacing={5}>
-          <Skeleton className={styles.libraryItem} h={220} />
-          <Skeleton className={styles.libraryItem} h={220} />
-          <Skeleton className={styles.libraryItem} h={220} />
-          <Skeleton className={styles.libraryItem} h={220} />
-          <Skeleton className={styles.libraryItem} h={220} />
-          <Skeleton className={styles.libraryItem} h={220} />
+          <Skeleton className={styles.libraryItem} h={175} w={400} />
+          <Skeleton className={styles.libraryItem} h={175} w={400} />
+          <Skeleton className={styles.libraryItem} h={175} w={400} />
+          <Skeleton className={styles.libraryItem} h={175} w={400} />
+          <Skeleton className={styles.libraryItem} h={175} w={400} />
+          <Skeleton className={styles.libraryItem} h={175} w={400} />
         </SimpleGrid>}
 
       {!isGrid &&
         <HStack>
-          <Skeleton w={340} h={150} />
-          <Skeleton w={340} h={150} />
-          <Skeleton w={340} h={150} />
+          <Skeleton w={220} h={90} />
+          <Skeleton w={220} h={90} />
         </HStack>}
     </>
   )
