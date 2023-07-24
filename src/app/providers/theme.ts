@@ -58,7 +58,6 @@ const myCustomComponents = {
         fontFamily: "'Plus Jakarta Sans'",
         fontWeight: 'bold',
         borderRadius: '100px',
-        _focus: { boxShadow: 'outline' },
         color: 'white'
       }
     }
