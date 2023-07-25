@@ -40,7 +40,6 @@ const myCustomComponents = {
     },
     Heading: {
       baseStyle: {
-        fontSize: '46px !important',
         fontWeight: 'bold',
         fontFamily: "'Plus Jakarta Sans', sans-serif",
         lineHeight: '130%'
@@ -51,6 +50,14 @@ const myCustomComponents = {
         lg: { fontSize: 'lg', lineHeight: 'xl' },
         md: { fontSize: 'md', lineHeight: 'base' },
         sm: { fontSize: 'sm', lineHeight: 'base' }
+      },
+      variants: {
+        h1: {
+          fontSize: '26px',
+          '@media screen and (min-width: 601px)': {
+            fontSize: '42px'
+          }
+        }
       }
     },
     Button: {

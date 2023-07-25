@@ -49,7 +49,7 @@ const HomePage = () => {
           <Grid templateColumns='repeat(12, 1fr)' gap={4}>
             <GridItem colSpan={{ lg: 2, md: 0, sm: 0, base: 0 }} />
             <GridItem colSpan={{ lg: 8, md: 12, sm: 12, base: 12 }}>
-              <Heading as='h1' fontSize='42px' className='heading text-center' mb={10}>Enchanting AI-Powered Storytelling Adventures for Children</Heading>
+              <Heading as='h1' variant='h1' className='heading text-center' mb={10}>Enchanting AI-Powered Storytelling Adventures for Children</Heading>
               <Text className='body-big text-center' mb={3}>Create a story for </Text>
 
               <AgeSelector age={age} setAge={setAge} />
