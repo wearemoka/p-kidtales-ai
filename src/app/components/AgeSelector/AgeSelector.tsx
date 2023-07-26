@@ -22,7 +22,7 @@ function AgeSelector ({ age, setAge, openOptions }:Props) {
         }}
       >
         <Stack direction='row' justify='center' spacing={{ md: '20px', base: '10px' }}>
-          {ages.map((age) => <Radio key={`age-option-${age}`} value={age}>{age} years</Radio>)}
+          {ages.map((age) => <Radio key={`age-option-${age}`} value={age}>{age} yrs</Radio>)}
         </Stack>
       </RadioGroup>
     </>
