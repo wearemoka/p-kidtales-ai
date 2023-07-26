@@ -67,6 +67,19 @@ const myCustomComponents = {
         borderRadius: '100px',
         color: 'white'
       }
+    },
+    Skeleton: {
+      baseStyle: {
+        display: 'inline-block',
+        borderRadius: '8px',
+        '--skeleton-start-color': 'var(--chakra-colors-gray-800)',
+        '--skeleton-end-color': 'var(--chakra-colors-gray-600)',
+        maxHeight: '150px',
+        '@media screen and (min-width: 991px)': {
+          maxHeight: '210px',
+          width: '100%'
+        }
+      }
     }
   }
 }
