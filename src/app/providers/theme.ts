@@ -74,7 +74,11 @@ const myCustomComponents = {
         borderRadius: '8px',
         '--skeleton-start-color': 'var(--chakra-colors-gray-800)',
         '--skeleton-end-color': 'var(--chakra-colors-gray-600)',
-        maxHeight: '150px',
+        width: '320px',
+        maxHeight: '100px',
+        '@media screen and (min-width: 601px)': {
+          width: '285px'
+        },
         '@media screen and (min-width: 991px)': {
           maxHeight: '210px',
           width: '100%'
@@ -97,7 +101,8 @@ const styles = {
       ':root': {
         fontFamily: 'Plus Jakarta Sans, sans-serif !important',
         '--chakra-fonts-heading': 'Plus Jakarta Sans, sans-serif',
-        '--chakra-fonts-body': 'Plus Jakarta Sans, sans-serif'
+        '--chakra-fonts-body': 'Plus Jakarta Sans, sans-serif',
+        overflowX: 'hidden !important'
       },
       '.chakra-container': {
         maxWidth: '100%',
