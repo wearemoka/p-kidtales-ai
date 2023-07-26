@@ -87,7 +87,7 @@ const TopBar = () => {
       title: 'You successfully flagged the tale as inappropriate',
       description: 'Thanks for become Kidtales a safest place, feel free to create a new tale.',
       status: 'info',
-      duration: 9000,
+      duration: 90000,
       isClosable: true
     })
     router.push('/')
