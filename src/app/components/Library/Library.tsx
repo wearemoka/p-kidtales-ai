@@ -13,9 +13,9 @@ const MIN_ITEMS_TO_DISPLAY = 6
 
 interface Props {
     age:string,
-		stories: any,
-		isLargerThan990: boolean,
-		loading: boolean
+    stories: any,
+    isLargerThan990: boolean,
+    loading: boolean
 }
 
 function Stories ({ age, isLargerThan990, stories, loading }:Props) {

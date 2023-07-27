@@ -20,7 +20,7 @@ const TopBar = () => {
   const [areOnLibrary, setAreOnLibrary] = useState(false)
 
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { globalStory, modalOpened, setModalOpened } = useGlobalContext()
+  const { globalStory, setModalOpened } = useGlobalContext()
 
   // The history of navigation
   const [historyPath, setHistoryPath] = useState({ prevPage: '', currentPage: '' })
