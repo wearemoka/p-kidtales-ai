@@ -33,11 +33,6 @@ const myCustomComponents = {
         gap: 4
       }
     },
-    GridItem: {
-      baseStyle: {
-        colSpan: { lg: 2, md: 0, sm: 0, base: 0 }
-      }
-    },
     Heading: {
       baseStyle: {
         fontWeight: 'bold',
