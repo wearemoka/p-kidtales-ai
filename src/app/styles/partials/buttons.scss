@@ -6,7 +6,7 @@
         font-size: 16px;
         line-height: 20px;
         font-weight: 600;
-        @media screen and (min-width: 767px) {
+        @media screen and (min-width: 601px) {
             font-size: 18px;
             padding: 19px 46px;
         }
@@ -21,7 +21,7 @@
             &::before{
                 display: none !important;
             }
-            @media screen and (min-width: 767px) {
+            @media screen and (min-width: 601px) {
                 max-width: 40px;
                 min-width: 40px;
                 height: 40px;
@@ -33,7 +33,7 @@
         font-size: 14px;
         line-height: 20px;
         font-weight: 600;
-        @media screen and (min-width: 767px) {
+        @media screen and (min-width: 601px) {
             font-size: 16px;
             padding: 9px 34px;
         }
@@ -73,7 +73,7 @@
         }
     }
     &.md_secondary{
-        @media screen and (min-width: 767px) {
+        @media screen and (min-width: 601px) {
             background: linear-gradient(182.48deg, rgba(255, 255, 255, 0.05) 2.09%, rgba(255, 255, 255, 0.1) 66.35%, rgba(255, 255, 255, 0.2) 97.55%) !important;
             border: 1px solid var(--white70);
             padding: 8px 28px 8px 24px !important;
@@ -96,7 +96,7 @@
         &:hover{
             background: linear-gradient(180deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.40) 100%) !important;
         }
-        @media screen and (min-width: 767px) {
+        @media screen and (min-width: 601px) {
             padding: 8px 28px 8px 24px !important;
             width: auto;
             height: auto;
@@ -107,7 +107,7 @@
         &.big{
             min-width: 50px;
             height: 50px;
-            @media screen and (min-width: 767px) {
+            @media screen and (min-width: 601px) {
                 min-width: 60px;
                 height: 60px;
             }

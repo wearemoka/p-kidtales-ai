@@ -36,7 +36,10 @@ interface ContextProps {
   setGlobalStory: Dispatch<SetStateAction<IStoryStore>>,
   // object with prompt values
   globalPrompt: IUserPromptSelection,
-  setGlobalPrompt: Dispatch<SetStateAction<IUserPromptSelection>>
+  setGlobalPrompt: Dispatch<SetStateAction<IUserPromptSelection>>,
+  // is any modal open?
+  modalOpened: string,
+  setModalOpened: Dispatch<SetStateAction<string>>
 }
 
 const GlobalContext = createContext<ContextProps>({
@@ -45,13 +48,16 @@ const GlobalContext = createContext<ContextProps>({
   globalStory: emptyStoryStore,
   setGlobalStory: IStoryStore => {},
   globalPrompt: emptyPrompt,
-  setGlobalPrompt: IUserPromptSelection => {}
+  setGlobalPrompt: IUserPromptSelection => {},
+  modalOpened: '',
+  setModalOpened: () : string => ''
 })
 
 export const GlobalContextProvider = ({ children }: Props) => {
   const [BGMusic, setBGMusic] = useState(false)
   const [globalStory, setGlobalStory] = useState<IStoryStore>(emptyStoryStore)
   const [globalPrompt, setGlobalPrompt] = useState(emptyPrompt)
+  const [modalOpened, setModalOpened] = useState('')
 
   return (
     <GlobalContext.Provider value={{
@@ -60,7 +66,9 @@ export const GlobalContextProvider = ({ children }: Props) => {
       globalStory,
       setGlobalStory,
       globalPrompt,
-      setGlobalPrompt
+      setGlobalPrompt,
+      modalOpened,
+      setModalOpened
     }}
     >
       {children}

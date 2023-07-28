@@ -2,16 +2,27 @@ import { ages } from '@/app/services/constants/StoryParams'
 import { Radio, RadioGroup, Stack } from '@chakra-ui/react'
 
 interface Props {
-    age: string,
-    setAge: (age: string) => void
+  age: string,
+  setAge: (age: string) => void,
+  openOptions?: (option: boolean) => void
 }
 
-function AgeSelector ({ age, setAge }:Props) {
+function AgeSelector ({ age, setAge, openOptions }:Props) {
   return (
     <>
-      <RadioGroup onChange={setAge} value={age} className='body-big' mb={3}>
+      <RadioGroup
+        onChange={(age) => {
+          setAge(age)
+        }}
+        value={age} className='body-big' mb={3}
+        onClick={() => {
+          setTimeout(() => {
+            openOptions && openOptions(false)
+          }, 100)
+        }}
+      >
         <Stack direction='row' justify='center' spacing={{ md: '20px', base: '10px' }}>
-          {ages.map((age) => <Radio key={`age-option-${age}`} value={age}>{age} years</Radio>)}
+          {ages.map((age) => <Radio key={`age-option-${age}`} value={age}>{age} yrs</Radio>)}
         </Stack>
       </RadioGroup>
     </>

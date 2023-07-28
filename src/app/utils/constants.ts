@@ -1,4 +1,3 @@
-
 /**
  * These messages will be displayed when making requests to the server
  */

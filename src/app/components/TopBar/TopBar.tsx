@@ -1,3 +1,4 @@
+'use client'
 import React, { useEffect, useState } from 'react'
 
 import styles from './TopBar.module.scss'
@@ -17,12 +18,9 @@ const TopBar = () => {
   const [showBackButton, setShowBackButton] = useState(false)
   const [areOnStoryView, setAreOnStoryView] = useState(false)
   const [areOnLibrary, setAreOnLibrary] = useState(false)
-  const [areOnHome, setAreOnHome] = useState(false)
-  const [areOnStoryGenerate, setAreOnStoryGenerate] = useState(false)
 
-  // const { BGMusic, setBGMusic } = useGlobalContext()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { globalStory } = useGlobalContext()
+  const { globalStory, setModalOpened } = useGlobalContext()
 
   // The history of navigation
   const [historyPath, setHistoryPath] = useState({ prevPage: '', currentPage: '' })
@@ -42,17 +40,13 @@ const TopBar = () => {
     setShowBackButton(pathname !== ROUTES.HOME)
     setAreOnStoryView(pathname.startsWith(ROUTES.STORY_VIEW))
     setAreOnLibrary(pathname.startsWith(ROUTES.LIBRARY))
-    setAreOnHome(pathname === ROUTES.HOME)
-    setAreOnStoryGenerate(pathname === ROUTES.STORY_GENERATE)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
-  /**
-   * Changes the global status of background music
-   */
-  // const musicOnOffButtonClick = () => {
-  //   setBGMusic(!BGMusic)
-  // }
+  const closeModal = () => {
+    setModalOpened('')
+    onClose()
+  }
 
   const openModalAbout = () => {
     setModalData({
@@ -72,8 +66,9 @@ const TopBar = () => {
       secondaryActionLabel: ''
     })
     if (isOpen) {
-      onClose()
+      closeModal()
     } else {
+      setModalOpened('about-kidtales')
       onOpen()
     }
   }
@@ -81,7 +76,7 @@ const TopBar = () => {
   const flagTheStory = async () => {
     const storyToFlag = { ...globalStory.story, appropriate: false }
     await updateDocumentInFireStore(fireBaseStoryCollection, storyToFlag, globalStory.story.id)
-    onClose()
+    closeModal()
     toast({
       position: 'top-right',
       title: 'You successfully flagged the tale as inappropriate',
@@ -100,6 +95,7 @@ const TopBar = () => {
       primaryActionLabel: 'Flag Story',
       secondaryActionLabel: 'Cancel'
     })
+    setModalOpened('flag-story')
     onOpen()
   }
 
@@ -108,7 +104,7 @@ const TopBar = () => {
   return (
     <div className={styles.topbar}>
       <Container>
-        <SimpleGrid columns={[2, 3]} spacing='20px' className={styles.topbarWrapper}>
+        <SimpleGrid columns={[3]} spacing='20px' className={styles.topbarWrapper}>
           <Box className={styles.gridStart}>
             {showBackButton &&
               <BackButton historyPath={historyPath} />}
@@ -135,13 +131,6 @@ const TopBar = () => {
                   <label>Library</label>
                 </Button>}
 
-              {/* <Button
-              aria-label='Music on/off'
-              rightIcon={<Image src='/icons/Music.svg' alt='Books outline white icon' />}
-              display={{ base: 'block', md: 'none' }}
-              onClick={musicOnOffButtonClick}
-            /> */}
-
               {!areOnStoryView &&
                 <Button
                   aria-label='About us'
@@ -164,12 +153,12 @@ const TopBar = () => {
       {/* Modal to display */}
       <ModalWrapper
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={closeModal}
         modalTitle={modalData.title}
         primaryActionLabel={modalData.primaryActionLabel}
         secondaryActionLabel={modalData.secondaryActionLabel}
         primaryAction={flagTheStory}
-        secondaryAction={onClose}
+        secondaryAction={closeModal}
         rightIconPrimaryAction={<Image src='/icons/Flag.svg' alt='Flag outline white icon' />}
       >{modalData.children}
       </ModalWrapper>

@@ -10,7 +10,7 @@ import { ROUTES } from '@/app/utils/routes'
 import Slider from 'react-slick'
 
 function viewPage () {
-  const { globalStory } = useGlobalContext()
+  const { globalStory, modalOpened, setModalOpened } = useGlobalContext()
   const [title, setTitle] = useState<string>('')
   const [firstSlide, setfirstSlide] = useState<boolean>(true)
   const [lastSlide, setlastSlide] = useState<boolean>(false)
@@ -18,6 +18,10 @@ function viewPage () {
   const router = useRouter()
   const sliderRef = useRef<Slider>(null)
   let timeoutID: any = null
+  const MaxTimeOut = process.env.NEXT_PUBLIC_STORY_TIMER_ALERT_LAST_PAGE || 8000
+
+  const modalOpenedRef = useRef(modalOpened)
+  modalOpenedRef.current = modalOpened
 
   const AgeLarge = globalStory.story.prompt[0] === '7-10'
 
@@ -67,6 +71,11 @@ function viewPage () {
     )
   }
 
+  function closeModal () {
+    setModalOpened('')
+    onClose()
+  }
+
   // Settings fot Slider Story
   const settings = {
     dots: true,
@@ -82,9 +91,12 @@ function viewPage () {
       const slidesToShow = globalStory.storyPaged.length - 2
       if (currentIndex === slidesToShow) {
         setlastSlide(true)
-        timeoutID = setTimeout(() => {
-          onOpen()
-        }, 8000)
+        timeoutID = setTimeout(function (modalOpenedRef) {
+          if (!modalOpenedRef.current) {
+            setModalOpened('create-another-story')
+            onOpen()
+          }
+        }, MaxTimeOut, modalOpenedRef)
       } else {
         setlastSlide(false)
         if (timeoutID) {
@@ -125,7 +137,7 @@ function viewPage () {
       {/* Modal to display */}
       <ModalWrapper
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={closeModal}
         primaryActionLabel='Create another story'
         primaryAction={generateNewStory}
         secondaryActionLabel='View library'
