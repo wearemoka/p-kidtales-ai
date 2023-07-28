@@ -6,7 +6,7 @@
         max-height: calc(100dvh - 108px) !important; //some devices don't read dvh so we need a backup
         max-height: calc(100vh - 108px);
     }
-    &>img{
+    &>.bgImage{
         position: absolute;
         z-index: -1;
         top: -15vh;

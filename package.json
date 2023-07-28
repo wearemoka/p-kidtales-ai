@@ -14,17 +14,18 @@
 		"@ducanh2912/next-pwa": "^9.3.0",
 		"@emotion/react": "^11.11.1",
 		"@emotion/styled": "^11.11.0",
-		"@types/node": "18.15.1",
-		"@types/react": "18.0.28",
-		"@types/react-dom": "18.0.11",
+		"@lottiefiles/lottie-player": "^2.0.2",
+		"@types/node": "20.4.5",
+		"@types/react": "18.2.17",
+		"@types/react-dom": "18.2.7",
 		"encoding": "^0.1.13",
 		"eslint": "8.45.0",
-		"eslint-config-next": "13.4.10",
+		"eslint-config-next": "13.4.12",
 		"eventsource-parser": "^1.0.0",
 		"firebase": "^9.17.2",
 		"firebase-tools": "^11.24.1",
-		"framer-motion": "^10.13.0",
-		"next": "13.4.10",
+		"framer-motion": "^10.15.0",
+		"next": "13.4.12",
 		"react": "18.2.0",
 		"react-dom": "18.2.0",
 		"react-slick": "^0.29.0",
@@ -35,7 +36,7 @@
 	"devDependencies": {
 		"@types/react-slick": "^0.23.10",
 		"@types/webspeechapi": "^0.0.29",
-		"sass": "^1.64.0",
+		"sass": "^1.64.1",
 		"standard": "^17.1.0"
 	}
 }

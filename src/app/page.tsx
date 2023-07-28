@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useRef } from 'react'
 import { Container, Image, Heading, Text, Stack, Button, Grid, GridItem, Box, useMediaQuery } from '@chakra-ui/react'
 import styles from './page.module.scss'
 import { useRouter } from 'next/navigation'
@@ -40,9 +40,30 @@ const HomePage = () => {
     </Box>
   )
 
+  const ref = useRef(null)
+
+  useEffect(() => {
+    import('@lottiefiles/lottie-player')
+  })
+
   return (
     <div className={styles.initialPage}>
-      <Image src='/images/Initial.png' alt='' className={styles.bgImage} />
+      <lottie-player
+        id='firstLottie'
+        ref={ref}
+        autoplay
+        loop
+        mode='normal'
+        src='/lotties/Wizard_animation.json'
+        style={{
+          position: 'absolute',
+          zIndex: '-1',
+          top: 'var(--lottie-top)',
+          left: 'var(--lottie-left)',
+          width: 'var(--lottie-width)'
+        }}
+      />
+      {/* <Image src='/images/Initial.png' alt='' className={styles.bgImage} /> */}
       <Container>
 
         <div className={styles.contentWrapper}>

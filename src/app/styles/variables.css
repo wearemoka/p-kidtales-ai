@@ -6,4 +6,16 @@
     --white20: rgba(255, 255, 255, 0.2);
     --black: #0C0416;
     --purple: #8826FF;
+
+    --lottie-top: -15vh;
+    --lottie-left: 0;
+    --lottie-width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+    :root{
+        --lottie-top: -14vh;
+        --lottie-left: -10vw;
+        --lottie-width: 640px;
+    }
 }
