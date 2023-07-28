@@ -1,4 +1,3 @@
-import React from 'react'
 import { Button, Image } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useGlobalContext } from '@/app/context/store'

@@ -55,12 +55,12 @@ function UserPrompt ({ promptOptions, steps }: Props) {
     <div className={styles.prompt}>
       <Box mb={8}>
         <Text className='body_big' textAlign='center' mb={2}>
-          Creating a story for <span onClick={() => { setEditAge(true) }}>{globalPrompt.age || '...'}</span> years
+          Creating a story for <span onClick={() => { setEditAge(true) }}>{globalPrompt.age || '...'}</span> years old
         </Text>
 
         {editAge &&
           <>
-            <AgeSelector age={age} setAge={setAge} />
+            <AgeSelector age={age} setAge={setAge} openOptions={setEditAge} />
             <Text className='body_big' textAlign='center' mt={2}>
               Age is required to generate an appropriate story
             </Text>

@@ -1,4 +1,4 @@
-import { db, addDoc, collection, getDocs } from '@/app/firebase/Config/Config'
+import { db, addDoc, collection, getDocs } from '@/app/services/constants/Config'
 import { doc, updateDoc } from 'firebase/firestore'
 
 export interface getDocArrayDataType {

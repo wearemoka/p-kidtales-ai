@@ -1,37 +1,34 @@
 'use client'
 
 import { useGlobalContext } from '@/app/context/store'
-import { useFetchStory } from '@/app/hooks/useFetchStory'
 import { paginateStory } from '@/app/utils/helper'
 import { ROUTES } from '@/app/utils/routes'
-import { Box, Button, Heading, SimpleGrid, Stack, Image, Text, useMediaQuery } from '@chakra-ui/react'
+import { Box, Button, Heading, SimpleGrid, Stack, Image, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import styles from './Library.module.scss'
 import Slider from 'react-slick'
-import LoadingSkeleton from './LoadingSkeleton'
 
-const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 const MIN_ITEMS_TO_DISPLAY = 6
 
 interface Props {
-    age:string
+    age:string,
+    stories: any,
+    isLargerThan990: boolean,
+    loading: boolean
 }
 
-function Stories ({ age }:Props) {
+function Stories ({ age, isLargerThan990, stories, loading }:Props) {
   const router = useRouter()
   const { globalStory, setGlobalStory } = useGlobalContext()
-  const { data, loading } = useFetchStory(fireBaseStoryCollection) // get stories from the repository
   const [itemsToDisplay, setItemsToDisplay] = useState<number>(MIN_ITEMS_TO_DISPLAY)
   let totalItemsToDisplay = 0
 
   let mappedDataByAge:any = []
   let toDisplay = []
 
-  const [isLargerThan990] = useMediaQuery('(min-width: 990px)')
-
-  if (data) {
-    mappedDataByAge = data?.filter((item: any) => {
+  if (stories) {
+    mappedDataByAge = stories?.filter((item: any) => {
       if (item.appropriate !== false && Array.isArray(item.prompt)) {
         return item.prompt.includes(age)
       } else {
@@ -65,23 +62,27 @@ function Stories ({ age }:Props) {
   const settings = {
     dots: false,
     speed: 500,
+    slidesToShow: 2.5,
+    slidesToScroll: 1,
     swipeToSlide: true,
     arrows: false,
-    infinite: true,
-    slidesToScroll: 1,
+    initialSlide: 1,
+    infinite: false,
     responsive: [
       {
         breakpoint: 600,
         settings: {
           slidesToShow: 1.5,
-          slidesToScroll: 1
+          slidesToScroll: 1,
+          initialSlide: 1
         }
       },
       {
         breakpoint: 990,
         settings: {
           slidesToShow: 2.5,
-          slidesToScroll: 1
+          slidesToScroll: 1,
+          initialSlide: 1
         }
       }
     ]
@@ -89,8 +90,6 @@ function Stories ({ age }:Props) {
 
   return (
     <>
-      {loading && <LoadingSkeleton isGrid={isLargerThan990} />}
-
       {itemsToDisplay && isLargerThan990 &&
         <Stack direction='column' justify='start' spacing='20px' mt={3} mb={10}>
           <Heading as='h2' className='lead text-secondary'> For {age} years old kids </Heading>
@@ -117,7 +116,7 @@ function Stories ({ age }:Props) {
             <div>
               <Button
                 onClick={() => {
-                  setItemsToDisplay(data.length)
+                  setItemsToDisplay(stories.length)
                 }}
                 variant='link'
                 className='button-link'
