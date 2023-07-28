@@ -18,8 +18,8 @@ const myCustomComponents = {
   components: {
     Container: {
       baseStyle: {
-        maxWidth: '100%',
-        '@media screen and (min-width: 767px)': {
+        maxWidth: '95vw',
+        '@media screen and (min-width: 768px)': {
           maxWidth: '90vw'
         },
         '@media screen and (min-width: 991px)': {

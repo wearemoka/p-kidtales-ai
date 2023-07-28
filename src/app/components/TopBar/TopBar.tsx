@@ -104,7 +104,7 @@ const TopBar = () => {
   return (
     <div className={styles.topbar}>
       <Container>
-        <SimpleGrid columns={[2, 3]} spacing='20px' className={styles.topbarWrapper}>
+        <SimpleGrid columns={[3]} spacing='20px' className={styles.topbarWrapper}>
           <Box className={styles.gridStart}>
             {showBackButton &&
               <BackButton historyPath={historyPath} />}
