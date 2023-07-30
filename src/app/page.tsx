@@ -9,7 +9,6 @@ import { PROMPT_STEPS } from '@/app/utils/constants'
 import { getRandomUserPrompt } from './utils/helper'
 import AgeSelector from './components/AgeSelector/AgeSelector'
 import { ROUTES } from '@/app/utils/routes'
-import '@lottiefiles/lottie-player'
 
 const HomePage = () => {
   const router = useRouter()
@@ -20,6 +19,10 @@ const HomePage = () => {
     setGlobalPrompt(emptyPrompt)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    import('@lottiefiles/lottie-player')
+  })
 
   const startCreateStoryButtonHandler = () => {
     const newStep: any = { ...emptyPrompt, age, step: PROMPT_STEPS.CHARACTER }
