@@ -40,7 +40,7 @@ function ModalWrapper ({ isOpen, onClose, modalTitle, children, primaryActionLab
               </Button>}
             {secondaryActionLabel &&
               <Button
-                className={`${alignmentBottom ? 'md_secondary_border big' : 'big secondary'}`}
+                className={alignmentBottom ? 'md_secondary_border big' : 'big secondary'}
                 onClick={secondaryAction}
                 rightIcon={rightIconSecondaryAction}
               >
