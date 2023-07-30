@@ -9,6 +9,7 @@ import { PROMPT_STEPS } from '@/app/utils/constants'
 import { getRandomUserPrompt } from './utils/helper'
 import AgeSelector from './components/AgeSelector/AgeSelector'
 import { ROUTES } from '@/app/utils/routes'
+import '@lottiefiles/lottie-player'
 
 const HomePage = () => {
   const router = useRouter()
@@ -41,10 +42,6 @@ const HomePage = () => {
   )
 
   const ref = useRef(null)
-
-  useEffect(() => {
-    import('@lottiefiles/lottie-player')
-  })
 
   return (
     <div className={styles.initialPage}>
