@@ -18,7 +18,7 @@ function viewPage () {
   const router = useRouter()
   const sliderRef = useRef<Slider>(null)
   let timeoutID: any = null
-  const MaxTimeOut = process.env.NEXT_PUBLIC_STORY_TIMER_ALERT_LAST_PAGE || 8000
+  const MaxTimeOut = process.env.NEXT_PUBLIC_STORY_TIMER_ALERT_LAST_PAGE ? parseInt(process.env.NEXT_PUBLIC_STORY_TIMER_ALERT_LAST_PAGE) : 8000
 
   const modalOpenedRef = useRef(modalOpened)
   modalOpenedRef.current = modalOpened
