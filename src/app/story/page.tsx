@@ -51,7 +51,7 @@ const StoryPage = () => {
 
     setIsLoadingStory(false)
 
-    if (response.status === 'error' || !response?.res.startsWith('Title:')) {
+    if (response.status === 'error' || response.status >= 500 || !response?.res.startsWith('Title:')) {
       setError(true)
     } else {
       const storyTitle = getStoryTitle(response.res)

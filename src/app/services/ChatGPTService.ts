@@ -19,7 +19,6 @@ export async function getAiStory (ageRange: string, character: string, character
     body: JSON.stringify({ ageRange, character, characterName, place, lesson })
   })
 
-  console.log('service response', response)
   if (response.status >= 500) {
     return NextResponse.json({ status: 'error', error: 'Internal server error' }, { status: response.status })
   }
