@@ -16,6 +16,11 @@ export async function POST (request: Request) {
       headers: headerOpenAiRequest,
       cache: 'no-store'
     })
+
+    if (res.status >= 500) {
+      return NextResponse.json({ status: 'error', error: 'Open AI server error' })
+    }
+
     const jsonData = await res.json()
 
     const finishReason = jsonData.choices[0].finish_reason
