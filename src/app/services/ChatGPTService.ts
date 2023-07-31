@@ -1,3 +1,5 @@
+import { NextResponse } from 'next/server'
+
 /**
  * Requests a story to the AI using internal API
  * @param ageRange the age range, e.g. 5-7
@@ -16,6 +18,10 @@ export async function getAiStory (ageRange: string, character: string, character
     cache: 'no-store',
     body: JSON.stringify({ ageRange, character, characterName, place, lesson })
   })
+
+  if (response.status >= 500) {
+    return NextResponse.json({ status: 'error', error: 'Internal server error' })
+  }
 
   const jsonResponse = await response.json()
   return jsonResponse
