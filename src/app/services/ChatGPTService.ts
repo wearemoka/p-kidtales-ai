@@ -21,7 +21,7 @@ export async function getAiStory (ageRange: string, character: string, character
 
   console.log('service response', response)
   if (response.status >= 500) {
-    return NextResponse.json({ status: 'error', error: 'Internal server error' })
+    return NextResponse.json({ status: 'error', error: 'Internal server error' }, { status: response.status })
   }
 
   const jsonResponse = await response.json()
