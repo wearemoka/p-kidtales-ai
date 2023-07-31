@@ -47,7 +47,6 @@ const StoryPage = () => {
     setIsLoadingStory(true)
     setFlagged(false)
     const response = await getAiStory(age, character, name, scenario, lesson)
-    console.log('page response', response)
 
     setIsLoadingStory(false)
 
