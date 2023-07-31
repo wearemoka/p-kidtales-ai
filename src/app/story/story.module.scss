@@ -1,9 +1,22 @@
 .storyPage{
     position: relative;
-    min-height: calc(100vh - 108px);
+    min-height: calc(100dvh - 82px) !important; //some devices don't read dvh so we need a backup
+    min-height: calc(100vh - 102px); // +20px because browsers bars -just mobile-
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    &.storyPageLoading{
+        align-items: center !important;
+        overflow: hidden;
+        justify-content: center;
+    }
+    @media screen and (min-width: 768px) {
+        min-height: calc(100dvh - 108px) !important; //some devices don't read dvh so we need a backup
+        min-height: calc(100vh - 108px); 
+    }
     .random{
         position: absolute;
-        bottom: 0;
+        bottom: 15px;
         margin: 10px auto;
     }
     .loading{

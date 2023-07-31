@@ -12,7 +12,7 @@ import { IStoryStore } from '@/app/utils/interfaces'
 import { useRouter } from 'next/navigation'
 import styles from './story.module.scss'
 import RandomButton from '../components/RandomButton/RandomButton'
-import { createSlugWithTimeStamp, getStoryTitle } from '../utils/helper'
+import { createSlugWithTimeStamp, getStoryTitle, paginateStory } from '../utils/helper'
 import { ROUTES } from '@/app/utils/routes'
 import { addDocumentInFireStore } from '@/app/services/FirebaseService'
 
@@ -26,57 +26,69 @@ const StoryPage = () => {
   const { age, character, name, scenario, lesson } = globalPrompt
   const inputLessonRef = useRef<HTMLInputElement>(null)
   const [flagged, setFlagged] = useState<boolean>(false)
+  const [error, setError] = useState<boolean>(false)
+  let storyIdStored: string = ''
+  const [customLesson, setCustomLesson] = useState<boolean>(false)
 
   useEffect(() => {
     if (globalPrompt.step === PROMPT_STEPS.GENERATION) {
       writeStoryHandler()
     }
+
+    if (!isLoadingStory && customLesson && globalPrompt.age && globalPrompt.character && globalPrompt.name && globalPrompt.scenario && globalPrompt.lesson) {
+      writeStoryHandler()
+    }
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [globalPrompt.step])
+  }, [globalPrompt.step, customLesson])
 
   const writeStoryHandler = async () => {
+    setError(false)
     setIsLoadingStory(true)
     setFlagged(false)
     const response = await getAiStory(age, character, name, scenario, lesson)
+
     setIsLoadingStory(false)
 
-    if (response.status === 'error' || !response?.res.startsWith('Title:')) {
-      setIsLoadingStory(false)
-      setGlobalPrompt({ ...globalPrompt, step: PROMPT_STEPS.LESSON })
-      return
-    }
+    if (response.status === 'error' || response.status >= 500 || !response?.res.startsWith('Title:')) {
+      setError(true)
+    } else {
+      const storyTitle = getStoryTitle(response.res)
+      const slug = createSlugWithTimeStamp(storyTitle)
 
-    const storyTitle = getStoryTitle(response.res)
-    const slug = createSlugWithTimeStamp(storyTitle)
+      if (storyTitle && slug) {
+        const myStory = {
+          title: storyTitle,
+          slug,
+          prompt: [age, character, name, scenario, lesson],
+          story: response.res
+        }
 
-    if (storyTitle && slug) {
-      const myStory = {
-        title: storyTitle,
-        slug,
-        prompt: [age, character, name, scenario, lesson],
-        story: response.res
+        if (!storyIdStored) {
+          storyIdStored = await addDocumentInFireStore(fireBaseStoryCollection, myStory)
+        }
+
+        const story: IStoryStore = {
+          story: { ...myStory, id: storyIdStored },
+          storyPaged: paginateStory(response.res),
+          currentPage: 0
+        }
+
+        setGlobalStory(story)
       }
 
-      const id = await addDocumentInFireStore(fireBaseStoryCollection, myStory)
-
-      const story: IStoryStore = {
-        story: { ...myStory, id },
-        storyPaged: response.res.split('\n\n').filter((value: string) => value !== ''),
-        currentPage: 0
-      }
-
-      setGlobalStory(story)
+      router.push(ROUTES.STORY_VIEW)
     }
-
-    router.push(ROUTES.STORY_VIEW)
   }
 
   useEffect(() => {
     setFlagged(false)
+    setError(false)
+
     if (globalPrompt.step === PROMPT_STEPS.GENERATION && writeStoryHandler) {
       writeStoryHandler()
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const customLessonHandler = (lesson: string) => {
@@ -85,22 +97,22 @@ const StoryPage = () => {
   }
 
   const handleLessonKeyDown = async (e: any) => {
+    const lesson = inputLessonRef.current!.value
     if (e.key === 'Enter') {
-      const lesson = inputLessonRef.current!.value
       const resp = await moderateStringWithAI(lesson)
       if (resp.results[0].flagged) {
         setFlagged(true)
       } else {
         setFlagged(false)
+        setCustomLesson(true)
         writeStoryHandler()
       }
     }
   }
 
   return (
-    <VStack className={styles.storyPage}>
+    <VStack className={`${styles.storyPage} ${isLoadingStory ? styles.storyPageLoading : ''}`}>
       {/* Display the User prompt */}
-
       {!isLoadingStory && globalStory.storyPaged.length === 0 && (
         <>
           <UserPrompt promptOptions={globalPrompt} steps={PROMPT_STEPS} />
@@ -131,7 +143,7 @@ const StoryPage = () => {
               />}
 
             {/* Display Lesson options */}
-            {globalPrompt.step === PROMPT_STEPS.LESSON && !globalPrompt.lesson &&
+            {globalPrompt.step === PROMPT_STEPS.LESSON && !customLesson &&
               <VStack>
 
                 <GallerySelect
@@ -139,7 +151,10 @@ const StoryPage = () => {
                   options={lessonOpts}
                   saveOn='lesson'
                   columns={[2]}
-                  afterClickHandler={writeStoryHandler}
+                  afterClickHandler={() => {
+                    setCustomLesson(true)
+                    writeStoryHandler()
+                  }}
                   type='noImg'
                 />
 
@@ -158,11 +173,14 @@ const StoryPage = () => {
                     This lesson cannot be used. Change the lesson to a different one.
                   </Box>}
 
-                {inputLessonRef.current && inputLessonRef.current.value?.length > 0 &&
+                {globalPrompt.lesson.length > 0 &&
                   <Button
                     rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
                     className='big primary only-icon'
-                    onClick={writeStoryHandler}
+                    onClick={() => {
+                      setCustomLesson(true)
+                      writeStoryHandler()
+                    }}
                   />}
 
               </VStack>}
@@ -174,10 +192,34 @@ const StoryPage = () => {
         </>
       )}
 
+      {/* Error on response */}
+      {/* {!isLoadingStory && error &&
+        toast({
+          position: 'top-right',
+          title: 'The ChatGPT server is experiencing some issues.',
+          description: 'We can not continue due to an external problem. Try again',
+          status: 'info',
+          duration: 9000
+        })} */}
+      {!isLoadingStory && error &&
+        <VStack>
+          <Text className='lead'>
+            There has been an error with the AI, we could not generate your story.
+          </Text>
+          <Button
+            rightIcon={<Image src='/icons/Arrow-Right.svg' alt='Arrow right outline white icon' />}
+            className='big primary'
+            onClick={writeStoryHandler}
+            variant='outline'
+          >
+            Try again
+          </Button>
+        </VStack>}
+
       {isLoadingStory && (
         <div className={styles.loading}>
           <VStack justify='center'>
-            <Text textAlign='center' className='body-big' my={8}>Create a story for {globalPrompt.age}</Text>
+            <Text textAlign='center' className='body-big' mb={8}>Create a story for {globalPrompt.age}</Text>
             <Box className='big-lead'>
               <Text textAlign='center'>Once upon a time a {globalPrompt.character}</Text>
               <Text textAlign='center'>called {globalPrompt.name}</Text>

@@ -4,6 +4,7 @@
 @import './partials/buttons.scss';
 @import './partials/form.scss';
 @import './partials/modals.scss';
+@import './partials/alerts.scss';
 
 :root{
   font-family: 'Plus Jakarta Sans' !important;
@@ -19,8 +20,8 @@ body{
 }
 
 .chakra-container{
-  max-width: 100%;
-  @media screen and (min-width: 767px) {
+  max-width: 95vw;
+  @media screen and (min-width: 768px) {
     max-width: 90vw;
   }
   @media screen and (min-width: 991px) {
@@ -59,13 +60,29 @@ body{
   color: var(--white) !important;
   opacity: 1 !important;
 }
-.slick-slider.story{
+.slick-slider.story{ 
+  min-height: 45dvh !important; //some devices don't read dvh so we need a backup
   min-height: 45vh; 
+  margin-bottom: 50px;
+  .slick-list{
+    min-height: 45dvh !important;
+    min-height: 45vh;
+  }
   @media screen and (min-width: 600px) {
-    min-height: 30vh; 
+    min-height: 50dvh !important;
+    min-height: 50vh;
+    .slick-list{
+      min-height: 50dvh !important;
+      min-height: 50vh;
+    }
   }
   @media screen and (min-width: 991px) {
-    min-height: 65vh; 
+    min-height: 65dvh !important; 
+    min-height: 65vh;
+    .slick-list{
+      min-height: 65dvh !important;
+      min-height: 65vh;
+    }
   }
 }
 .slick-slider.library{
@@ -76,8 +93,9 @@ body{
 }
 .slick-next, .slick-prev{
   display: none !important;
+  transition: opacity .3s ease-in-out;
   @media screen and (min-width: 991px) {
-    top: 16% !important;
+    top: 14% !important;
     display: block !important;
   }
 }
@@ -87,9 +105,28 @@ body{
 .slick-prev{
   left: -60px !important;
 }
+.slick-dots{
+  bottom: 0;
+}
 
+.button-prev, 
+.button-next{
+  width: 50px !important;
+  height: 50px !important;
+  padding: 0 !important;
+  opacity: .8;
+  span{
+    width: 50px;
+  }
+  &:hover{
+    background: none !important;
+    border: none !important;
+    opacity: 1;
+  }
+}
 .button-prev::before,
 .button-next::before{
   font-size: 0 !important;
   display: none !important;
 }
+

@@ -1,36 +1,34 @@
 'use client'
 
 import { useGlobalContext } from '@/app/context/store'
-import { useFetchStory } from '@/app/hooks/useFetchStory'
 import { paginateStory } from '@/app/utils/helper'
 import { ROUTES } from '@/app/utils/routes'
-import { Box, Button, Heading, SimpleGrid, Stack, Image, Text, Skeleton, useMediaQuery } from '@chakra-ui/react'
+import { Box, Button, Heading, SimpleGrid, Stack, Image, Text } from '@chakra-ui/react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import styles from './Library.module.scss'
 import Slider from 'react-slick'
 
-const fireBaseStoryCollection = process.env.NEXT_PUBLIC_FIREBASE_STORE_STORY_END_POINT as string
 const MIN_ITEMS_TO_DISPLAY = 6
 
 interface Props {
-    age:string
+    age:string,
+    stories: any,
+    isLargerThan990: boolean,
+    loading: boolean
 }
 
-function Stories ({ age }:Props) {
+function Stories ({ age, isLargerThan990, stories, loading }:Props) {
   const router = useRouter()
   const { globalStory, setGlobalStory } = useGlobalContext()
-  const { data, loading } = useFetchStory(fireBaseStoryCollection) // get stories from the repository
   const [itemsToDisplay, setItemsToDisplay] = useState<number>(MIN_ITEMS_TO_DISPLAY)
   let totalItemsToDisplay = 0
 
   let mappedDataByAge:any = []
   let toDisplay = []
 
-  const [isLargerThan990] = useMediaQuery('(min-width: 990px)')
-
-  if (data) {
-    mappedDataByAge = data?.filter((item: any) => {
+  if (stories) {
+    mappedDataByAge = stories?.filter((item: any) => {
       if (item.appropriate !== false && Array.isArray(item.prompt)) {
         return item.prompt.includes(age)
       } else {
@@ -39,7 +37,11 @@ function Stories ({ age }:Props) {
     })
     totalItemsToDisplay = mappedDataByAge.length
 
-    toDisplay = mappedDataByAge.slice(0, itemsToDisplay)
+    if (isLargerThan990) {
+      toDisplay = mappedDataByAge.slice(0, itemsToDisplay)
+    } else {
+      toDisplay = mappedDataByAge.slice(0)
+    }
   }
 
   /**
@@ -88,63 +90,60 @@ function Stories ({ age }:Props) {
 
   return (
     <>
-      {itemsToDisplay &&
-        <Skeleton isLoaded={!loading}>
-          {isLargerThan990 &&
-            <Stack direction='column' justify='start' spacing='20px' mt={3} mb={10}>
-              <Heading as='h2' className='lead text-secondary'> For {age} years old kids </Heading>
-              {/* Error - no stories */}
-              {!loading && totalItemsToDisplay === 0 && <Text>No stories found for {age} years old kids</Text>}
+      {itemsToDisplay && isLargerThan990 &&
+        <Stack direction='column' justify='start' spacing='20px' mt={3} mb={10}>
+          <Heading as='h2' className='lead text-secondary'> For {age} years old kids </Heading>
+          {/* Error - no stories */}
+          {!loading && totalItemsToDisplay === 0 && <Text>No stories found for {age} years old kids</Text>}
 
-              <SimpleGrid columns={3} spacing={5}>
-                {toDisplay && toDisplay.map((item: any, index: number) => {
-                  return (
-                    <Box
-                      key={index}
-                      onClick={() => { openStoryHandler(item) }}
-                      borderRadius='lg'
-                      className={styles.libraryItem}
-                    >
-                      <Image src='images/Loading.png' alt='' />
-                      <Text className='body'>{item.title}</Text>
-                    </Box>
-                  )
-                })}
-              </SimpleGrid>
+          <SimpleGrid columns={3} spacing={5}>
+            {toDisplay && toDisplay.map((item: any, index: number) => {
+              return (
+                <Box
+                  key={index}
+                  onClick={() => { openStoryHandler(item) }}
+                  borderRadius='lg'
+                  className={styles.libraryItem}
+                >
+                  <Image src='images/librarybg.png' alt='' />
+                  <Text className='lead'>{item.title}</Text>
+                </Box>
+              )
+            })}
+          </SimpleGrid>
 
-              {(itemsToDisplay <= MIN_ITEMS_TO_DISPLAY && totalItemsToDisplay > MIN_ITEMS_TO_DISPLAY) &&
-                <div>
-                  <Button
-                    onClick={() => {
-                      setItemsToDisplay(data.length)
-                    }}
-                    variant='link'
-                    className='button-link'
-                  >
-                    View All
-                  </Button>
-                </div>}
-            </Stack>}
+          {(itemsToDisplay <= MIN_ITEMS_TO_DISPLAY && totalItemsToDisplay > MIN_ITEMS_TO_DISPLAY) &&
+            <div>
+              <Button
+                onClick={() => {
+                  setItemsToDisplay(stories.length)
+                }}
+                variant='link'
+                className='button-link'
+              >
+                View All
+              </Button>
+            </div>}
+        </Stack>}
 
-          {!isLargerThan990 &&
-            <Box mt={3}>
-              <Heading as='h2' className='lead text-secondary' mb={2}> For {age} years old kids </Heading>
-              <Slider {...settings} className='library'>
-                {toDisplay && toDisplay.map((item: any, index: number) =>
-                  <Box
-                    key={index}
-                    onClick={() => { openStoryHandler(item) }}
-                    borderRadius='lg'
-                    className={styles.libraryItem}
-                  >
-                    <Image src='images/Loading.png' alt='' />
-                    <Text className='body'>{item.title}</Text>
-                  </Box>)}
-              </Slider>
-              {/* Error - no stories */}
-              {!loading && totalItemsToDisplay === 0 && <Text>No stories found for {age} years old kids</Text>}
-            </Box>}
-        </Skeleton>}
+      {itemsToDisplay && !isLargerThan990 &&
+        <Box mt={3}>
+          <Heading as='h2' className='lead text-secondary' mb={2}> For {age} years old kids </Heading>
+          <Slider {...settings} className='library'>
+            {toDisplay && toDisplay.map((item: any, index: number) =>
+              <Box
+                key={index}
+                onClick={() => { openStoryHandler(item) }}
+                borderRadius='lg'
+                className={styles.libraryItem}
+              >
+                <Image src='images/librarybg.png' alt='' />
+                <Text className='body'>{item.title}</Text>
+              </Box>)}
+          </Slider>
+          {/* Error - no stories */}
+          {!loading && totalItemsToDisplay === 0 && <Text>No stories found for {age} years old kids</Text>}
+        </Box>}
     </>
   )
 }

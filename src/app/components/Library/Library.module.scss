@@ -7,6 +7,9 @@
     margin-right: 20px;
     max-height: 150px;
     width: auto !important;
+    img{
+        width: 100%;
+    }
     p{
         position: absolute;
         bottom: 20px;
@@ -21,5 +24,30 @@
         max-height: 210px;
         margin: 0;
         width: 100%
+    }
+    &::before{
+        content: '';
+        display: block;
+        width: 100%;
+        height: 100%;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
+        z-index: 0;
+        top: 0;
+        left: 0;
+        position: absolute;
+    }
+    &:hover{
+        p{
+            text-decoration: underline;
+        }
+    }
+}
+
+.stack{
+    width: calc(100% + 360px);
+    @media screen and (min-width: 601px) {
+        width: calc(100% + 260px);
     }
 }

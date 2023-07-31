@@ -1,8 +1,9 @@
+'use client'
 import React, { useEffect, useState } from 'react'
 
 import styles from './TopBar.module.scss'
 import { usePathname, useRouter } from 'next/navigation'
-import { Button, Stack, Image, Container, useDisclosure } from '@chakra-ui/react'
+import { Button, Stack, Image, Container, useDisclosure, useToast, Box, SimpleGrid } from '@chakra-ui/react'
 import BackButton from './BackButton'
 import { useGlobalContext } from '@/app/context/store'
 import { ROUTES } from '@/app/utils/routes'
@@ -17,12 +18,9 @@ const TopBar = () => {
   const [showBackButton, setShowBackButton] = useState(false)
   const [areOnStoryView, setAreOnStoryView] = useState(false)
   const [areOnLibrary, setAreOnLibrary] = useState(false)
-  const [areOnHome, setAreOnHome] = useState(false)
-  const [areOnStoryGenerate, setAreOnStoryGenerate] = useState(false)
 
-  // const { BGMusic, setBGMusic } = useGlobalContext()
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const { globalStory } = useGlobalContext()
+  const { globalStory, setModalOpened } = useGlobalContext()
 
   // The history of navigation
   const [historyPath, setHistoryPath] = useState({ prevPage: '', currentPage: '' })
@@ -42,17 +40,13 @@ const TopBar = () => {
     setShowBackButton(pathname !== ROUTES.HOME)
     setAreOnStoryView(pathname.startsWith(ROUTES.STORY_VIEW))
     setAreOnLibrary(pathname.startsWith(ROUTES.LIBRARY))
-    setAreOnHome(pathname === ROUTES.HOME)
-    setAreOnStoryGenerate(pathname === ROUTES.STORY_GENERATE)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname])
 
-  /**
-   * Changes the global status of background music
-   */
-  // const musicOnOffButtonClick = () => {
-  //   setBGMusic(!BGMusic)
-  // }
+  const closeModal = () => {
+    setModalOpened('')
+    onClose()
+  }
 
   const openModalAbout = () => {
     setModalData({
@@ -71,13 +65,26 @@ const TopBar = () => {
       primaryActionLabel: '',
       secondaryActionLabel: ''
     })
-    onOpen()
+    if (isOpen) {
+      closeModal()
+    } else {
+      setModalOpened('about-kidtales')
+      onOpen()
+    }
   }
 
   const flagTheStory = async () => {
     const storyToFlag = { ...globalStory.story, appropriate: false }
     await updateDocumentInFireStore(fireBaseStoryCollection, storyToFlag, globalStory.story.id)
-    onClose()
+    closeModal()
+    toast({
+      position: 'top-right',
+      title: 'You successfully flagged the tale as inappropriate',
+      description: 'Thanks for become Kidtales a safest place, feel free to create a new tale.',
+      status: 'info',
+      duration: 90000,
+      isClosable: true
+    })
     router.push('/')
   }
 
@@ -88,66 +95,70 @@ const TopBar = () => {
       primaryActionLabel: 'Flag Story',
       secondaryActionLabel: 'Cancel'
     })
+    setModalOpened('flag-story')
     onOpen()
   }
+
+  const toast = useToast()
 
   return (
     <div className={styles.topbar}>
       <Container>
-        <div className={styles.topbarWrapper}>
-          {showBackButton &&
-            <BackButton historyPath={historyPath} />}
-          <div className={`${styles.brand} ${areOnHome || areOnStoryGenerate ? styles.home : ''}`}>
-            <Image src='/images/KidTalesLogo.svg' alt='KidTales logo in white color' />
-          </div>
+        <SimpleGrid columns={[3]} spacing='20px' className={styles.topbarWrapper}>
+          <Box className={styles.gridStart}>
+            {showBackButton &&
+              <BackButton historyPath={historyPath} />}
+            <div className={styles.brand}>
+              <Image src='/images/KidTalesLogo.svg' alt='KidTales logo in white color' />
+            </div>
+          </Box>
+          <Box className={styles.gridCenter}>
+            <div className={styles.brand}>
+              <Image src='/images/KidTalesLogo.svg' alt='KidTales logo in white color' />
+            </div>
+          </Box>
+          <Box className={styles.gridEnd}>
+            <Stack direction='row' spacing={{ base: 1, md: 4 }} className={styles.actions}>
+              {!areOnStoryView && !areOnLibrary &&
+                <Button
+                  aria-label='Go to Library'
+                  rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
+                  className='md_secondary'
+                  onClick={() => {
+                    router.push(ROUTES.LIBRARY)
+                  }}
+                >
+                  <label>Library</label>
+                </Button>}
 
-          <Stack direction='row' spacing={{ base: 1, md: 4 }} className={styles.actions}>
-            {!areOnStoryView && !areOnLibrary &&
-              <Button
-                aria-label='Go to Library'
-                rightIcon={<Image src='/icons/Library.svg' alt='Books outline white icon' />}
-                className='md_secondary'
-                onClick={() => {
-                  router.push(ROUTES.LIBRARY)
-                }}
-              >
-                <label>Library</label>
-              </Button>}
+              {!areOnStoryView &&
+                <Button
+                  aria-label='About us'
+                  rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
+                  onClick={openModalAbout}
+                />}
 
-            {/* <Button
-              aria-label='Music on/off'
-              rightIcon={<Image src='/icons/Music.svg' alt='Books outline white icon' />}
-              display={{ base: 'block', md: 'none' }}
-              onClick={musicOnOffButtonClick}
-            /> */}
-
-            {!areOnStoryView &&
-              <Button
-                aria-label='About us'
-                rightIcon={<Image src='/icons/Info.svg' alt='Books outline white icon' />}
-                onClick={openModalAbout}
-              />}
-
-            {areOnStoryView && !areOnLibrary &&
-              <Button
-                className='big secondary only-icon'
-                aria-label='Flag tale as inappropriate'
-                rightIcon={<Image src='/icons/Flag.svg' alt='Flag outline white icon' />}
-                onClick={openModalFlag}
-              />}
-          </Stack>
-        </div>
+              {areOnStoryView && !areOnLibrary &&
+                <Button
+                  className='big secondary only-icon'
+                  aria-label='Flag tale as inappropriate'
+                  rightIcon={<Image src='/icons/Flag.svg' alt='Flag outline white icon' />}
+                  onClick={openModalFlag}
+                />}
+            </Stack>
+          </Box>
+        </SimpleGrid>
       </Container>
 
       {/* Modal to display */}
       <ModalWrapper
         isOpen={isOpen}
-        onClose={onClose}
+        onClose={closeModal}
         modalTitle={modalData.title}
         primaryActionLabel={modalData.primaryActionLabel}
         secondaryActionLabel={modalData.secondaryActionLabel}
         primaryAction={flagTheStory}
-        secondaryAction={onClose}
+        secondaryAction={closeModal}
         rightIconPrimaryAction={<Image src='/icons/Flag.svg' alt='Flag outline white icon' />}
       >{modalData.children}
       </ModalWrapper>

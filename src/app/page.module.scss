@@ -1,36 +1,48 @@
 .initialPage{
     position: relative;
-    &>img{
+    max-height: calc(100dvh - 82px) !important; //some devices don't read dvh so we need a backup
+    max-height: calc(100vh - 152px); // +70px because browsers bars -just mobile-
+    @media screen and (min-width: 768px) {
+        max-height: calc(100dvh - 108px) !important; //some devices don't read dvh so we need a backup
+        max-height: calc(100vh - 108px);
+    }
+    &>.bgImage{
         position: absolute;
         z-index: -1;
-        top: -12vh;
+        top: -15vh;
         left: 0;
-        @media screen and (min-width: 601px) {
-            top: -8vh;
+        @media screen and (min-width: 768px) {
+            top: -14vh;
             left: -10vw;
         }
     }
     .contentWrapper{
-        padding-top: 35vh;
+        min-height: calc(100dvh - 82px) !important; //some devices don't read dvh so we need a backup
+        min-height: calc(100vh - 152px); // +70px because browsers bars -just mobile-
+        display: flex;
+        justify-content: center;
+        align-items: flex-end;
+        padding-bottom: 15px;
         @media screen and (min-width: 601px) {
-            padding-top: 100px;
+            align-items: center;
+            padding-bottom: 0;
+        }
+        @media screen and (min-width: 768px) {
+            min-height: calc(100dvh - 108px) !important; //some devices don't read dvh so we need a backup
+            min-height: calc(100vh - 108px);
+            padding-bottom: 0;
         }
     }
     .buttonBottom{
-        //position: absolute;
-        //width: 100%;
-        //padding: 0 15px;
-        //left: 0;
-        //bottom: -25vh;
-        margin-top: 40px;
-        @media screen and (min-width: 601px) {
-            position: static;
-            width: auto;
-            padding: 0;
-            margin-top: 40px;
-        }
         position: static;
         width: auto;
         padding: 0;
+    }
+    .buttonsWrapper{
+        margin-top: 40px;
+        min-height: calc(110px - 54.59px);
+        @media screen and (min-width: 768px) {
+            min-height: 60px;
+        }
     }
 }

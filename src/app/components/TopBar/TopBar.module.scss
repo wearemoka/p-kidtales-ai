@@ -1,52 +1,54 @@
 .topbar{
     .topbarWrapper{
-        display: flex;
+        /* display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items: center; */
         padding: 40px 0px 20px;
-        .brand {
-            width: 100%;
-            margin-left: 10px;
-            &.home{
-                @media screen and (min-width: 767px) {
-                    width: 100%;
-                    img{
-                        margin-left: auto;
-                        margin-right: calc(50% - 120px);
-                    }
+        .gridCenter{
+            opacity: 0;
+            @media screen and (min-width: 601px) {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                opacity: 1;
+                .brand img{
+                    height: 20px;
+                    margin: auto;
                 }
             }
-            @media screen and (min-width: 767px) {
-                width: auto;
-                margin-left: 0px;
+        }
+        .gridStart{
+            display: flex;
+            justify-content: flex-start;
+            .brand {
+                display: flex;
+                margin-left: 10px;
+                align-items: center;
                 img{
                     height: 20px;
                 }
-            }
-            img{
-                height: 20px;
-            }
-            .backButton{
-                background-color: var(--white);
-                padding: 10px 7px;
-                span{
-                    margin: 0;
+                @media screen and (min-width: 601px) {
+                    display: none;
                 }
             }
+        }
+        .gridEnd{
+            display: flex;
+            justify-content: flex-end;
         }
         .actions button {
             background: transparent;
             padding: 0;
             span{
                 margin: 0;
-                @media screen and (min-width: 767px) {
+                @media screen and (min-width: 601px) {
                     margin: 5px;
                 }
             }
             label{
                 display: none;
                 color: var(--white);
-                @media screen and (min-width: 767px) {
+                @media screen and (min-width: 601px) {
                     display: inline;
                     cursor: pointer;
                 }

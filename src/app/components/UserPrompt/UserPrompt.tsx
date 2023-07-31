@@ -55,12 +55,12 @@ function UserPrompt ({ promptOptions, steps }: Props) {
     <div className={styles.prompt}>
       <Box mb={8}>
         <Text className='body_big' textAlign='center' mb={2}>
-          Create a story for <span onClick={() => { setEditAge(true) }}>{globalPrompt.age || '...'}</span>
+          Creating a story for <span onClick={() => { setEditAge(true) }}>{globalPrompt.age || '...'}</span> years old
         </Text>
 
         {editAge &&
           <>
-            <AgeSelector age={age} setAge={setAge} />
+            <AgeSelector age={age} setAge={setAge} openOptions={setEditAge} />
             <Text className='body_big' textAlign='center' mt={2}>
               Age is required to generate an appropriate story
             </Text>
@@ -70,7 +70,7 @@ function UserPrompt ({ promptOptions, steps }: Props) {
       <Box className='big-lead' mb={8}>
         <Stack direction={{ lg: 'row', base: 'column' }} justify='center'>
           <Text textAlign='center' className={`${blurArray[steps.CHARACTER - step] ?? ''} ${step === steps.CHARACTER ? styles.active : ''} ${character ? styles.seted : styles.unseted}`}>
-            Once upon a time a <span onClick={() => { jumpToStepHandler(steps.CHARACTER) }}>{character || '...'}</span>
+            Once upon a time there was a <span onClick={() => { jumpToStepHandler(steps.CHARACTER) }}>{character || '...'}</span>
           </Text>
 
           <Text textAlign='center' className={`${blurArray[steps.NAME - step] ?? ''} ${step === steps.NAME ? styles.active : ''} ${name ? styles.seted : styles.unseted}`}>
@@ -80,7 +80,7 @@ function UserPrompt ({ promptOptions, steps }: Props) {
 
         <Stack direction={{ lg: 'row', base: 'column' }} justify='center'>
           <Text textAlign='center' className={`${blurArray[steps.SCENARIO - step] ?? ''} ${step === steps.SCENARIO ? styles.active : ''} ${scenario ? styles.seted : styles.unseted}`}>
-            had an amazing adventure in the  <span onClick={() => { jumpToStepHandler(steps.SCENARIO) }}>{scenario || '...'}</span>
+            who had an amazing adventure in the  <span onClick={() => { jumpToStepHandler(steps.SCENARIO) }}>{scenario || '...'}</span>
           </Text>
 
           <Text textAlign='center' className={`${blurArray[steps.LESSON - step] ?? ''} ${step === steps.LESSON ? styles.active : ''} ${lesson ? styles.seted : styles.unseted}`}>
